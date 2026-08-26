@@ -1,0 +1,2833 @@
+{
+  "name": "Transportadora - Atendimento, Cotacao e Rastreio com IA",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Voce é um funcionário da Transportadora Exemplo, seu objetivo é atender os clientes da melhor maneira e ajudar eles com suas cotações para encaminhar para o setor responsável.\n\nSeu nome é Assistente, voce tem 24 anos é uma pessoa gentil, divertida e educada, no seu atendimento você pode misturar um pouco de profissionalismo com informalidade para ficar um atendimento bem humanizado, nosso foco é não parecer um robo.\n\n\n\n\n## Informações Gerais da empresa\n\nNome: Transportadora Exemplo LTDA (nome fantasia: Transportadora Exemplo)\n\nCNPJ Matriz: 00.000.000/0001-00\n\nCNPJ Filial: 00.000.000/0001-00\n\nSede: Cidade Matriz/UF\n\nFilial: Cidade Filial/UF\n\nSegmento: Transporte rodoviário e logístico de cargas em todo o território nacional\n\nWebsite: https://transportadora-exemplo.com.br/\n\n### História e Missão\n\n\n- Nascida do sonho de infância do fundador, apaixonado por caminhões.\n- Fundada com o objetivo de oferecer transporte eficiente, seguro e com atendimento humanizado.\n- Comprometida com qualidade, confiança e inovação tecnológica.\n- Atua com profissionalismo e rastreamento em tempo real, oferecendo transparência total aos clientes.\n\n### Endereços e Contatos\n\nMatriz – Cidade Matriz/UF\n- Endereço: Av. Exemplo, 000 - Distrito Industrial\n- Telefone/WhatsApp: (69) 3322-4546\n- E-mail: contato@transportadora-exemplo.com.br\n- Atendimento: Segunda a sexta, 8h às 18h\n\nFilial – Cidade Filial/UF\n- Endereço: Rua Doutor Solano Trindade, 333 – Jardim Nova Cidade\n- Telefone/WhatsApp: (11) 2414-8777\n- E-mail: Cidade Filial@transportadora-exemplo.com.br\n\n\n### Frota\n- Frota moderna e diversificada de caminhões e carretas.\n- Veículos equipados com rastreamento via satélite 24h.\n- Todos os veículos possuem manutenção preventiva regular.\n- Seguro completo de carga e escolta veicular em rotas críticas.\n- Motoristas capacitados e treinados em transporte de cargas perigosas e sensíveis.\n\n## Serviços\n\n- usar ferramenta {servicos}\n  Usada para pegar os serviços que nós temos \n  Faça uma pergunta de cada vez e seja objetivo não manda varias perguntas em uma unica fala.\n\n- Usar ferramenta {coleta}\n  Usada para pegar as informações que precisamos para fazer a cotação e quando fazer as perguntas uma de cada vez envia em json com as informações separadas na ferramenta {cotacao} e no fim mostra o resumo e avisa que foi enviado para analise a cotação\n\n- Usar ferramenta {cotacao} \n  Está ferramenta e usada para pegar as informações e enviar a um grupo de cotação. Então envia para está ferramente as informções coletadas em json separadas e organizadas.\n\n### Licenças e Autorizações\n\n- Certificado de Regularidade do IBAMA.\n- Autorização para transporte interestadual de produtos perigosos.\n- Inspeções periódicas de segurança veicular.\n- Cumprimento das normas da ANTT e DENATRAN.\n\n\n### Para Cotação\n\nFormulário de Cotação:\nNome / Empresa\nTipo de serviço (Coleta, Transporte, Entrega)\nOrigem e destino\nTipo e peso da carga\nData prevista\nObservações adicionais\nE-mail (WhatsApp e e-mail)\n\n- precisamos dessas informações para informar valores da cotação e seguir com ela.",
+        "height": 1856,
+        "width": 1280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        5504,
+        784
+      ],
+      "id": "5df4a3df-84b6-402c-9208-a862bb435c01",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd78df4d-bc6d-4068-b28e-9be252f16f0c",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook21').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "fa50dc29-6cd9-4573-8def-405e8170e7ef",
+              "name": "dados.numero",
+              "value": "={{ $json.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "f99c707a-b0e9-4d31-a6be-25ac120d6ecf",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook21').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b33eda7a-ab0d-4413-867f-5f08e69dca55",
+              "name": "minha?",
+              "value": "={{ $('Webhook21').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "80bb9043-4fcd-4cf6-984f-f0782e615ea0",
+              "name": "dados.pushname",
+              "value": "={{ $('Webhook21').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "3e1ffa7c-35d0-4dd8-a4ed-939e81fb6291",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook21').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "fabe7f21-b76b-4cfc-a70b-1c335ee5698e",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook21').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c7246d36-52cb-4647-a940-1f157d50cacb",
+              "name": "dados.message",
+              "value": "={{ $('Webhook21').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "db8feda2-4e48-4da3-a45a-4873f5e34cf1",
+              "name": "message",
+              "value": "={{ $('Webhook21').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "a637e501-2f65-4a93-a547-fb2e581d484c",
+              "name": "idnumero",
+              "value": "={{ $('Webhook21').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "720f38ea-223a-4fe3-bb2a-d315bf2cc9aa",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook21').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "321f4720-495d-4b77-ad6d-dd0fc28da199",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook21').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "a9300e2f-65c8-47ca-a9e7-80cedf77f33e",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "33ac77a9-646f-46ce-a334-eee7485f794b",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook21').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "c68422c6-d332-47b1-907a-3274adc4cbbd",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1088,
+        640
+      ],
+      "id": "511a35e3-f665-4362-95d1-06ebb341cd8d",
+      "name": "tratamento"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3152,
+        800
+      ],
+      "id": "64147140-f30a-4196-8a31-c806879fb3d0",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bc01f1ae-7c18-4acf-9ea9-4befb4e83c46",
+              "name": "=messages",
+              "value": "={{ $('pegamessages').item.json.message.join('\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "4c5ee7f0-f7a2-4d4b-9fd0-72a68c5a0d08",
+              "name": "numero",
+              "value": "={{ $('Wait1').item.json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3376,
+        912
+      ],
+      "id": "78eda37e-22a6-4d93-86b4-270f80fa8f8d",
+      "name": "concatena"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $json.numero }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2944,
+        928
+      ],
+      "id": "46f6ef8e-91d1-4d97-9e82-065e6e50b14f",
+      "name": "pegamessages",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $json.numero }}",
+        "messageData": "={{ $json.message }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2560,
+        928
+      ],
+      "id": "82512310-3eac-4695-afd8-54a17fa79a1e",
+      "name": "listamessage",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.numero }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3536,
+        912
+      ],
+      "id": "e185bbb9-3f0d-47e5-b4eb-e1b2890ad5c5",
+      "name": "deletalista",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "51faf3d2-35e7-4e3c-b796-60992dd3233d",
+              "leftValue": "={{ $('Webhook21').item.json.body.data.key.fromMe }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        304
+      ],
+      "id": "05b9551e-8c94-4f00-b302-d7eda635db71",
+      "name": "verifica se é uma mensagem DO CLIENTE1"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=transportadora_{{ $('Webhook21').item.json.body.data.key.remoteJid }}_block",
+        "value": "true",
+        "expire": true,
+        "ttl": 3600
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        496,
+        288
+      ],
+      "id": "fb576504-b33a-4a57-96be-e25fc5eea704",
+      "name": "CHave-block",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "=transportadora_{{ $('Webhook21').item.json.body.data.key.remoteJid }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        512,
+        496
+      ],
+      "id": "ad6fc501-afad-4a1f-a211-f4ec92e71723",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9dc554b4-2f50-4924-8a11-e679206fb9cc",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        496
+      ],
+      "id": "81e3e27d-c5ee-4b26-b3a0-b279847deb5d",
+      "name": "verifica_isblock_estado"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        720,
+        288
+      ],
+      "id": "42a4effb-c320-4921-89ea-9c55965dcd3c",
+      "name": "NOOP_01"
+    },
+    {
+      "parameters": {
+        "content": "## Bloqueio humano",
+        "height": 420,
+        "width": 1140,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "10e2740a-644b-46fd-9dbb-ccd5a958c740",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        192,
+        496
+      ],
+      "id": "17826b7d-b2a8-4015-be23-9051fd43e076",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd4596a5-ac3a-4045-a493-8a240506f1a2",
+              "leftValue": "={{ $json.body.data.key.remoteJid }}",
+              "rightValue": "@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -96,
+        320
+      ],
+      "id": "6dc4eaf4-907d-40aa-a8f6-39faf9a70463",
+      "name": "degrupo"
+    },
+    {
+      "parameters": {
+        "content": "##  BUffer\n",
+        "height": 380,
+        "width": 1116,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2544,
+        784
+      ],
+      "typeVersion": 1,
+      "id": "1085c6db-f8e6-4482-ac26-75fdaec265d0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Tratadados",
+        "height": 292,
+        "width": 184,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1040,
+        512
+      ],
+      "typeVersion": 1,
+      "id": "1f9fd140-28bc-4604-bb28-cbbd3fc5fda1",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd4596a5-ac3a-4045-a493-8a240506f1a2",
+              "leftValue": "={{ $('Webhook21').item.json.body.data.key.remoteJid }}",
+              "rightValue": "@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        960
+      ],
+      "id": "37cd99de-7d65-4114-b022-de12012d6c27",
+      "name": "degrupo1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        304,
+        976
+      ],
+      "id": "e2a1ef80-a94f-4c1b-a480-1a8651ef52d6",
+      "name": "No Operation, do nothing5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f00af22-b0c5-4a82-9887-0a35bdb55014",
+              "name": "lid",
+              "value": "={{ $('Webhook21').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "678432bc-dfb7-4125-a888-d099072d4efd",
+              "name": "numero",
+              "value": "={{ $('Webhook21').item.json.body.data.key.remoteJidAlt.replace(/:\\d+(?=@)/, '') }}",
+              "type": "string"
+            },
+            {
+              "id": "5c301943-c5a9-4078-bd61-5de29e387f7c",
+              "name": "fromme",
+              "value": "={{ $('Webhook21').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        704
+      ],
+      "id": "e8584c51-2571-43a0-b6e8-e2e183158707",
+      "name": "extrainumero"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        720,
+        688
+      ],
+      "id": "2efc068b-5f9b-4193-be5b-7b1b6f22c08f",
+      "name": "NOOP_1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bae113da-0288-4daf-83f6-9674c2c659fd",
+              "name": "numero",
+              "value": "={{ $('extrainumero').item.json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        992
+      ],
+      "id": "7afed2dd-e8c1-482b-8d3a-891bb10655d9",
+      "name": "coleta1"
+    },
+    {
+      "parameters": {
+        "content": "## Bloqueio humano \nLID",
+        "height": 500,
+        "width": 1136,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -128,
+        704
+      ],
+      "typeVersion": 1,
+      "id": "e163a2f1-8826-4f58-bb03-7e73fdc08043",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "51faf3d2-35e7-4e3c-b796-60992dd3233d",
+              "leftValue": "={{ $('Webhook21').item.json.body.data.key.fromMe }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        304,
+        704
+      ],
+      "id": "4ca962f7-a1e8-4885-aea2-fcd9db642c1a",
+      "name": "verifica se é uma mensagem DO CLIENTE"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=transportadora_{{ $('extrainumero').item.json.numero }}_block",
+        "value": "true",
+        "expire": true,
+        "ttl": 10800
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        496,
+        688
+      ],
+      "id": "d6d0fb20-5e63-43af-9c22-d350d3c443c6",
+      "name": "CHave-block1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "=transportadora_{{ $json.numero }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        512,
+        976
+      ],
+      "id": "1a4be3fa-f47c-4720-8d1f-eee4f8410441",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9dc554b4-2f50-4924-8a11-e679206fb9cc",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        976
+      ],
+      "id": "c959fd40-eff4-4c59-ab3d-e832019a7d3f",
+      "name": "verifica_isblock_estado1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd4596a5-ac3a-4045-a493-8a240506f1a2",
+              "leftValue": "={{ $('Webhook21').item.json.body.data.key.remoteJid }}",
+              "rightValue": "@lid",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -272,
+        640
+      ],
+      "id": "627631e6-023d-4fb5-a22d-14c3a5fdcf35",
+      "name": "LID?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bae113da-0288-4daf-83f6-9674c2c659fd",
+              "name": "numero",
+              "value": "={{ $('Webhook21').item.json.body.data.key.remoteJid.replace(/:\\d+(?=@)/, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        512
+      ],
+      "id": "34bc937b-dfee-4482-ba67-bd88366eea84",
+      "name": "coleta"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b4e0ca0e-5d60-4e3e-9ae6-77819bc2a068",
+              "leftValue": "={{ $json.message.last() }}",
+              "rightValue": "={{ $('Wait1').item.json.message }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3152,
+        928
+      ],
+      "id": "73002ccb-c9d2-4bbc-bd52-91d0bf4339be",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories_transportadora",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories_transportadora"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3136,
+        1184
+      ],
+      "id": "463e1893-c143-44c2-992f-39ded6c5081d",
+      "name": "memoria",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Inicio",
+        "height": 196,
+        "width": 436,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -560,
+        592
+      ],
+      "typeVersion": 1,
+      "id": "962ddcfe-caaf-499e-9fbf-fd790183fcc3",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "toolDescription": "usar para falar sobre os serviços prestados.",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=# ⚫ Ferramenta `{Servicos}` – Transportadora Exemplo\n\n## 🎯 Função\n\nUsada quando o cliente pedir informações sobre **os tipos de transporte e serviços oferecidos pela Transportadora Exemplo**.\nO objetivo é **explicar de forma resumida, natural e visualmente organizada**, com quebras de linha adequadas para leitura no WhatsApp.\n\n---\n\n## ⚙️ Regras de Uso\n\n* Acione **{Servicos}** quando o cliente perguntar:\n\n  * “Quais serviços vocês oferecem?”\n  * “O que a Transportadora Exemplo transporta?”\n  * “Vocês fazem cargas perigosas, fracionadas ou liberadas?”\n  * “Trabalham com EADI ou produtos sensíveis?”\n\n* A resposta deve ser:\n\n  * **Curta, leve e humanizada**, sem texto institucional.\n  * **Com quebras de linha** entre os itens.\n  * **Organizada por tópicos ou ícones**, fácil de ler.\n  * Se o cliente quiser saber mais sobre um tipo específico, explique **apenas aquele** serviço em mais detalhes.\n\n---\n\n## 💬 Modelo de Resposta Padrão (formatada para WhatsApp)\n\n```\nCarla: A Transportadora Exemplo trabalha com várias soluções em transporte e logística 👇  \n\n🚛 **Carga Liberada**  \nTransporte de cargas já nacionalizadas, prontas para circulação.  \n\n📦 **Carga Fracionada**  \nIdeal para cargas menores — cada encomenda chega ao destino com segurança e eficiência.  \n\n🏢 **EADIs**  \nEquipe treinada para recepcionar caminhões, agilizar trâmites e documentações em áreas alfandegadas.  \n\n⚙️ **Cargas Sensíveis**  \nTreinamento diferenciado para o transporte de equipamentos e materiais delicados.  \n\n☣️ **Cargas Perigosas**  \nTransporte e armazenamento de produtos químicos com motoristas certificados.  \n\nQuer que eu te explique melhor algum desses serviços?\n```\n\n---\n\n## 💡 Regras de Estilo e Exibição\n\n* Use **emojis com moderação** (1 por item é o ideal).\n* Sempre **quebre as linhas** para facilitar a leitura no WhatsApp.\n* Não envie blocos de texto longos.\n* Se o cliente pedir mais detalhes, responda com uma frase curta e clara sobre aquele serviço específico.\n\n  > Exemplo: “Claro! Em cargas perigosas, trabalhamos com veículos equipados e motoristas com certificação MOPP.”\n\n---\n\n## 🧾 Resumo dos Serviços (base informativa)\n\n1. **Carga Liberada** – Transporte de cargas já nacionalizadas.\n2. **Carga Fracionada** – Transporte de cargas com menor volume, ideal para entregas compartilhadas.\n3. **EADIs** – Recepção de caminhões e agilidade nos trâmites e processos burocráticos.\n4. **Cargas Sensíveis** – Sistema de transporte com treinamento diferenciado para materiais delicados.\n5. **Cargas Perigosas** – Transporte e armazenamento de produtos químicos com motoristas treinados."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        3776,
+        1360
+      ],
+      "id": "a91a7b1f-d15a-40c6-b04b-5c605386fa9d",
+      "name": "servicos"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3776,
+        1488
+      ],
+      "id": "2c839f82-ee6e-4553-957d-7130d8759275",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_transportadora",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        3872,
+        1600
+      ],
+      "id": "08fdb928-c5dc-4ed4-b2e4-92d481bf3a67",
+      "name": "Postgres Chat Memory1",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messages }}",
+        "options": {
+          "systemMessage": "=━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nQuem você é\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nVocê é uma funcionária da **Transportadora Exemplo**, e o seu objetivo é **atender os clientes da melhor forma possível**, ajudando com **cotações**, **envios**, **entregas** e **informações gerais** para depois encaminhar tudo ao setor responsável.\n\nSeu nome é **Assistente**, você tem **24 anos**, é uma pessoa **gentil, divertida e educada**.\nNo seu atendimento, pode misturar um pouco de **profissionalismo com informalidade**, mantendo um tom **humanizado e natural**.\nO foco é **não parecer um robô** e garantir que o cliente se sinta bem atendido.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nInformações Gerais da Empresa\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Nome: Transportadora Exemplo LTDA (nome fantasia: Transportadora Exemplo)\n- CNPJ Matriz: 00.000.000/0001-00\n- CNPJ Filial: 00.000.000/0001-00\n- Sede: Cidade Matriz/UF\n- Filial: Cidade Filial/UF\n- Segmento: Transporte rodoviário e logístico de cargas em todo o território nacional\n- Website: https://transportadora-exemplo.com.br/\n- Endereço: Rua Exemplo, 000 - Bairro / Cidade/UF\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nEndereços e Contatos\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nMatriz – Cidade Matriz/UF \n- Endereço: Av. Exemplo, 000 - Distrito Industrial\n- Telefone/WhatsApp: (69) 3322-4546\n- E-mail: contato@transportadora-exemplo.com.br\n- Atendimento: Segunda a sexta, 8h às 18h\n\n- Filial — Cidade Filial/UF  \n- Endereço: Rua Exemplo, 000 - Bairro / Cidade/UF\n- WhatsApp: ( 11) 2436-7757\n- Telefone: (11) 2436-7757  \n- Celular: (11) 93348-0404\n- E-mail: sac@transportadora-exemplo.com.br\n\nRegras\n- A MATRIZ (sede) fica em Cidade Matriz/UF: Av. Exemplo, 000 - Distrito Industrial\n- A FILIAL fica em Cidade Filial/UF: Rua Exemplo, 000 - Bairro / Cidade/UF\n- Sempre que o cliente pedir o endereço/local da empresa sem especificar qual, informe o endereço da MATRIZ (Cidade Matriz/UF).\n- Só informe o endereço de Cidade Filial se o cliente pedir especificamente a filial de São Paulo, ou se o contexto deixar claro que é sobre a filial.\n- Quando a resposta for apenas sobre endereço/local/contato, NÃO mostrar o menu de opções (1 a 6). Só mostrar o menu quando fizer sentido no fluxo (início do atendimento ou quando o cliente pedir para ver as opções).\n- Você deve passar o endereço que o cliente pedir corretamente \n- Não deve inventar endereços\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nTriagem e estilo de conversa\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAo iniciar o atendimento, cumprimente o cliente e apresente as opções disponíveis de forma natural. Exemplo (adapte conforme o contexto):\n(esta mensagem é padrão)\n\"Oi, tudo bem? 😊\nComo posso te ajudar hoje?\n1. Financeiro\n2. Fazer uma cotação\n3. Fazer coleta\n4. Rastreamento de entrega\n5. Avaria\n6. Falar com a equipe\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAviso\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Quando alguém pedir rastreamento ou status de entrega, informe que vai passar para um responsável e utilize a ferramenta {rastreamento}.\n- Se alguém quiser falar com Mohamed, Hamouda, Fauzi ou outro responsável, informe que vai avisar e utilize a ferramenta {aviso_responsavel}.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFluxo de Cotação\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nApenas estas informações devem ser coletadas uma de cada vez, APENAS PARA ESTAS PERGUNTAS.\nQuando o cliente solicitar cotação, coleta ou envio de carga, envie todas as perguntas de uma vez, estilo formulário:\n\"Perfeito! Para eu montar a cotação, preciso de algumas informações:\n\n1. Qual o nome do solicitante?\n2. Qual o nome da empresa?\n3. De qual cidade o material vai sair?\n4. Para qual cidade vai?\n5. O frete será CIF (entrega paga) ou FOB (retirada paga)?\n6. CNPJ do remetente e do destinatário?\n7. Qual o peso total da carga?\n8. Quais as medidas dos volumes? (A x L x C em cm)\n9. Quantos volumes serão coletados?\n10. Qual o valor da NF?\n11. Qual o melhor horário para coleta?\"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nResumo Final e Envio\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nApós coletar todas as respostas, monte um resumo organizado e mostre ao cliente para conferência:\n\n\"Perfeito, anotei tudo assim:\nOrigem: (cidade de saída)\nDestino: (cidade de destino)\nFrete: (CIF ou FOB)\nSolicitante: (nome e empresa)\nRemetente (CNPJ): (número)\nDestinatário (CNPJ): (número)\nPeso total: (valor em kg)\nMedidas: (A x L x C em cm)\nVolumes: (quantidade)\nValor da NF: (valor)\nNecessita de coleta: sim ou nao.\nContato: +55 xx xxxxx-xxxx automaticamente)\n\nEstá tudo certo com essas informações?\"\nAssim que o cliente confirmar (ex.: \"ok\", \"sim\", \"pode enviar\", \"beleza\", \"tudo certo\"):\n- Envie imediatamente para o setor usando a ferramenta {cotacao}\n- Responda com a mensagem de encerramento abaixo\n- Não repita o resumo após a confirmação\n- Não pergunte novamente se pode enviar\nMensagem de encerramento:\n\"Perfeito! 🚛 Já encaminhei tudo para o setor de cotação.\nAssim que tiver o retorno com o valor e o prazo, eu te aviso por aqui, combinado?\"\nSe o cliente pedir atualização depois:\n\"Assim que o setor me passar o retorno, eu te aviso aqui, tá bom?\"\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nMenu conforme a conversa \n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Para o começo\n1. Financeiro\n2. Fazer uma cotação\n3. Fazer coleta\n4. Rastreamento de entrega\n5. Avaria\n6. Falar com a equipe\n\n- Opção 1\n- Caso o cliente escolha esse voce pode informar que o numero para falar com o financeiro é 00 00000-0000\n\n- Opção 2\nAqui você fara as perguntas de cotação mas fara as perguntas uma de cada vez. \n\nOpção 3\n- Se o cliente solicitar coleta, voce vai enviar a seguinte mensagem para ele (obrigatorio):\n\nDADOS PARA COLETA\nRETORNE A MENSAGEM COM AS INFORMAÇÕES SOLICITADAS:\n\nSOLICITANTE ( NOME DA PESSOA) :}\nTELEFONE DE CONTATO:\nCNPJ REMETENTE:\nENDEREÇO DE COLETA:\nCNPJ DESTINATARIO:\nVOLUMES:\nPESO:\nMEDIDAS: A x C x L: \nCLASSIFICAÇÃO DE RISCO:\nTIPO DE MERCADORIA:\nHORARIO DE COLETA (INICIO, PARADA PARA ALMOÇO CASO HAJA E HORARIO LIMITE):\n\ne depois que o cliente informar o que pedido, informar que vai enviar para os responsáveis que vao entrar em contato, e envie na ferramenta {cotacao}\n\n4 - opção 4 \nQuando o cliente selecionar essa opção, pode falar que ele pode entrar em contato com o contato: 00 00000-0000 que é responsável por isso. (enviar na ferramenta {avaria/rastreio}, e falar o que o cliente deseja.)\n\nOpção 5 - avaria\n- Aqui quando selecionado o \"5. Avaria\" você deve coletar o numero da  NF , e após coletar você deve falar que já já entrara alguem em contato e pede para a pessoa aguardar sem mandar o menu. Nesta opção não precisa mostrar o menu quando selecionado. (enviar na ferramenta {avaria/rastreio}, e falar o que o cliente deseja.)\n(nao informe esse dois dados como opções, mas pode colocar como lista.)\n\n opção 6 - Falar com equipe\nAqui você vai chamar a equipe e não vai mostrar as opções.\nCaso o cliente mande mais alguma coisa.\nFala que a equipe já está vindo atende-lo. Ative a ferramenta {cotacao} para avisar\n\nRegras sobre os menus\n- A opção \"Falar com a equipe\" é suporte\n- Você tem que mostrar todos os menus quando nescessario como explicado.\n- Os dados NF, CPF e CNPJ são obrigatorios.\n- Quando for falar sobre a Transportadora Exemplo ou quando ver que o assunto é grande, resuma e resuma muito bem, sendo o mais direto possivel.\n- Você deve sempre obedecer as opções quando selecionadas para mostrar no chat\n- Sempre deve mostrar os menus.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nLicenças e Autorizações\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Certificado de Regularidade do IBAMA\n- Autorização para transporte interestadual de produtos perigosos\n- Inspeções periódicas de segurança veicular\n- Cumprimento das normas da ANTT e DENATRAN\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nHistória e Missão\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Nascida do sonho de infância do fundador, apaixonado por caminhões\n- Fundada com o objetivo de oferecer transporte eficiente, seguro e com atendimento humanizado\n- Comprometida com qualidade, confiança e inovação tecnológica\n- Atua com rastreamento em tempo real, oferecendo transparência total aos clientes\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFrota\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Frota moderna e diversificada de caminhões e carretas\n- Veículos equipados com rastreamento via satélite 24h\n- Manutenção preventiva regular em todos os veículos\n- Seguro completo de carga e escolta veicular em rotas críticas\n- Motoristas capacitados e treinados em transporte de cargas perigosas e sensíveis\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nTom de voz e comunicação\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Profissional, amigável e direto\n- Sempre que fizer uma pergunta, liste as ações disponíveis conforme o contexto da conversa\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAtendimento ao cliente\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. Postura e tom\n   - Sempre profissional, gentil e acolhedora\n   - Misturar leveza e simpatia com profissionalismo\n   - Evitar respostas automáticas e robóticas\n   - Transmitir confiança em cada mensagem\n\n2. Forma de falar\n   - Frases curtas e naturais\n   - Usar expressões como \"perfeito!\", \"ótimo!\", \"tudo certo!\"\n   - Falar sempre em primeira pessoa\n\n3. Tom emocional\n   - Gentil, prestativa e empática\n   - Mostrar interesse real pelo cliente\n   - Usar poucos emojis (máximo 1 por mensagem)\n\n4. Fluxo da conversa\n   - Para triagem: uma pergunta por vez\n   - Para cotação: enviar todas as perguntas de uma vez, estilo formulário\n   - Confirmar os dados antes de enviar\n   - Usar quebras de linha para deixar o texto limpo e leve\n\n5. Erros e dúvidas\n   - Se o cliente não souber algo, marcar como \"não informado\" e continuar\n   - Confirmar com educação qualquer dado confuso\n\n6. Encerramento\n   - Confirmar quando o pedido for enviado ao setor de cotação\n   - Encerrar sempre com gentileza:\n     \"Foi um prazer te atender! 💛 Assim que o setor me passar o retorno, eu te aviso.\"\n\n7. Regras\n   - Nunca dizer que é uma IA ou robô\n   - Não inventar valores ou prazos\n   - Não enviar textos longos\n   - Não repetir \"Em que posso ajudar?\" em toda mensagem — fica robótico\n   - Não inventar dados que não foram fornecidos aqui\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nInformações Obrigatórias para Cotação\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Nome / Empresa\n- Tipo de serviço (Coleta, Transporte, Entrega)\n- Origem e destino\n- Tipo e peso da carga\n- Medidas dos volumes (A x L x C)\n- Quantidade de volumes\n- Valor da NF\n- Horário de coleta\n\nEssas informações são obrigatórias para que a equipe consiga calcular os valores e seguir com o atendimento.\nApenas estas informações devem ser coletadas uma de cada vez só para as opções devem ser por alternativa\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nData e hora atual\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Data e hora atual: {{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}, Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nRegras Gerais\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Quando for falar sobre a Transportadora Exemplo você tem que enviar de forma resumida super resumida e direta.\n- Você não deve falar para o cliente qual ferramenta você vai usar isso é proibido.\n- Só usar ferramentas quando necessário e após coletar todas as informações\n- Nunca fazer agendamento, cotação ou consulta sem coletar os dados necessários primeiro\n- Não informar dados que não foram fornecidos neste prompt\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFerramentas\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n{cotacao}\nUsada para enviar os dados da cotação ao setor responsável.\nAtivar após o cliente confirmar o resumo.\nUsa está ferramenta tbm quando o cliente solicitar rastreamento. \nQuando ativado, avisa ao cliente que já chegara alguém responsavel para fazer o rastreamento\n\n{servico}\nUsa está ferramenta para ver os serviços que oferece, usa quando o cliente perguntar quais serviços oferece\n\nSobre serviços — quando o cliente perguntar diretamente sobre os serviços:\n\"A Transportadora Exemplo trabalha com transporte rodoviário nacional, cargas fracionadas, EADIs, produtos sensíveis e perigosos. Quer detalhes sobre algum tipo específico?\"\n\nAtenção: Se o cliente disser \"preciso enviar\", \"fazer uma cotação\", \"mandar uma carga\" ou similar — NÃO mostrar lista de serviços. Ir direto para o formulário de cotação."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        3712,
+        912
+      ],
+      "id": "7829ad95-6244-4a75-9d82-34517dce5c1f",
+      "name": "Assistente"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4032,
+        1488
+      ],
+      "id": "d76594e2-f7c4-4923-bbd6-d1da8e4542ec",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_transportadora",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        4128,
+        1600
+      ],
+      "id": "95880e7f-8abb-429a-be9f-b6cc903e25fd",
+      "name": "Postgres Chat Memory2",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## IA",
+        "height": 512,
+        "width": 1808,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3680,
+        784
+      ],
+      "id": "69820dc9-1785-4aa1-a7ab-d4fbf1a0c780",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Agentes IAS\n",
+        "height": 496,
+        "width": 960,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3680,
+        1312
+      ],
+      "id": "1e49b590-da1a-4544-bdcd-024b0703e63b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('tratamento').first().json.dados.instancia }}",
+        "remoteJid": "={{ $('concatena').first().json.numero }}",
+        "messageText": "=*Assistente:* \n{{ $('Assistente').first().json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        4928,
+        896
+      ],
+      "id": "3262e4b5-f5d2-4465-a571-5b44d462ea61",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4000,
+        912
+      ],
+      "id": "553e33a8-23ed-4549-8a33-5de089c83606",
+      "name": "Wait",
+      "webhookId": "f7200551-fd4e-4ee0-bb9c-1d2aad2da8e6",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.exemplo.com.br/webhook/cotacao-transportadora",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "dados",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `informar tudo aqui para a cotação`, 'string') }}"
+            },
+            {
+              "name": "instancia",
+              "value": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero.replace('@s.whatsapp.net', '') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        4432,
+        1664
+      ],
+      "id": "99df7b8c-c7df-4348-b42c-a1b891174c9e",
+      "name": "Cotacao"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7676353d-caaa-4d86-a03f-db6d5587623b",
+              "name": "dados",
+              "value": "={{ $json.body.dados }}",
+              "type": "string"
+            },
+            {
+              "id": "96eded2e-0c27-4737-8606-d651b464d0a1",
+              "name": "instancia",
+              "value": "={{ $json.body.instancia }}",
+              "type": "string"
+            },
+            {
+              "id": "f1856f4d-65dd-4acc-a159-798b162f5966",
+              "name": "numero",
+              "value": "={{ $json.body.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        1344
+      ],
+      "id": "4d6cc6f4-a995-44ee-aa2d-6b94b40f8ef6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.dados }}\n{{ $json.numero }}",
+        "options": {
+          "systemMessage": "=vc é responsável por mandar cotação para o grupo dos consultores, onde eles vao analisar e entrar em contato com o cliente.\n\n\nmandar somente 1 modelo de pedido de cotação. diferencia os pedidos as vezes, para nao irem sempre com o mesmo modelo de mensagem, mas mantenha o objetivo ainda.\n\no resumo do pedido deve ser objetivo e direto.\n\n\nse for um aviso de alguem, informar que é;\n\no numero do cliente deve ser informado na cotação\n\nnumero cliente {{ $json.numero.split('@')[0].slice(2) }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1696,
+        1344
+      ],
+      "id": "12ba3f9d-8a1b-4086-9723-4b006fa7854a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1696,
+        1488
+      ],
+      "id": "dbc10c4e-1022-4672-8d3a-b70588d98106",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.numero }}",
+        "tableName": "n8n_chat_histories_transportadora",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        1792,
+        1600
+      ],
+      "id": "1ceadfef-793d-41b8-9f2e-627557af1c91",
+      "name": "Postgres Chat Memory3",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Edit Fields').item.json.instancia }}",
+        "remoteJid": "=000000000000000000@g.us",
+        "messageText": "=*Assistente:* \n\n{{ $json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2368,
+        1344
+      ],
+      "id": "f192533c-91c7-491c-923c-5d10007f14a7",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cotacao-transportadora",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        1344
+      ],
+      "id": "32d9df2c-4f14-4a11-a37a-63a205074aaa",
+      "name": "Webhook1",
+      "webhookId": "fdc2526f-dc42-4070-bcb0-a3caac870912"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Você ira pegar estás informações e organizar para enviar para um grupo do WhathsApp",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=voce é responsavel por organizar as informação para contação e enviar ao fluxo que vai mandar no grupo do whatsapp que vai receber essas informaçãoes e vai assumir o atendimento.\n\nobrigatorio saber o nome do cliente, caso nao tenha, peça para informar.\n\ncaso o numero do cliente nao venha para voce na mensagem, vc vai receber no seu pront o numero, ai pode adicioanr ele.\n\nA ferrementa que deve chamar após organizar certinho é {cotacao}\n\nnumero do cliente: {{ $('concatena').item.json.numero.replace('@s.whatsapp.net', '').replace(/^55/, '') }}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        4288,
+        1360
+      ],
+      "id": "9bc221eb-4dd8-4065-b1ef-cde2225a8de5",
+      "name": "cotacao"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        3760,
+        1184
+      ],
+      "id": "ca456b15-c3fa-47f1-8f66-87460ab16ad4",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usar para verificar quais dados precisamos coletar para enviar para a equipe de cotação",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Essas são as perguntas que precisamos fazer para coletar as informações:\n\nColeta:\n\nDADOS PARA COLETA\nRETORNE A MENSAGEM COM AS INFORMAÇÕES SOLICITADAS:\n\nSOLICITANTE ( NOME DA PESSOA) :}\nTELEFONE DE CONTATO:\nCNPJ REMETENTE:\nENDEREÇO DE COLETA:\nCNPJ DESTINATARIO:\nVOLUMES:\nPESO:\nMEDIDAS: A x C x L: \nCLASSIFICAÇÃO DE RISCO:\nTIPO DE MERCADORIA:\nHORARIO DE COLETA (INICIO, PARADA PARA ALMOÇO CASO HAJA E HORARIO LIMITE):\n\n\nEnvio:\n\nSOLICITAR:\nCIDADE QUE VAI O MATERIAL\nSE O FRETE E CIF OU FOB\nNOME DO SOLICITANTE\nNOME DA EMPRESA DO SOLICITANTE\nCONTATO DO SOLICITANTE"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        4032,
+        1360
+      ],
+      "id": "244ba903-7dff-4b14-871c-791c7aa4dcdb",
+      "name": "coleta/envio"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e525106a-5952-4dc4-aad7-81ae0882dc0c",
+              "leftValue": "={{ $json.dados.tipomessage }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1488,
+        640
+      ],
+      "id": "844205a8-a1e9-475c-90c7-22344fa40bf0",
+      "name": "If12"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0c8298b7-a107-4033-9755-a92986ca4b44",
+                    "leftValue": "={{ $('If12').item.json.dados.tipomessage }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e6c9f67c-7fe2-4d37-82f5-51977ae9aeb7",
+                    "leftValue": "={{ $('If12').item.json.dados.tipomessage }}",
+                    "rightValue": "documentMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "210b04b8-d9ca-4b0c-8599-a1634fd57307",
+                    "leftValue": "={{ $('If12').item.json.dados.tipomessage }}",
+                    "rightValue": "=imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Imagem"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1488,
+        864
+      ],
+      "id": "1f3d0f91-588d-4ba3-a6b4-30860387ed3d",
+      "name": "Caminhos1"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1856,
+        784
+      ],
+      "id": "2b5868da-4998-45f1-8c89-c9816f11499c",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "Analisar a imagem e identificar o que se trata e passar as informações adiante.",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1856,
+        976
+      ],
+      "id": "dc990070-8d2d-4e30-9f1c-ace66193be16",
+      "name": "OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        976
+      ],
+      "id": "9e2c5cb0-6602-4cc3-8e38-c8c840bee4eb",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data.base64",
+        "options": {
+          "fileName": "audio.mp3",
+          "mimeType": "audio/mpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        784
+      ],
+      "id": "7ae65023-db1b-4ad8-aa65-6b17d7e9fd65",
+      "name": "Convert to File4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.content }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "descricao",
+              "description": "falar sobre a imagem"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=Voce é especializado em analizar as imagens, na maioria das vezes voce vai receber imagem de clientes para a  , seu trabalho vai ser identificar e descrever ela para poder atender a pessoa\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        2016,
+        976
+      ],
+      "id": "fb88c797-778e-4c76-874e-d4cf17883c3a",
+      "name": "imagem-data1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ea54cf6-be8b-46ff-b14b-4c78a0a9d29e",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "0794197c-4688-4d35-8f33-a98963ea98ec",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2304,
+        784
+      ],
+      "id": "5140d362-54b2-42b4-a4c1-d4661f768fa1",
+      "name": "saidapadrao5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f080410-f46c-437e-8a8d-fdcb0daa0209",
+              "name": "message",
+              "value": "={{ $json.output.descricao }}",
+              "type": "string"
+            },
+            {
+              "id": "558ed4eb-12b9-400f-80f1-692cc58e1823",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2304,
+        976
+      ],
+      "id": "6a880edd-96a7-4461-9d84-c74647c125d7",
+      "name": "saidapadrao6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f080410-f46c-437e-8a8d-fdcb0daa0209",
+              "name": "message",
+              "value": "={{ $json.dados.message }}",
+              "type": "string"
+            },
+            {
+              "id": "e8554953-7c63-4880-88f7-6d1a9ba1391a",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2304,
+        624
+      ],
+      "id": "42b13b74-938c-4cdf-b7a6-5afdee4d1d0d",
+      "name": "saidapadrao9"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "get-media-base64",
+        "instanceName": "={{ $json.dados.instancia }}",
+        "messageId": "={{ $json.dados.idmessage }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        880
+      ],
+      "id": "dfaf620b-04ce-46c4-a4b4-35ef5abf9d8a",
+      "name": "Obter m dia em base1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Tratamento de Audio e Imagem",
+        "height": 700,
+        "width": 1300,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1232,
+        560
+      ],
+      "typeVersion": 1,
+      "id": "5c05e18d-2654-4cf6-8be4-c0b1fea08197",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2016,
+        1120
+      ],
+      "id": "3816327d-b1b3-4256-87a0-ab2f99b895d9",
+      "name": "imagem?",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4304,
+        1472
+      ],
+      "id": "bc707efc-8780-4285-812c-12f51a4ed665",
+      "name": "chat",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_transportadora",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        4384,
+        1552
+      ],
+      "id": "269b1373-eda1-4681-8fb1-aaeeb14930d5",
+      "name": "memorias",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3712,
+        1056
+      ],
+      "id": "37960baa-c5ee-4a7f-878a-bc7faf099bc6",
+      "name": "oi?",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('tratamento').first().json.dados.instancia }}",
+        "remoteJid": "={{ $('tratamento').first().json.dados.numero }}",
+        "messageId": "={{ $('tratamento').first().json.dados.idmessage }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        4176,
+        912
+      ],
+      "id": "006987e2-9b00-4d6a-889a-5fba4de585e6",
+      "name": "Marcar mensagens como lidas",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $('tratamento').first().json.dados.instancia }}",
+        "remoteJid": "={{ $('tratamento').first().json.dados.numero }}",
+        "delay": 5000
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        4336,
+        912
+      ],
+      "id": "5628675f-c17a-4967-99ab-fd20f04111bd",
+      "name": "Enviar presen a1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 8
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2752,
+        928
+      ],
+      "id": "1bc13306-98d5-4caf-b609-7d4567d53543",
+      "name": "Wait1",
+      "webhookId": "0f181227-1deb-4036-8914-93f6671ab23a"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gera um atraso aleatório entre 20s e 80s para CADA item\nconst MIN_S = 10;      // 20 segundos\nconst MAX_S = 80;      // 1 min 20s\n\nfor (const item of items) {\n  const s = Math.floor(MIN_S + Math.random() * (MAX_S - MIN_S + 1));\n  item.json.delaySeconds = s;        // ex.: 37\n  item.json.delayMs = s * 1000;      // ex.: 37000\n  item.json.delayHuman = `${s}s`;    // útil para logs/debug\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2016,
+        1344
+      ],
+      "id": "ba7dcf41-c09e-4742-b3e2-e99ef2ffe445",
+      "name": "Code9"
+    },
+    {
+      "parameters": {
+        "amount": "={{$json.delaySeconds}}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2192,
+        1344
+      ],
+      "id": "fd784cad-842a-4074-86e2-0fb8acb81e45",
+      "name": "Wait2",
+      "webhookId": "4f1da789-d469-406c-9583-0805ca814875"
+    },
+    {
+      "parameters": {
+        "content": "## Cotação - envio",
+        "height": 448,
+        "width": 1296,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        1280
+      ],
+      "id": "45a4715b-1e7b-4bef-a579-5c7dcabe072f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "=transportadora_{{ $('concatena').item.json.numero }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4512,
+        912
+      ],
+      "id": "2ab09129-8e7e-484f-83a0-d42e49c611dd",
+      "name": "Redis2",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9dc554b4-2f50-4924-8a11-e679206fb9cc",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4672,
+        912
+      ],
+      "id": "c5a82c6e-5733-4bcd-aff0-8eed33014624",
+      "name": "verifica_isblock_estado2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "mensagens",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numero",
+              "condition": "eq",
+              "keyValue": "={{ $item(0).$node['Webhook21'].json.body.sender }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "recebido",
+              "fieldValue": "TRUE"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5328,
+        880
+      ],
+      "id": "1a57a03a-e2b2-4b9d-a9f5-6f6748e80131",
+      "name": "Update a row3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "220c1f4a-c422-46af-8837-424b8184e53e",
+              "leftValue": "={{ $item(0).$node['tratamento'].json.message }}",
+              "rightValue": "Teste Funcionamento!",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5104,
+        896
+      ],
+      "id": "f2ef468b-3407-4c96-856a-a9a7fcbafdd9",
+      "name": "If30"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "instancia-exemplooficial",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -496,
+        640
+      ],
+      "id": "e5f830dd-9f4e-4906-bca7-b2be0352ec75",
+      "name": "Webhook21",
+      "webhookId": "c8c6f730-37a4-40c1-bedd-5b31547cbc27"
+    },
+    {
+      "parameters": {
+        "content": "instancia-exemplo",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1056,
+        704
+      ],
+      "id": "6e067a05-dfcc-41c6-8058-063636411e31",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.exemplo.com.br/webhook/avaria",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "dados",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Informar o que o cliente deseja, se é avaria ou rastreio.`, 'string') }}"
+            },
+            {
+              "name": "instancia",
+              "value": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero.replace('@s.whatsapp.net', '') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        3568,
+        1216
+      ],
+      "id": "ae128b29-d011-469b-bad2-08dc98eff727",
+      "name": "avaria/rastreio"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7676353d-caaa-4d86-a03f-db6d5587623b",
+              "name": "dados",
+              "value": "={{ $json.body.dados }}",
+              "type": "string"
+            },
+            {
+              "id": "96eded2e-0c27-4737-8606-d651b464d0a1",
+              "name": "instancia",
+              "value": "={{ $json.body.instancia }}",
+              "type": "string"
+            },
+            {
+              "id": "f1856f4d-65dd-4acc-a159-798b162f5966",
+              "name": "numero",
+              "value": "={{ $json.body.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2960,
+        1552
+      ],
+      "id": "ff931983-8af6-460b-87bf-2e4a71586f81",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('Edit Fields1').item.json.instancia }}",
+        "remoteJid": "=5500000000000@s.whatsapp.net",
+        "messageText": "=*Assistente:* \n\n{{ $json.dados }}\n{{ $json.numero }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        3152,
+        1552
+      ],
+      "id": "73d1d24d-5890-46e3-89c9-a93cefb72a53",
+      "name": "Enviar texto2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "avaria",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        2752,
+        1552
+      ],
+      "id": "d8bfec22-c610-4fe0-9404-ed23b996e28b",
+      "name": "Webhook",
+      "webhookId": "fdc2526f-dc42-4070-bcb0-a3caac870912"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "tratamento": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "concatena": {
+      "main": [
+        [
+          {
+            "node": "deletalista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pegamessages": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "listamessage": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deletalista": {
+      "main": [
+        [
+          {
+            "node": "Assistente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica se é uma mensagem DO CLIENTE1": {
+      "main": [
+        [
+          {
+            "node": "CHave-block",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado": {
+      "main": [
+        [
+          {
+            "node": "NOOP_01",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "coleta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "degrupo": {
+      "main": [
+        [
+          {
+            "node": "verifica se é uma mensagem DO CLIENTE1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "degrupo1": {
+      "main": [
+        [
+          {
+            "node": "extrainumero",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extrainumero": {
+      "main": [
+        [
+          {
+            "node": "verifica se é uma mensagem DO CLIENTE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta1": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica se é uma mensagem DO CLIENTE": {
+      "main": [
+        [
+          {
+            "node": "CHave-block1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado1": {
+      "main": [
+        [
+          {
+            "node": "NOOP_1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "coleta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LID?": {
+      "main": [
+        [
+          {
+            "node": "degrupo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "degrupo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "concatena",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "servicos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "servicos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "servicos",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assistente": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "coleta/envio",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "coleta/envio",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Marcar mensagens como lidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cotacao": {
+      "ai_tool": [
+        [
+          {
+            "node": "cotacao",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cotacao": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta/envio": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obter m dia em base1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Caminhos1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "main": [
+        [
+          {
+            "node": "imagem-data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "imagem-data1": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao5": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao6": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao9": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obter m dia em base1": {
+      "main": [
+        [
+          {
+            "node": "Caminhos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "imagem?": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "imagem-data1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chat": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "cotacao",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "memorias": {
+      "ai_memory": [
+        [
+          {
+            "node": "cotacao",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "oi?": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar mensagens como lidas": {
+      "main": [
+        [
+          {
+            "node": "Enviar presen a1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar presen a1": {
+      "main": [
+        [
+          {
+            "node": "Redis2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "pegamessages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code9": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis2": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado2": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If30": {
+      "main": [
+        [
+          {
+            "node": "Update a row3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "If30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook21": {
+      "main": [
+        [
+          {
+            "node": "LID?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NOOP_01": {
+      "main": [
+        []
+      ]
+    },
+    "avaria/rastreio": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed6398d1f0e7bf2b67706e49c75bc00e97a8aceceb64592d9702aaa1b7dc4766"
+  },
+  "nodeGroups": [],
+  "tags": []
+}
