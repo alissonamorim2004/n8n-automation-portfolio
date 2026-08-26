@@ -1,0 +1,4488 @@
+{
+  "name": "Aviso de Incidente de Rede",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "opa-receberrr",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1120,
+        720
+      ],
+      "id": "13801835-3d0b-42b5-b674-a8b88a1338ea",
+      "name": "Webhook",
+      "webhookId": "70d95074-f9e4-476a-bcc1-0b5771eb0e57",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## ID ticket problema de rede\n\nTICKET_ID_EXEMPLO\n\nProblema geral na rede\n\nyellow",
+        "height": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "952128eb-a7f4-4c84-9512-9d6457403d55",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8f25f171-2f7a-4e6d-9d5a-728b1690f8e0",
+              "leftValue": "={{ $json.body.event.data.payload.customerChannel }}",
+              "rightValue": "5500000000000@c.us",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -352,
+        192
+      ],
+      "id": "fa8891be-4821-4ca1-b70d-8a44e2ff8d7d",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c60a362d-6849-44b8-890a-c245308858bf",
+              "name": "type",
+              "value": "={{ $json.body.event.type }}",
+              "type": "string"
+            },
+            {
+              "id": "19aa76a0-7bf7-474b-bba8-b5782f47e73e",
+              "name": "action",
+              "value": "={{ $json.body.event.data.action }}",
+              "type": "string"
+            },
+            {
+              "id": "3eb84a5b-058b-498c-b703-c2aea5715974",
+              "name": "customerId",
+              "value": "={{ $json.body.event.data.payload.customerId }}",
+              "type": "string"
+            },
+            {
+              "id": "7debdbcd-964d-4348-a4d8-b35fe5f4cf36",
+              "name": "contactId",
+              "value": "={{ $json.body.event.data.payload.contactId }}",
+              "type": "string"
+            },
+            {
+              "id": "b950f2ac-f564-4f31-b46f-427c0d9d934a",
+              "name": "attendantId",
+              "value": "={{ $json.body.event.data.payload.attendantId }}",
+              "type": "string"
+            },
+            {
+              "id": "5c02c0c2-17ef-4abd-a89d-64c7d1447928",
+              "name": "departmentId",
+              "value": "={{ $json.body.event.data.payload.departmentId }}",
+              "type": "string"
+            },
+            {
+              "id": "408582f7-de8c-4f7f-93eb-3d0beb2fb6de",
+              "name": "channelId",
+              "value": "={{ $json.body.event.data.payload.channelId }}",
+              "type": "string"
+            },
+            {
+              "id": "5828f7e9-d165-4d97-97f2-1c91bfbbb3fb",
+              "name": "channelType",
+              "value": "={{ $json.body.event.data.payload.channelType }}",
+              "type": "string"
+            },
+            {
+              "id": "6d72cf54-060b-4802-a793-e9c96cf55295",
+              "name": "status",
+              "value": "={{ $json.body.event.data.payload.status }}",
+              "type": "string"
+            },
+            {
+              "id": "6ced6948-1f8a-411b-ae91-89861e97811b",
+              "name": "numero",
+              "value": "={{ $json.body.event.data.payload.customerChannel }}",
+              "type": "string"
+            },
+            {
+              "id": "0ab4e8c0-280a-4f83-ac6c-358172305e95",
+              "name": "protocol",
+              "value": "={{ $json.body.event.data.payload.protocol }}",
+              "type": "string"
+            },
+            {
+              "id": "735c956a-15b8-4a5c-a21e-01681b0aaf2a",
+              "name": "body.event.data.payload.tags",
+              "value": "={{ $json.body.event.data.payload.tags }}",
+              "type": "array"
+            },
+            {
+              "id": "55ee6f73-d8e2-44b6-9284-84688e3dac56",
+              "name": "notes",
+              "value": "={{ $json.body.event.data.payload.notes }}",
+              "type": "array"
+            },
+            {
+              "id": "f617ef9d-878b-4e79-8df3-004123fbfab0",
+              "name": "reasons",
+              "value": "={{ $json.body.event.data.payload.reasons }}",
+              "type": "array"
+            },
+            {
+              "id": "72a5b246-7ad3-4d4f-a10d-f832046b7e51",
+              "name": "id",
+              "value": "={{ $json.body.event.data.payload._id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        720
+      ],
+      "id": "84d2f963-037c-4005-bcd9-6301e1429714",
+      "name": "tratamento"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "83aba736-9f96-49b9-9fab-26a7d86e62ba",
+              "name": "id_rota",
+              "value": "={{ $json.data[0]._id }}",
+              "type": "string"
+            },
+            {
+              "id": "41929c40-68a1-4fee-a12c-60f01f42287b",
+              "name": "id_cliente",
+              "value": "={{ $json.data[0].id_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "3afa996a-d56f-4ab2-89f7-398b29adb936",
+              "name": "id_user",
+              "value": "={{ $json.data[0].id_user }}",
+              "type": "string"
+            },
+            {
+              "id": "2b980001-5015-4763-a664-e1c829df8e18",
+              "name": "id_atendente",
+              "value": "={{ $json.data[0].id_atendente }}",
+              "type": "string"
+            },
+            {
+              "id": "7627f44e-44ee-48c1-ae48-6f1b8e0dd064",
+              "name": "setor",
+              "value": "={{ $json.data[0].setor }}",
+              "type": "string"
+            },
+            {
+              "id": "1c314e70-e57f-43ca-a515-c6f840895e9a",
+              "name": "status",
+              "value": "={{ $json.data[0].status }}",
+              "type": "string"
+            },
+            {
+              "id": "e5ec662c-996f-451a-b7cd-91266b789878",
+              "name": "canal_id",
+              "value": "={{ $json.data[0].canal_id }}",
+              "type": "string"
+            },
+            {
+              "id": "2c9f4f83-6a66-4690-a569-814246299821",
+              "name": "canal_cliente",
+              "value": "={{ $json.data[0].canal_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "411aa092-27e4-4734-a297-85cc6b59c023",
+              "name": "protocolo",
+              "value": "={{ $json.data[0].protocolo }}",
+              "type": "string"
+            },
+            {
+              "id": "f8d217c9-040d-435e-8fd4-6126cfc8a4b4",
+              "name": "tags",
+              "value": "={{ $json.data[0].tags }}",
+              "type": "array"
+            },
+            {
+              "id": "0dc442ed-5267-408b-bbef-46e9296e16c1",
+              "name": "motivos",
+              "value": "={{ $json.data[0].motivos }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1808,
+        720
+      ],
+      "id": "23dd08d6-05fe-4a61-85cc-3fdb5dde2e19",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  const mensagens = item.json.data || [];\n\n  return mensagens.map(msg => {\n    let nomeCliente = null;\n\n    // Extrair nome do cliente a partir da mensagem padrão\n    if (typeof msg.mensagem === 'string') {\n      const match = msg.mensagem.match(/Olá\\s+([^,]+),/i);\n      if (match) {\n        nomeCliente = match[1].trim();\n      }\n    }\n\n    return {\n      json: {\n        id: msg._id,\n        rota: msg.id_rota,\n        atendimento: msg.id_atend || null,\n        usuario: msg.id_user || null,\n\n        tipo: msg.tipo,\n        mensagem: msg.mensagem,\n\n        nome_cliente: nomeCliente,\n\n        canal: msg.canalComunicacao,\n        origem: msg.origin,\n        destinatario: msg.destinatario,\n        tipoDestinatario: msg.tipoDestinatario,\n\n        data: msg.data,\n        criadoEm: msg.createdAt,\n        atualizadoEm: msg.updatedAt,\n\n        visivelParaContato: msg.visivelParaContato,\n        statusLeitura: msg.statusEnvio?.status || null,\n\n        mensagemCanalId: msg.idMensagemCanal || null,\n        mensagemCitataId: msg.id_mensagem_citada || null\n      }\n    };\n  });\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2208,
+        720
+      ],
+      "id": "911325c7-b4db-4a67-84d4-fd1f3ab20abb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fe9d3ced-044d-43f6-963e-db2d1091ebae",
+              "leftValue": "={{ $json.mensagem }}",
+              "rightValue": "Pedimos desculpas pelo transtorno e agradecemos sua compreensão 💙",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2384,
+        720
+      ],
+      "id": "561e840b-1cc3-4bdc-b633-5164350af34c",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ca5cee9b-793f-4bd9-85af-2c45b3415d5c",
+              "name": "id_cliente",
+              "value": "={{ $('Edit Fields').item.json.id_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "f62b91ce-c3b4-4312-98ad-a71d2eff5384",
+              "name": "protocolo",
+              "value": "={{ $('Edit Fields').item.json.protocolo }}",
+              "type": "string"
+            },
+            {
+              "id": "b3bdffe3-309d-4d99-832b-c78aa2433e09",
+              "name": "data",
+              "value": "={{ $json.data }}",
+              "type": "string"
+            },
+            {
+              "id": "0bb038b1-9fa9-4eb6-9c11-bdf4bbbefa86",
+              "name": "nome_cliente",
+              "value": "={{ $json.nome_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "51dfd1c8-2857-4114-a7fe-970bb151e686",
+              "name": "rota",
+              "value": "={{ $json.rota }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2656,
+        672
+      ],
+      "id": "06e20619-fbce-4da2-a60c-e07db1d465c8",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "tableId": "erro_rede",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "id_cliente",
+              "fieldValue": "={{ $('Lista_clientes_opa').item.json.data[0].id }}"
+            },
+            {
+              "fieldId": "cnpjcpf",
+              "fieldValue": "={{ $('Lista_clientes_opa').item.json.data[0].cpf_cnpj }}"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Lista_clientes_opa').item.json.data[0].nome }}"
+            },
+            {
+              "fieldId": "rota",
+              "fieldValue": "={{ $('Edit Fields1').item.json.rota }}"
+            },
+            {
+              "fieldId": "idnumero_origem",
+              "fieldValue": "={{ $('tratamento').item.json.attendantId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3584,
+        688
+      ],
+      "id": "90e654a8-43ea-43b7-a5f2-b474bbde27b8",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -400,
+        1312
+      ],
+      "id": "684a8e1b-9ffa-49aa-9a00-a538761b5af7",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7ccad1d0-e550-488b-82d2-8504eb18c550",
+              "name": "created_at",
+              "value": "={{ new Date(new Date($json.created_at).getTime() - 4 * 60 * 60 * 1000).toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "51a497fd-fc01-4753-b10d-9c9ff5cdaa1b",
+              "name": "id_cliente",
+              "value": "={{ $json.id_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "d3a688d4-9f93-4f4f-82d6-83c0b30f64d7",
+              "name": "nome",
+              "value": "={{ $json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "dc90aead-8d7e-4ec2-8912-48a433b12602",
+              "name": "cnpjcpf",
+              "value": "={{\n(() => {\n  const v = String($json.cnpjcpf ?? '').replace(/\\D/g, '');\n\n  if (v.length === 11) {\n    return v.replace(/(\\d{3})(\\d{3})(\\d{3})(\\d{2})/, '$1.$2.$3-$4');\n  }\n\n  if (v.length === 14) {\n    return v.replace(/(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})/, '$1.$2.$3/$4-$5');\n  }\n\n  return v; // se vier diferente (vazio ou tamanho inesperado)\n})()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        704,
+        1568
+      ],
+      "id": "0c10d48a-2f04-4dd7-8222-66fc07365251",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({ json: os }));\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        1568
+      ],
+      "id": "bbd3b298-d819-4f92-b75d-e9e594a9f4b7",
+      "name": "organiza_relato3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c09c8dc3-cc31-4af2-bcb7-fe941269e71a",
+              "leftValue": "={{ $json.cnpj_cpf }}",
+              "rightValue": "={{ $('Edit Fields2').item.json.cnpjcpf }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1216,
+        1568
+      ],
+      "id": "ec1d4006-aa51-483e-bebc-bbdb91759bbe",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f9162595-efff-42e6-adb3-cad49124cbe5",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "1987f027-3b68-4bb9-846c-c138e844a273",
+              "name": "razao",
+              "value": "={{ $json.razao }}",
+              "type": "string"
+            },
+            {
+              "id": "54b4bf2a-f27f-4ebe-abb0-81e91a486cd2",
+              "name": "cnpj_cpf",
+              "value": "={{ $json.cnpj_cpf }}",
+              "type": "string"
+            },
+            {
+              "id": "168a81b3-33ea-482d-9922-9fe42fd8da87",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "d8e84510-79f0-4cc8-9e93-63c3acb9b56f",
+              "name": "id_cliente",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        1552
+      ],
+      "id": "d0d7a16a-88d6-4320-81e2-7f66a08c5ded",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n  const razao = item.json.razao;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({\n    json: {\n      ...os,\n      razao: razao\n    }\n  }));\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1808,
+        1520
+      ],
+      "id": "4c9fdd6c-07f0-4d25-be0b-f257aa083429",
+      "name": "organiza_relato"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst seen = new Set();\nconst out = [];\n\nfor (const item of items) {\n  let data = item.json.data;\n\n  // 1) parseia se vier como string\n  if (typeof data === 'string') {\n    try {\n      data = JSON.parse(data);\n    } catch (e) {\n      continue; // ignora se não der parse\n    }\n  }\n\n  // 2) pega registros\n  const registros = data?.registros;\n  if (!Array.isArray(registros)) continue;\n\n  // 3) deduplica\n  for (const r of registros) {\n    const key = r?.id; // 👈 chave de duplicação (9778)\n\n    if (!key) continue;\n    if (seen.has(key)) continue;\n\n    seen.add(key);\n\n    out.push({\n      json: r\n    });\n  }\n}\n\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2576,
+        1376
+      ],
+      "id": "e2c8c8ae-3369-4f1b-811c-4d37ef2000f5",
+      "name": "organiza_relato1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- Helpers ---------------------------------------------------------------\n\n// Decodifica entidades HTML comuns (inclui numéricas: &#225; / &#xE1;)\nfunction decodeHtml(str = \"\") {\n  if (!str || typeof str !== \"string\") return \"\";\n  const map = {\n    \"&nbsp;\": \" \", \"&amp;\": \"&\", \"&lt;\": \"<\", \"&gt;\": \">\",\n    \"&quot;\": '\"', \"&apos;\": \"'\",\n    \"&aacute;\": \"á\", \"&eacute;\": \"é\", \"&iacute;\": \"í\", \"&oacute;\": \"ó\", \"&uacute;\": \"ú\",\n    \"&Aacute;\": \"Á\", \"&Eacute;\": \"É\", \"&Iacute;\": \"Í\", \"&Oacute;\": \"Ó\", \"&Uacute;\": \"Ú\",\n    \"&atilde;\": \"ã\", \"&otilde;\": \"õ\", \"&Atilde;\": \"Ã\", \"&Otilde;\": \"Õ\",\n    \"&acirc;\": \"â\", \"&ecirc;\": \"ê\", \"&icirc;\": \"î\", \"&ocirc;\": \"ô\", \"&ucirc;\": \"û\",\n    \"&Acirc;\": \"Â\", \"&Ecirc;\": \"Ê\", \"&Icirc;\": \"Î\", \"&Ocirc;\": \"Ô\", \"&Ucirc;\": \"Û\",\n    \"&ccedil;\": \"ç\", \"&Ccedil;\": \"Ç\",\n    \"&ouml;\": \"ö\", \"&Ouml;\": \"Ö\", \"&uuml;\": \"ü\", \"&Uuml;\": \"Ü\",\n  };\n  str = str.replace(/&#(\\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)));\n  str = str.replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)));\n  return str.replace(/&[a-zA-Z]+;/g, m => map[m] || m);\n}\n\n// Extrai com regex: retorna grupo 1 ou null\nfunction pick(re, s) {\n  const m = s.match(re);\n  return m ? m[1].trim() : null;\n}\n\n// Converte número (ex.: \"-23.76\") => Number ou null\nfunction toNum(v) {\n  if (v === null || v === undefined || v === \"\") return null;\n  const n = Number(String(v).replace(\",\", \".\"));\n  return Number.isFinite(n) ? n : null;\n}\n\n// Normaliza HTML -> texto\nfunction htmlToText(html = \"\") {\n  return decodeHtml(\n    String(html)\n      .replace(/<br\\s*\\/?>/gi, \"\\n\")\n      .replace(/<\\/div>/gi, \"\\n\")\n      .replace(/<[^>]+>/g, \" \")\n  )\n    .replace(/[ \\t]+\\n/g, \"\\n\")\n    .replace(/\\n[ \\t]+/g, \"\\n\")\n    .replace(/[ \\t]{2,}/g, \" \")\n    .replace(/\\n{2,}/g, \"\\n\")\n    .trim();\n}\n\n// Extrai campos do texto\nfunction parseONU(text) {\n  const tituloPainel   = pick(/^\\s*(Pot[êe]ncia de ONU)\\s*$/mi, text) || \"Potência de ONU\";\n\n  const causaUltQueda  = pick(/Causa da .*?queda:\\s*([^\\n]+)/i, text);\n  const sinalRx        = toNum(pick(/Sinal\\s*Rx:\\s*([-\\d.,]+)/i, text));\n  const temperatura    = toNum(pick(/Temperatura:\\s*([-\\d.,]+)/i, text));\n  const voltagem       = toNum(pick(/Voltagem:\\s*([-\\d.,]+)/i, text));\n  const sinalTx        = toNum(pick(/Sinal\\s*Tx:\\s*([-\\d.,]+)/i, text));\n  const statusPotencia = pick(/Status\\s*pot[êe]ncia:\\s*([^\\n]+)/i, text);\n\n  const fs_p           = pick(/F\\/s\\/p:\\s*([^\\n]+)/i, text);\n  const onuId          = pick(/Onu id:\\s*([^\\n]+)/i, text);\n  const controlFlag    = pick(/Control flag:\\s*([^\\n]+)/i, text);\n  const runState       = pick(/Run state:\\s*([^\\n]+)/i, text);\n  const configState    = pick(/Config state:\\s*([^\\n]+)/i, text);\n\n  const downTime       = pick(/Down time:\\s*([^\\n]+)/i, text);\n  const lastDyingGasp  = pick(/Last .*?gasp time:\\s*([^\\n]+)/i, text);\n  const onlineDuration = pick(/Online duration:\\s*([^\\n]+)/i, text);\n\n  const macRouter      = pick(/Mac router:\\s*([0-9A-Fa-f:]+)/i, text);\n  const vendorSn       = pick(/Vendor sn:\\s*([^\\n]*)/i, text) || null;\n\n  const txOlt          = toNum(pick(/Tx olt:\\s*([-\\d.,]+)/i, text));\n  const rxOlt          = toNum(pick(/Rx olt:\\s*([-\\d.,]+)/i, text));\n\n  return {\n    titulo: tituloPainel,\n    causa_ultima_queda: causaUltQueda,\n    status_potencia: statusPotencia,\n\n    medidas: {\n      sinal_rx_dbm: sinalRx,\n      sinal_tx_dbm: sinalTx,\n      temperatura_c: temperatura,\n      voltagem_v: voltagem,\n      tx_olt: txOlt,\n      rx_olt: rxOlt,\n    },\n\n    operacao: {\n      fs_p,\n      onu_id: onuId,\n      control_flag: controlFlag,\n      run_state: runState,\n      config_state: configState,\n      down_time: downTime,\n      last_dying_gasp_time: lastDyingGasp,\n      online_duration: onlineDuration,\n    },\n\n    rede: {\n      mac_router: macRouter,\n      vendor_sn: vendorSn,\n    },\n  };\n}\n\n// --- Entrada: TODOS os itens ------------------------------------------------\nconst items = $input.all();\n\n// --- Saída: 1 item de saída para cada item de entrada -----------------------\nreturn items.map((item, index) => {\n  const html = item.json?.data || \"\";\n  const text = htmlToText(html);\n\n  const parsed = parseONU(text);\n\n  return {\n    json: {\n      // metadata pra não “misturar” e facilitar debug\n      _index: index,\n      _source: item.json?.url || item.json?.URL || item.json?.endpoint || null,\n\n      ...parsed,\n\n      raw_text: text, // útil para auditoria/log\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3424,
+        1904
+      ],
+      "id": "bceab41c-8100-487a-83c9-4c8432397213",
+      "name": "organiza_relato2"
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/cliente",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"qtype\": \"cliente.cnpj_cpf\",\n    \"query\": \"{{ $json.cnpjcpf }}\",\n    \"oper\": \"=\",\n    \"page\": \"1\",\n    \"rp\": \"1\",\n    \"sortname\": \"cliente.cnpj_cpf\",\n    \"sortorder\": \"desc\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        896,
+        1568
+      ],
+      "id": "ef6a5dba-4913-41ca-a177-a23e7acbfd21",
+      "name": "cliente",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/radusuarios",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n      \"qtype\": \"radusuarios.id_cliente\",\n    \"query\": \"{{ $('Edit Fields3').item.json.id }}\",\n    \"oper\": \"=\",\n    \"page\": \"1\",\n    \"rp\": \"20\",\n    \"sortname\": \"radusuarios.id_cliente\",\n    \"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1664,
+        1520
+      ],
+      "id": "9a56c6d9-a9ed-44ad-a46f-6155308c2e56",
+      "name": "login",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/radusuarios",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"qtype\": \"radusuarios.id_cliente\",\n    \"query\": \"{{ $json.id_cliente }}\",\n    \"oper\": \"=\",\n    \"page\": \"1\",\n    \"rp\": \"20\",\n    \"sortname\": \"radusuarios.id_cliente\",\n    \"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2400,
+        1568
+      ],
+      "id": "c011ed79-576b-485a-b8c4-3bbd2556594b",
+      "name": "fibra",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3104,
+        272
+      ],
+      "id": "c26240f1-76bf-4d5b-a827-71591d7b208c",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/botao_rel_22991",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"id\":\"{{ $json.id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3248,
+        1904
+      ],
+      "id": "b8b85255-dea2-4a4d-86d9-638c2dc21656",
+      "name": "potenciaONU",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e4abe517-fc6b-4fba-adb8-1f1bdfbe159f",
+              "name": "id_contrato",
+              "value": "={{ $json.id_contrato }}",
+              "type": "string"
+            },
+            {
+              "id": "5e9e03ea-4571-49c7-8b62-f1add48680c1",
+              "name": "id_cliente",
+              "value": "={{ $json.id_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "790458b1-a7fc-4bad-8b09-6ddcbb88d99a",
+              "name": "login",
+              "value": "={{ $json.login }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        1488
+      ],
+      "id": "36897729-e6f2-4fec-896e-fee1882e1d17",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e4abe517-fc6b-4fba-adb8-1f1bdfbe159f",
+              "name": "id_contrato",
+              "value": "={{ $('organiza_relato1').item.json.id_contrato }}",
+              "type": "string"
+            },
+            {
+              "id": "5e9e03ea-4571-49c7-8b62-f1add48680c1",
+              "name": "id",
+              "value": "={{ $('organiza_relato1').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "e3380270-15c5-4106-af17-fbe439972027",
+              "name": "nome",
+              "value": "={{ $json.razao }}",
+              "type": "string"
+            },
+            {
+              "id": "667b17f2-0b24-4aa9-a614-dfb3958473f8",
+              "name": "ativo",
+              "value": "={{ $('organiza_relato1').item.json.ativo }}",
+              "type": "string"
+            },
+            {
+              "id": "7634bf00-715f-475f-bad7-d8c2bc13a1c0",
+              "name": "online",
+              "value": "={{ $('organiza_relato1').item.json.online }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2944,
+        1424
+      ],
+      "id": "0f037cd1-4cbc-4dd3-8d6e-bc67690b89fe",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/cliente_contrato",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"qtype\": \"cliente_contrato.id_cliente\",\n\"query\": \"{{ $json.id_cliente }}\",\n\"oper\": \"=\",\n\"page\": \"1\",\n\"rp\": \"20\",\n\"sortname\": \"cliente_contrato.id_cliente\",\n\"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3872,
+        1424
+      ],
+      "id": "9eae78eb-dd47-4940-98c6-53ce3b0a13dd",
+      "name": "contrato",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({ json: os }));\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4064,
+        1424
+      ],
+      "id": "75b2004d-0aba-417c-a1c0-198aa4709df9",
+      "name": "organiza_relato4"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({ json: os }));\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4416,
+        1424
+      ],
+      "id": "6c64fb37-781b-41fb-a736-624367fe5bb8",
+      "name": "organiza_relato5"
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/cliente",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"qtype\": \"cliente.id\",\n    \"query\": \"{{ $json.id_cliente }}\",\n    \"oper\": \"=\",\n    \"page\": \"1\",\n    \"rp\": \"19\",\n    \"sortname\": \"cliente.id\",\n    \"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        4240,
+        1424
+      ],
+      "id": "90b69000-0c2d-4697-8eb6-dd5eb887567e",
+      "name": "lista cliente",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3374a8cc-f915-4c4d-92a9-dc4baca11fcd",
+              "name": "razao",
+              "value": "={{ $json.razao }}",
+              "type": "string"
+            },
+            {
+              "id": "aaaeb3ca-2e18-4bd8-bb60-68e37e16d1c9",
+              "name": "cnpj_cpf",
+              "value": "={{ $json.cnpj_cpf }}",
+              "type": "string"
+            },
+            {
+              "id": "3b9dd30c-5093-47fc-a4de-53f249411eb7",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4624,
+        1424
+      ],
+      "id": "5d13740c-fd1e-4745-b129-521997bd0266",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/atendimento",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"protocolo\": \"{{ $json.protocol }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1584,
+        720
+      ],
+      "id": "3b5c07df-1baf-43b4-9e04-7c51984f6069",
+      "name": "lista_atendimentos",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/atendimento/mensagem",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"id_rota\": \"{{ $json.id_rota }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2000,
+        720
+      ],
+      "id": "5e592bb9-7f6c-4642-8363-12c94c274940",
+      "name": "lista_mensagens_atendimentos",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/cliente/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.nome_cliente }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2880,
+        672
+      ],
+      "id": "0223729a-4d70-4728-a9e6-f773d5cce5a1",
+      "name": "Lista_clientes_opa",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/cliente/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.razao }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        4784,
+        1424
+      ],
+      "id": "a0c2bfa4-7b18-4fd0-928d-0490a9984546",
+      "name": "Lista_clientes_opa1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst out = [];\n\n// controle de duplicados\nconst seen = new Set();\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const arr = item.json?.data;\n\n  if (!Array.isArray(arr)) continue;\n\n  for (let j = 0; j < arr.length; j++) {\n    const registro = arr[j];\n\n    // 🔑 chave de deduplicação (troque se quiser)\n    const key = registro?.cpf_cnpj;\n\n    // se não tiver chave, ignora\n    if (!key) continue;\n\n    // se já passou, pula\n    if (seen.has(key)) continue;\n\n    seen.add(key);\n\n    out.push({\n      json: {\n        _source_item: i,     // veio de qual item do HTTP\n        _index_in_data: j,   // posição dentro do data[]\n        ...registro,\n      },\n    });\n  }\n}\n\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4944,
+        1424
+      ],
+      "id": "b43e19b0-d3aa-4609-a944-e09f58a7a018",
+      "name": "organiza_relato6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f920d5a-a1c9-45cc-bb13-b6fe19737133",
+              "name": "rota",
+              "value": "={{ $json.rota }}",
+              "type": "string"
+            },
+            {
+              "id": "86383647-29a6-4fc6-9a45-9ce052c5ecfc",
+              "name": "idnumero",
+              "value": "={{ $json[\"idnumero_origem\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "892b55d4-24b4-4126-be49-3ba7a6c26b85",
+              "name": "nome",
+              "value": "={{ $json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "5af2d763-7666-4db2-bf3d-90c517280448",
+              "name": "id_cliente",
+              "value": "={{ $json.id_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "d383ab04-2ce4-4063-b833-fe14ad805337",
+              "name": "id_filial",
+              "value": "={{ $('dadofinal').item.json.id_filial }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5376,
+        1424
+      ],
+      "id": "936bbeea-a46c-4cc3-84f6-5b570ce794fa",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/cliente_contrato",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"qtype\": \"cliente_contrato.id\",\n\"query\": \"{{ $('volto/naovoltou').item.json.id_contrato }}\",\n\"oper\": \"=\",\n\"page\": \"1\",\n\"rp\": \"20\",\n\"sortname\": \"cliente_contrato.id\",\n\"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3872,
+        1584
+      ],
+      "id": "27a07da4-a665-4cd9-b3af-9ff01100f1e0",
+      "name": "contrato1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({ json: os }));\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4064,
+        1584
+      ],
+      "id": "031a674a-14a7-4b52-aa16-d64466f959fe",
+      "name": "organiza_relato7"
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/cliente",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"qtype\": \"cliente.id\",\n    \"query\": \"{{ $json.id_cliente }}\",\n    \"oper\": \"=\",\n    \"page\": \"1\",\n    \"rp\": \"19\",\n    \"sortname\": \"cliente.id\",\n    \"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        4272,
+        1584
+      ],
+      "id": "7ee97984-1101-49aa-bb96-8bd7a3fa5b77",
+      "name": "lista cliente1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({ json: os }));\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4416,
+        1584
+      ],
+      "id": "066e5895-d6fe-4978-8cfe-389199de076c",
+      "name": "organiza_relato8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3374a8cc-f915-4c4d-92a9-dc4baca11fcd",
+              "name": "razao",
+              "value": "={{ $json.razao }}",
+              "type": "string"
+            },
+            {
+              "id": "aaaeb3ca-2e18-4bd8-bb60-68e37e16d1c9",
+              "name": "cnpj_cpf",
+              "value": "={{ $json.cnpj_cpf }}",
+              "type": "string"
+            },
+            {
+              "id": "3b9dd30c-5093-47fc-a4de-53f249411eb7",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "81bfc6ea-aa47-45f3-bb67-38964b5306b6",
+              "name": "online",
+              "value": "={{ $('dados-clientes').item.json.online }}",
+              "type": "string"
+            },
+            {
+              "id": "23a8cf1c-743a-48d8-b50f-68cdc9ebf34e",
+              "name": "ativo",
+              "value": "={{ $('dados-clientes').item.json.ativo }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4624,
+        1584
+      ],
+      "id": "1e65fa08-0929-47e1-b839-66f4e4515d12",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/cliente/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.razao }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        4784,
+        1584
+      ],
+      "id": "3f8abd7e-d8b6-47ae-8c12-66bf4e374e85",
+      "name": "Lista_clientes_opa2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst out = [];\n\n// controle de duplicados\nconst seen = new Set();\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const arr = item.json?.data;\n\n  if (!Array.isArray(arr)) continue;\n\n  for (let j = 0; j < arr.length; j++) {\n    const registro = arr[j];\n\n    // 🔑 chave de deduplicação (troque se quiser)\n    const key = registro?.cpf_cnpj;\n\n    // se não tiver chave, ignora\n    if (!key) continue;\n\n    // se já passou, pula\n    if (seen.has(key)) continue;\n\n    seen.add(key);\n\n    out.push({\n      json: {\n        _source_item: i,     // veio de qual item do HTTP\n        _index_in_data: j,   // posição dentro do data[]\n        ...registro,\n      },\n    });\n  }\n}\n\nreturn out;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4928,
+        1584
+      ],
+      "id": "b1f33c9e-dbf0-4c5d-b0d3-85681649a299",
+      "name": "organiza_relato9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/atendimento/mensagem/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"customerServiceId\": \"{{$('dadofinale').item.json._id}}\",\n  \"content\": {\n    \"type\": \"text\",\n    \"text\": \"{{ $json.message.replace(/\\\\/g,'\\\\\\\\').replace(/\"/g,'\\\\\"').replace(/\\r?\\n/g,'\\\\n') }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        7424,
+        1792
+      ],
+      "id": "23816f34-ca63-4991-9c8c-e1ae0e9ac3b2",
+      "name": "envio_mensagem_opa1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 23
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        2144
+      ],
+      "id": "9264ac5e-867e-49b0-a5c8-04b7c7b4a2a5",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "erro_rede",
+          "mode": "list",
+          "cachedResultName": "erro_rede"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        288,
+        2176
+      ],
+      "id": "0df30f07-56a6-4ed8-89c0-1fff259bb90b",
+      "name": "Delete table or rows",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "provedor-exemplo",
+        "remoteJid": "000000000000000003@g.us",
+        "messageText": "={{ $json.message }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        6560,
+        1536
+      ],
+      "id": "9b4d85c4-d2bc-4677-8179-6647638e3f9d",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "404cd325-8abf-4db7-81de-beb720c53c97",
+              "name": "nome",
+              "value": "={{ $('dadofinale').item.json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "20fb5d0f-ac64-4198-bba1-6458e6911b12",
+              "name": "cpf_cnpj",
+              "value": "={{ $('dadofinale').item.json.cpf_cnpj }}",
+              "type": "string"
+            },
+            {
+              "id": "4cfece39-1d0f-4ada-9483-8c3b56dd22f6",
+              "name": "ID_OPA",
+              "value": "={{ $('dadofinale').item.json._id }}",
+              "type": "string"
+            },
+            {
+              "id": "e45e6973-f091-4896-af93-af711dec7ab0",
+              "name": "ID_opa2",
+              "value": "={{ $('dadofinale').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6c886b5d-319a-4ffd-9edb-feb09ba86501",
+              "name": "online",
+              "value": "={{ $('dados-clientes').item.json.online }}",
+              "type": "string"
+            },
+            {
+              "id": "21dc456a-2db5-4dfb-b69b-d2929b82da4c",
+              "name": "ativo",
+              "value": "={{ $('dados-clientes').item.json.ativo }}",
+              "type": "string"
+            },
+            {
+              "id": "7368d637-5f3b-48f8-892f-2300b32d270b",
+              "name": "idnumero",
+              "value": "={{ $json[\"idnumero_origem\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "2aa372f6-0695-4b0c-b6c2-85f735d1bf8a",
+              "name": "id_filial",
+              "value": "={{ $('dadofinale').item.json.id_filial }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5488,
+        1584
+      ],
+      "id": "1bd99c2e-63f9-4b9a-b124-0fdb0531bda9",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "jsCode": "// pega o item do node \"Edit Fields8\"\nconst src = $('Edit Fields8').item.json;\n\n// se você quiser montar a mensagem com 1 item só:\nconst nome   = src.nome || \"-\";\nconst cpf    = src.cpf_cnpj || \"-\";\nconst id1    = src.ID_OPA || \"-\";\nconst id2    = src.ID_opa2 || \"-\";\nconst online = src.online === \"S\" ? \"Online\" : \"Offline\";\nconst ativo  = src.ativo === \"S\" ? \"Ativo\" : \"Inativo\";\n\nconst texto =\n`📋 *Relatório para contato técnico*\nTotal de registros: 1\n\n1) ${nome}\nCPF/CNPJ: ${cpf}\nStatus conexão: ${online}\nStatus cadastro: ${ativo}\nID_OPA: ${id1} | ID_OPA2: ${id2}`;\n\nreturn [{ json: { message: texto } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6352,
+        1536
+      ],
+      "id": "a7c297cb-5e98-48de-8263-d4b96d48bac5",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "erro_rede",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id_cliente",
+              "condition": "eq",
+              "keyValue": "={{ $('dadofinale').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "aviso_final",
+              "fieldValue": "sim"
+            },
+            {
+              "fieldId": "status_final_verificacao",
+              "fieldValue": "=irregular"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5360,
+        1584
+      ],
+      "id": "c50e8901-7ae9-4ac9-a4ae-8b0a07e86632",
+      "name": "Update a row",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "182238c9-d9eb-4ead-a0f8-f7fba0825eff",
+              "leftValue": "={{ $json.aviso_final }}",
+              "rightValue": "sim",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        496,
+        1568
+      ],
+      "id": "d09e41b3-aedc-4c60-bf79-f38f3d5f5e04",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6c4df19e-e68c-4e3e-b80f-8e6ae795cf4d",
+              "leftValue": "={{ $json.ativo }}",
+              "rightValue": "S",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "f0bc4b38-b9b7-47b8-b1c1-ec763f227de5",
+              "leftValue": "={{ $json.online }}",
+              "rightValue": "S",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3184,
+        1424
+      ],
+      "id": "fc3c1e9a-d6be-40d8-9f7e-c0e979ee5267",
+      "name": "volto/naovoltou"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "erro_rede",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id_cliente",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "aviso_final",
+              "fieldValue": "sim"
+            },
+            {
+              "fieldId": "status_final_verificacao",
+              "fieldValue": "regular"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5232,
+        1424
+      ],
+      "id": "4336a253-e7e1-4b20-93f6-4cef12e4144d",
+      "name": "Update a row1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2192,
+        1488
+      ],
+      "id": "8761ce6d-cb40-49f0-81cb-04ab3eb402c0",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "002df15c-73a9-451f-8aa1-57695d4be27f",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "={\"page\":\"1\",\"total\":\"0\"}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2400,
+        1392
+      ],
+      "id": "964940db-fd4a-49ab-add1-42a6eeae92b1",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "provedor-exemplo",
+        "remoteJid": "000000000000000003@g.us",
+        "messageText": "={{ $json.message }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2976,
+        1680
+      ],
+      "id": "4df7813c-0c65-4440-91dd-e73ca05601a3",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "897c95b5-04de-4127-bcb8-e62b72a74831",
+              "name": "data",
+              "value": "={{ $json.data }}",
+              "type": "string"
+            },
+            {
+              "id": "c4781281-efef-424e-a988-2d632f542e7b",
+              "name": "id_cliente",
+              "value": "={{ $('Edit Fields5').item.json.id_cliente }}",
+              "type": "string"
+            },
+            {
+              "id": "3cab9b48-7690-4b6d-94a8-98a4e198a8e6",
+              "name": "login",
+              "value": "={{ $('Edit Fields5').item.json.login }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2592,
+        1616
+      ],
+      "id": "ca1c6062-89fd-4ecc-a92e-504a3b389550",
+      "name": "Edit Fields13"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// parse seguro do campo data (pode vir string JSON)\nfunction parseData(v) {\n  if (!v) return {};\n  if (typeof v === 'object') return v;\n  if (typeof v !== 'string') return {};\n  try { return JSON.parse(v); } catch (e) { return {}; }\n}\n\n// controle de duplicados\nconst seen = new Set();\n\n// 1) filtra somente os que vieram com total = 0 (sem info no IXC)\n//    + remove duplicados\nconst vazios = items.filter(it => {\n  const d = parseData(it.json?.data);\n  const total = Number(d?.total ?? 0);\n\n  if (total !== 0) return false;\n\n  // 🔑 chave de deduplicação\n  const key = it.json?.id_cliente || it.json?.login;\n  if (!key) return false;\n\n  if (seen.has(key)) return false;\n  seen.add(key);\n\n  return true;\n});\n\n// 2) se não tiver nenhum, retorna msg ok\nif (vazios.length === 0) {\n  return [{\n    json: {\n      message: \"✅ Tudo certo: o IXC retornou informações para todos os clientes consultados.\"\n    }\n  }];\n}\n\n// 3) monta linhas do relatório\nconst linhas = vazios.map((it, i) => {\n  const j = it.json || {};\n  const idCliente = j.id_cliente ?? \"-\";\n  const login = j.login ?? \"-\";\n  const idContrato = j.id_contrato ?? \"-\";\n\n  return `${i + 1}) id_cliente: ${idCliente} | login: ${login} | contrato: ${idContrato}`;\n});\n\n// 4) mensagem final pra enviar no WhatsApp dos técnicos\nconst texto =\n`⚠️ *IXC sem retorno pela API (total=0)*\nPeço que verifiquem manualmente os clientes abaixo (ONU/porta/sinal), pois a consulta via API não retornou dados.\n\nTotal sem retorno: ${vazios.length}\n\n${linhas.join('\\n')}\n`;\n\nreturn [{\n  json: {\n    message: texto,\n    total_sem_retorno: vazios.length,\n    clientes_sem_retorno: vazios.map(it => it.json),\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2752,
+        1680
+      ],
+      "id": "49b1539b-87da-493f-9d48-2b5d1bea543e",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        112
+      ],
+      "id": "4808815f-c5e8-44aa-8aaa-427bebfb03bf",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "provedor-exemplo",
+        "remoteJid": "000000000000000002@g.us",
+        "messageText": "=⚠️🔴 Deu erro no Workflow `\"{{ $workflow.name }}\"`. \n\nSegue o erro:\n\n*Nó que deu erro*:\n\n`{{ $json.execution.lastNodeExecuted }}`\n\n*Mensagem de erro*:\n\n`{{ $json.execution.error.message }}`\n\n*URL do erro para acompanhar*:\n\n`{{ $json.execution.url.replace('webhook','n8n') }}`",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        112
+      ],
+      "id": "7228a045-0908-4dcb-983b-4742663e2ad5",
+      "name": "mensagemDeErro",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Erros",
+        "height": 320,
+        "width": 416,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1216,
+        16
+      ],
+      "typeVersion": 1,
+      "id": "8a8440d1-11ac-4207-9b43-908f27431da4",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## OPA\n",
+        "height": 496,
+        "width": 2816,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        960,
+        560
+      ],
+      "typeVersion": 1,
+      "id": "c2c38460-3e72-44e5-b740-a9b2893bb597",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## OPA\n",
+        "height": 784,
+        "width": 6960,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -144,
+        1152
+      ],
+      "typeVersion": 1,
+      "id": "cc45cdf0-ab22-4d7a-9a66-0655e52e20c1",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "iniciar-verificao",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -48,
+        1552
+      ],
+      "id": "ccb5e9ca-9f31-4e6e-8334-3a1e13b117bc",
+      "name": "Webhook1",
+      "webhookId": "7d9a9f71-46f6-46f8-9607-62f95d4254df"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        6832,
+        1344
+      ],
+      "id": "65899138-cdb7-49c9-a323-d70be695761e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5792,
+        896
+      ],
+      "id": "be8ef1b9-73f3-44cb-8658-4b0c18f202f5",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        7424,
+        1968
+      ],
+      "id": "ea3781d9-f3a9-42d2-92fb-73dfdee4ccbe"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/atendimento/mensagem/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"customerServiceId\": \"69778cd8ee81991fd1d0dd14\",\n  \"content\": {\n    \"type\": \"text\",\n    \"text\": \".\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        7472,
+        1072
+      ],
+      "id": "63b65dde-4a91-45dd-9a17-dd7a08556922",
+      "name": "envio_mensagem_opa2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        7408,
+        1488
+      ],
+      "id": "19eadd25-00db-4ab1-b9b4-d35e0725eac9",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/template/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contato\": {\n    \"canalCliente\": \"{{ $json.data[0].fones[0].numero }}\"\n  },\n  \"template\": {\n    \"_id\": \"6984e99adfdca8f55336d613\",\n    \"variaveis\": [\"{{ $json.data[0].nome }}\"]\n  },\n  \"canal\": \"690cbb1bb14f50df657c1ec9\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6608,
+        992
+      ],
+      "id": "7a7aed18-e503-4929-835e-7e6b718e3464",
+      "name": "Envia_mensagem_clientes_opa1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/contato/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.nome }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        5984,
+        976
+      ],
+      "id": "b8e56e5b-d333-416e-8c47-f0614dc42d5b",
+      "name": "pega_o_contato",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {const items = $input.all();\n\n// horário atual\nconst now = new Date();\n\n// banco está em UTC-4 → ajusta para UTC\nconst dbOffsetHours = -4;\nconst nowUTC = new Date(now.getTime() - (dbOffsetHours * 60 * 60 * 1000));\n\n// limite de 24 horas atrás\nconst limit24h = new Date(nowUTC.getTime() - (24 * 60 * 60 * 1000));\n\nconst filtered = items.filter(item => {\n  const createdAtRaw = item.json.created_at;\n  if (!createdAtRaw) return false;\n\n  const createdAt = new Date(createdAtRaw);\n\n  // created_at já vem em ISO, compara com limite\n  return createdAt >= limit24h;\n});\n\nreturn filtered;\n\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        1760
+      ],
+      "id": "004294f3-5841-430f-bbd8-c1f288b00c03",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "erro_rede",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "cnpjcpf",
+              "keyValue": "={{ $json.data[0].cpf_cnpj }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3072,
+        672
+      ],
+      "id": "7ba9dee4-1382-43ea-be3a-0945e6ecc312",
+      "name": "Get a row1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0bf5403b-0ff5-4355-b6a0-e479dd0a4b1f",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3280,
+        672
+      ],
+      "id": "ad4768fa-4b85-4d86-b9a1-b7c9d2c729d8",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "erro_rede",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        208,
+        1552
+      ],
+      "id": "c19b730b-4856-446c-87a3-926a0312ccb0",
+      "name": "Get many rows",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "erro_rede",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "nome",
+              "condition": "eq",
+              "keyValue": "={{ $json.nome }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3472,
+        1296
+      ],
+      "id": "8e57bc88-3dec-4b4e-9600-1bcfd0fefff7",
+      "name": "Get many rows1",
+      "executeOnce": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e5e2b0cb-17c9-4741-b409-ef3a79e4476f",
+              "leftValue": "={{ $json.aviso_final }}",
+              "rightValue": "sim",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3664,
+        1280
+      ],
+      "id": "6014d759-2614-413a-bcc7-4e45910c0683",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "erro_rede",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "nome",
+              "condition": "eq",
+              "keyValue": "={{ $json.nome }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3520,
+        1568
+      ],
+      "id": "45168f12-2340-46cf-81d4-dc08cd2487fc",
+      "name": "Get many rows2",
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "e5e2b0cb-17c9-4741-b409-ef3a79e4476f",
+              "leftValue": "={{ $json.aviso_final }}",
+              "rightValue": "sim",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3648,
+        1568
+      ],
+      "id": "81f0fe14-d54f-4202-bf2c-1ce327ed764f",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be8ea474-18e8-4443-9759-3b5dcf99848e",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6b16ad29-4d46-4c7b-959d-1fe0d15968b4",
+              "name": "nome",
+              "value": "={{ $json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "f6228cd5-5b6f-486f-b6c3-d8a089ff76fc",
+              "name": "fantasia",
+              "value": "={{ $json.fantasia }}",
+              "type": "string"
+            },
+            {
+              "id": "370b01c2-38e9-45db-97e9-a3e71fd5401e",
+              "name": "cpf_cnpj",
+              "value": "={{ $json.cpf_cnpj }}",
+              "type": "string"
+            },
+            {
+              "id": "8d45e5de-70d4-4e44-bc7d-d093d3f4f62b",
+              "name": "_id",
+              "value": "={{ $json._id }}",
+              "type": "string"
+            },
+            {
+              "id": "4ae45cb2-ed0e-45ec-8c78-dce8d4eae4da",
+              "name": "id_filial",
+              "value": "={{ $json.id_filial }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5104,
+        1424
+      ],
+      "id": "6e549764-6ee0-489e-bfbd-4a050a926b62",
+      "name": "dadofinal"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be8ea474-18e8-4443-9759-3b5dcf99848e",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "6b16ad29-4d46-4c7b-959d-1fe0d15968b4",
+              "name": "nome",
+              "value": "={{ $json.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "f6228cd5-5b6f-486f-b6c3-d8a089ff76fc",
+              "name": "fantasia",
+              "value": "={{ $json.fantasia }}",
+              "type": "string"
+            },
+            {
+              "id": "370b01c2-38e9-45db-97e9-a3e71fd5401e",
+              "name": "cpf_cnpj",
+              "value": "={{ $json.cpf_cnpj }}",
+              "type": "string"
+            },
+            {
+              "id": "8d45e5de-70d4-4e44-bc7d-d093d3f4f62b",
+              "name": "_id",
+              "value": "={{ $json._id }}",
+              "type": "string"
+            },
+            {
+              "id": "38621b4e-80ec-43e2-95e9-cda128a2a1c3",
+              "name": "id_filial",
+              "value": "={{ $json.id_filial }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5072,
+        1584
+      ],
+      "id": "2ff68a9f-0f6f-4b64-ba55-ef2e923314c9",
+      "name": "dadofinale"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5920,
+        1584
+      ],
+      "id": "f887ba9e-9140-47c3-bdb2-76fa3fa1e53f",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/contato/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.nome }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6096,
+        1680
+      ],
+      "id": "ef24b4c7-c65e-46b2-9b53-40867f946ecd",
+      "name": "pega_o_contato1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/template/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contato\": {\n    \"canalCliente\": \"{{ $json.data[0].fones[0].numero }}\"\n  },\n  \"template\": {\n    \"_id\": \"6984ea34689fba101695295a\",\n    \"variaveis\": [\"{{ $json.data[0].nome }}\"]\n  },\n  \"canal\": \"690cbb1bb14f50df657c1ec9\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6720,
+        1744
+      ],
+      "id": "8ad7beba-8930-4c54-8d5a-4415c453d77e",
+      "name": "Envia_mensagem_clientes_opa",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://ixc.provedor-exemplo.com.br/webservice/v1/cliente",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "ixcsoft",
+              "value": "listar"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"qtype\": \"cliente.id\",\n    \"query\": \"\",\n    \"oper\": \">=\",\n    \"page\": \"1\",\n    \"rp\": \"19\",\n    \"sortname\": \"cliente.id\",\n    \"sortorder\": \"desc\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2944,
+        1168
+      ],
+      "id": "f655ed1b-11ce-4d72-a676-b1276d073622",
+      "name": "cliente1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "",
+          "name": "httpBasicAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.flatMap(item => {\n  let data = item.json.data;\n\n  // parseia só se for string\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  // se ainda for string (JSON dentro de string), parseia de novo\n  if (typeof data === 'string') data = JSON.parse(data);\n\n  const registros = data.registros || [];\n\n  return registros.map(os => ({ json: os }));\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3136,
+        1232
+      ],
+      "id": "6f24ed61-85a1-4665-9e13-2655824d6858",
+      "name": "organiza_relato10"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "email": "={{ $json.email }}",
+            "cnpj_cpf": "={{ $json.cnpj_cpf }}",
+            "razao": "={{ $json.razao }}",
+            "id_cliente": "={{ $json.id_cliente }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "cnpj_cpf",
+              "displayName": "cnpj_cpf",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "razao",
+              "displayName": "razao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "id_cliente",
+              "displayName": "id_cliente",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        1552
+      ],
+      "id": "16261387-240b-411b-ad2d-f82c1c85a559",
+      "name": "Insert row"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id_cliente",
+              "keyValue": "={{ $json.id_cliente }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2752,
+        1376
+      ],
+      "id": "b992c9b2-c3f3-452b-ae8c-f91ef471e090",
+      "name": "Get row(s)",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8a2e3c9e-bb99-4930-9409-a849c56195ed",
+              "name": "cnpj_cpf",
+              "value": "={{ $json.cnpj_cpf }}",
+              "type": "string"
+            },
+            {
+              "id": "d3da7e43-1e69-43c9-b272-2bbe3d6458cb",
+              "name": "razao",
+              "value": "={{ $json.razao }}",
+              "type": "string"
+            },
+            {
+              "id": "afd7f4bc-de04-4add-9b2d-71a7f8d87116",
+              "name": "email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3264,
+        1088
+      ],
+      "id": "15266e3c-e439-45d8-a999-33f29b29a6ba",
+      "name": "dados-clientes"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "razao",
+              "keyValue": "={{ $json.nome }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        5216,
+        1280
+      ],
+      "id": "de97bb70-42db-47f5-bde7-7a95234da7ec",
+      "name": "Delete row(s)",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "razao",
+              "keyValue": "={{ $json.razao }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6320,
+        832
+      ],
+      "id": "f5990854-83fe-40f5-9c82-61cb9a61c4d3",
+      "name": "Delete row(s)1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.id_filial }}",
+                    "rightValue": "9",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "84e0dcf1-d7f9-4b7c-ab4a-adc8ab213527"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "VIP"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c4b539f5-52be-4d5f-8eb6-6f49f90f7a63",
+                    "leftValue": "={{ $json.id_filial }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "provedor"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        5504,
+        1424
+      ],
+      "id": "84670554-4df7-49cd-89a3-77a2ec4c5b09",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5744,
+        1216
+      ],
+      "id": "c5039ad8-f659-4387-b7bb-b5ad3f21689b",
+      "name": "Loop Over Items4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/template/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contato\": {\n    \"canalCliente\": \"+5500000000000\"\n  },\n  \"template\": {\n    \"_id\": \"6984e99adfdca8f55336d613\",\n    \"variaveis\": [\"{{ $json.data[0].nome }}\"]\n  },\n  \"canal\": \"685997350567352f2df8dce5\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6640,
+        1216
+      ],
+      "id": "a181bea2-e7ff-4129-9593-5056387426cf",
+      "name": "Envia_mensagem_clientes_opa2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/contato/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.nome }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        5904,
+        1264
+      ],
+      "id": "fcfd11be-6e7c-412c-8d57-696cdd70a981",
+      "name": "pega_o_contato2",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.id_filial }}",
+                    "rightValue": "9",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "84e0dcf1-d7f9-4b7c-ab4a-adc8ab213527"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "VIP"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "c4b539f5-52be-4d5f-8eb6-6f49f90f7a63",
+                    "leftValue": "={{ $json.id_filial }}",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "provedor"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        5632,
+        1584
+      ],
+      "id": "bee8eb1e-bfba-487c-83a0-ef60c4931a05",
+      "name": "Switch1"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "provedor-exemplo",
+        "remoteJid": "000000000000000003@g.us",
+        "messageText": "={{ $json.message }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        6560,
+        2000
+      ],
+      "id": "b7b0a010-db6c-4e16-8bd8-47364e87d9e2",
+      "name": "Enviar texto2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// pega o item do node \"Edit Fields8\"\nconst src = $('Edit Fields8').item.json;\n\n// se você quiser montar a mensagem com 1 item só:\nconst nome   = src.nome || \"-\";\nconst cpf    = src.cpf_cnpj || \"-\";\nconst id1    = src.ID_OPA || \"-\";\nconst id2    = src.ID_opa2 || \"-\";\nconst online = src.online === \"S\" ? \"Online\" : \"Offline\";\nconst ativo  = src.ativo === \"S\" ? \"Ativo\" : \"Inativo\";\n\nconst texto =\n`📋 *Relatório para contato técnico*\nTotal de registros: 1\n\n1) ${nome}\nCPF/CNPJ: ${cpf}\nStatus conexão: ${online}\nStatus cadastro: ${ativo}\nID_OPA: ${id1} | ID_OPA2: ${id2}`;\n\nreturn [{ json: { message: texto } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6352,
+        2000
+      ],
+      "id": "5317c0c2-29b9-48dd-a56f-92ecd1a3813e",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        6032,
+        2048
+      ],
+      "id": "f8ee0265-3225-4fbf-9e37-9c00cfc5c24a",
+      "name": "Loop Over Items5"
+    },
+    {
+      "parameters": {
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/contato/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"filter\": {\n        \"nome\": \"{{ $json.nome }}\"\n    },\n    \"options\": {\n        \"limit\": 100\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6256,
+        2128
+      ],
+      "id": "09157e15-0242-4b94-93ab-f9800a4127a8",
+      "name": "pega_o_contato3",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://opa.provedor-exemplo.com.br/api/v1/template/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.OPA_API_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contato\": {\n    \"canalCliente\": \"{{ $json.data[0].fones[0].numero }}\"\n  },\n  \"template\": {\n    \"_id\": \"6984ea34689fba101695295a\",\n    \"variaveis\": [\"{{ $json.data[0].nome }}\"]\n  },\n  \"canal\": \"685997350567352f2df8dce5\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        6848,
+        2272
+      ],
+      "id": "1dd5aad0-d1ba-4431-a1b3-b00750ccdf60",
+      "name": "Envia_mensagem_clientes_opa3",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "",
+          "name": "httpBearerAuth (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6128,
+        832
+      ],
+      "id": "479d72a7-8202-47fc-82d1-598d1ffd11f9",
+      "name": "Get row(s)1"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "razao",
+              "keyValue": "={{ $json.razao }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6416,
+        1184
+      ],
+      "id": "9c9b4934-9c71-44e0-99fc-856a0ea8a464",
+      "name": "Delete row(s)2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6224,
+        1184
+      ],
+      "id": "78475a12-855c-4d92-8d9b-9f4db7461b12",
+      "name": "Get row(s)2"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "razao",
+              "keyValue": "={{ $json.razao }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6928,
+        1552
+      ],
+      "id": "df394016-72cc-43ee-8611-ca9fbd419201",
+      "name": "Delete row(s)3"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6784,
+        1552
+      ],
+      "id": "8c3a8762-507c-4964-ac4d-340366d36d31",
+      "name": "Get row(s)3"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "razao",
+              "keyValue": "={{ $json.razao }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6992,
+        1952
+      ],
+      "id": "0cc2623b-a982-4d2a-9bf4-951be3ca03fb",
+      "name": "Delete row(s)4"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "1133l0s9BAsKfdKv",
+          "mode": "list",
+          "cachedResultName": "clientes_temp",
+          "cachedResultUrl": "/projects/YXJzurs0TeXcrpVP/datatables/1133l0s9BAsKfdKv"
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        6800,
+        1952
+      ],
+      "id": "c9afd3ee-136d-4d66-ae28-c4aeae1dfd15",
+      "name": "Get row(s)4"
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "1003909809472074",
+        "recipientPhoneNumber": "={{ $json.whatsapp_numero }}",
+        "template": "sem_conexao|pt_BR",
+        "components": {
+          "component": [
+            {
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "text": "={{ $json.nome }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        6224,
+        1328
+      ],
+      "id": "071700e5-13e4-43ca-8187-a675444adf2f",
+      "name": "Send template",
+      "webhookId": "614fcf65-22e0-48a4-b46f-9596553312f4",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "",
+          "name": "whatsAppApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst data = $input.first().json.data || [];\n\nfor (const cliente of data) {\n  const fones = cliente.fones || [];\n  const whatsFone = fones.find(f => f.whatsapp === true);\n  if (whatsFone) {\n    results.push({\n      json: {\n        nome: cliente.nome,\n        whatsapp_numero: whatsFone.numero\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6064,
+        1328
+      ],
+      "id": "38950be4-aba5-4a5d-b160-017800666b27",
+      "name": "Code in JavaScript5",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst data = $input.first().json.data || [];\n\nfor (const cliente of data) {\n  const fones = cliente.fones || [];\n  const whatsFone = fones.find(f => f.whatsapp === true);\n  if (whatsFone) {\n    results.push({\n      json: {\n        nome: cliente.nome,\n        whatsapp_numero: whatsFone.numero\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6256,
+        1696
+      ],
+      "id": "2897f732-7e2b-41d7-88b5-1f90af2df396",
+      "name": "Code in JavaScript6",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "1003909809472074",
+        "recipientPhoneNumber": "={{ $json.whatsapp_numero }}",
+        "template": "verificacao_sem_sucesso|pt_BR",
+        "components": {
+          "component": [
+            {
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "text": "={{ $json.nome }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        6448,
+        1728
+      ],
+      "id": "13122838-7a84-4d72-8c3d-395c9b84a3bf",
+      "name": "Send template1",
+      "webhookId": "614fcf65-22e0-48a4-b46f-9596553312f4",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "",
+          "name": "whatsAppApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst data = $input.first().json.data || [];\n\nfor (const cliente of data) {\n  const fones = cliente.fones || [];\n  const whatsFone = fones.find(f => f.whatsapp === true);\n  if (whatsFone) {\n    results.push({\n      json: {\n        nome: cliente.nome,\n        whatsapp_numero: whatsFone.numero\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6448,
+        2208
+      ],
+      "id": "a3192ac2-334a-4655-8079-79a723d786af",
+      "name": "Code in JavaScript7",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "1003909809472074",
+        "recipientPhoneNumber": "={{ $json.whatsapp_numero }}",
+        "template": "verificacao_sem_sucesso|pt_BR",
+        "components": {
+          "component": [
+            {
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "text": "={{ $json.nome }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        6592,
+        2240
+      ],
+      "id": "320f7c0f-9abf-4475-a84e-694afd33e235",
+      "name": "Send template2",
+      "webhookId": "614fcf65-22e0-48a4-b46f-9596553312f4",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "",
+          "name": "whatsAppApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "1003909809472074",
+        "recipientPhoneNumber": "={{ $json.whatsapp_numero }}",
+        "template": "sem_conexao|pt_BR",
+        "components": {
+          "component": [
+            {
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "text": "={{ $json.nome }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        6304,
+        976
+      ],
+      "id": "2ab42e59-4a28-4fa6-8bd1-2bf2acb31dd1",
+      "name": "Send template3",
+      "webhookId": "614fcf65-22e0-48a4-b46f-9596553312f4",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "",
+          "name": "whatsAppApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nconst data = $input.first().json.data || [];\n\nfor (const cliente of data) {\n  const fones = cliente.fones || [];\n  const whatsFone = fones.find(f => f.whatsapp === true);\n  if (whatsFone) {\n    results.push({\n      json: {\n        nome: cliente.nome,\n        whatsapp_numero: whatsFone.numero\n      }\n    });\n  }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6144,
+        976
+      ],
+      "id": "8fb3242d-41c0-4216-b229-0069e4198182",
+      "name": "Code in JavaScript8",
+      "alwaysOutputData": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento": {
+      "main": [
+        [
+          {
+            "node": "lista_atendimentos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "lista_mensagens_atendimentos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Lista_clientes_opa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato3": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Insert row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cliente": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "login": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fibra": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato2": {
+      "main": [
+        []
+      ]
+    },
+    "potenciaONU": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "volto/naovoltou",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contrato": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato4": {
+      "main": [
+        [
+          {
+            "node": "lista cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lista cliente": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lista_atendimentos": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lista_mensagens_atendimentos": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lista_clientes_opa": {
+      "main": [
+        [
+          {
+            "node": "Get a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Lista_clientes_opa1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lista_clientes_opa1": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato6": {
+      "main": [
+        [
+          {
+            "node": "dadofinal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "contrato1": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato7": {
+      "main": [
+        [
+          {
+            "node": "lista cliente1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lista cliente1": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "Lista_clientes_opa2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lista_clientes_opa2": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "organiza_relato9": {
+      "main": [
+        [
+          {
+            "node": "dadofinale",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Delete table or rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "volto/naovoltou": {
+      "main": [
+        [
+          {
+            "node": "Get many rows1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get many rows2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "fibra",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields13": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "mensagemDeErro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pega_o_contato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        []
+      ]
+    },
+    "Limit": {
+      "main": [
+        []
+      ]
+    },
+    "pega_o_contato": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a row1": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        []
+      ]
+    },
+    "Envia_mensagem_clientes_opa1": {
+      "main": [
+        []
+      ]
+    },
+    "Get many rows1": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [],
+        [
+          {
+            "node": "contrato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows2": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [],
+        [
+          {
+            "node": "contrato1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dadofinal": {
+      "main": [
+        [
+          {
+            "node": "Update a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dadofinale": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pega_o_contato1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pega_o_contato1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia_mensagem_clientes_opa": {
+      "main": [
+        []
+      ]
+    },
+    "cliente1": {
+      "main": [
+        [
+          {
+            "node": "organiza_relato10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row": {
+      "main": [
+        [
+          {
+            "node": "login",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete row(s)": {
+      "main": [
+        []
+      ]
+    },
+    "Delete row(s)1": {
+      "main": [
+        []
+      ]
+    },
+    "Loop Over Items4": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pega_o_contato2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia_mensagem_clientes_opa2": {
+      "main": [
+        []
+      ]
+    },
+    "pega_o_contato2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items5": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "pega_o_contato3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pega_o_contato3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia_mensagem_clientes_opa3": {
+      "main": [
+        []
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Delete row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Delete row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)3": {
+      "main": [
+        [
+          {
+            "node": "Delete row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)4": {
+      "main": [
+        [
+          {
+            "node": "Delete row(s)4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send template": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "Send template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        [
+          {
+            "node": "Send template1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send template1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript7": {
+      "main": [
+        [
+          {
+            "node": "Send template2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send template2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript8": {
+      "main": [
+        [
+          {
+            "node": "Send template3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send template3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "meta": {
+    "instanceId": "254515dc7065c41bf14e3f9a2d8572147789c4fcda8fca8b9f90451cbfcb101e"
+  },
+  "tags": []
+}
