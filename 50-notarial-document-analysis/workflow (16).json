@@ -1,0 +1,1644 @@
+{
+  "name": "Analise Documental Cartorial com OCR e IA",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Cooperativa Exemplo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -832,
+        -96
+      ],
+      "id": "00000000-0000-4000-8000-000000000049",
+      "name": "entrada",
+      "webhookId": "00000000-0000-4000-8000-000000000072"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000011",
+              "name": "NomeArquivo",
+              "value": "={{ $json.body.fileName }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000039",
+              "name": "TipoDocs",
+              "value": "={{ $json.body.fileType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000014",
+              "name": "data",
+              "value": "={{ $json.body.documentBase64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000010",
+              "name": "horario",
+              "value": "={{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000081",
+              "name": "TipoAnalise",
+              "value": "={{ $json.body.analysisType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000041",
+              "name": "IDuser",
+              "value": "={{ $json.body.userId }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000054",
+              "name": "pront",
+              "value": "=Você atua como um analista jurídico especializado em registros cartorários. Sua tarefa é realizar uma leitura minuciosa e técnica de um documento PDF contendo a matrícula de um imóvel urbano ou rural, emitida por cartórios brasileiros. O documento pode conter páginas digitalizadas (imagem) ou em formato texto. Utilize OCR com precisão quando necessário.\\nSua análise deve ser completa, rigorosa e voltada à identificação de todos os elementos jurídicos e patrimoniais da matrícula, incluindo ônus ativos, herança de registros anteriores e riscos potenciais ao imóvel.\\n---\\n1. DADOS GERAIS DO DOCUMENTO\\nExtraia com precisão:\\n- Número da matrícula do imóvel.\\n- Data inicial do registro da matrícula.\\n- Município e estado do cartório emissor, se constar.\\n- Indicação clara de todos os proprietários atuais e respectivos percentuais, se houver.\\n- Informações sobre a origem do registro (ex: desmembramento, fusão, matrícula anterior).\\n---\\n2. ANÁLISE DETALHADA DAS ANOTAÇÕES\\nAvalie todas as anotações, inclusive as herdadas de outras matrículas (mesmo que sem origem explícita), e classifique-as conforme:\\nAverbações (prefixo \\\"AV\\\"):\\nPara cada AV, indique:\\n- Número da averbação (ex: AV-3).\\n- Finalidade da averbação (ex: alteração de nome, construção, cancelamento, casamento, morte, etc.).\\n- Data de registro da averbação.\\n- Valor financeiro envolvido, se houver.\\n- Vencimento, se aplicável.\\n- Se for herdada de outra matrícula, sinalizar claramente, mesmo que a matrícula anterior não esteja identificada.\\n- Contexto e tom da anotação (ex: simples alteração administrativa, fato jurídico relevante, implicação patrimonial).\\n- Observações complementares caso o texto seja ambíguo, repetido ou ausente.\\nRegistros (prefixo \\\"R.\\\"):\\nPara cada R, indique:\\n- Número do registro (ex: R-4).\\n- Finalidade (ex: hipoteca, penhor, alienação fiduciária, promessa de compra e venda, etc.).\\n- Data de registro.\\n- Valor financeiro envolvido.\\n- Vencimento do encargo, se houver.\\n- Nome do credor ou beneficiário.\\n- Estado atual do registro: ativo, cancelado, quitado, vencido ou pendente.\\n- Se for herdado de outra matrícula, indique.\\n- Qualquer observação adicional relevante, como cláusulas contratuais ou riscos potenciais.\\n---\\n3. ÔNUS, RISCOS E SITUAÇÕES JUDICIAIS\\nListe separadamente e com tom de alerta jurídico:\\n- Hipotecas, penhores, penhor, penhora, alienações fiduciárias ou garantias reais ainda ativas.\\n- Penhoras judiciais, administrativas ou fiscais (em aberto ou canceladas) — indicar status atual, valor, data e credor.\\n- Todos os ônus com valores em aberto, indicando:\\n  - Valor.\\n  - Data de vencimento.\\n  - Nome do credor.\\n  - Se há indícios de inadimplência ou cobrança ativa.\\n- Servidões, reservas legais, áreas de preservação ou restrições ambientais — indicar o tipo, localização e órgão vinculado.\\n- Anotações com implicações jurídicas relevantes, como:\\n  1. Inalienabilidade  \\n  2. Impenhorabilidade  \\n  3. Bem de família  \\n  4. Penhor judicial  \\n  5. Promessa de compra e venda  \\n  6. Cláusulas resolutivas do INCRA  \\n  7. Remissões de dívidas  \\n  8. Sucessões hereditárias  \\n  9. Usufruto vitalício  \\n  10. Servidão administrativa  \\n  11. Integralização de capital  \\n  12. Reserva legal  \\n  13. Manejo florestal  \\n  14. Averbações de transporte ou infraestrutura  \\n  15. Aditivos ou averbações ex officio\\n  16. Quaisquer outras anotações diferentes destas anteriores\\n> Essas informações devem ser apresentadas em tabela de no máximo 3 colunas, indicando:\\n> - Tipo de anotação\\n> - Identificação ou número (se houver)\\n> - Órgão responsável ou parte envolvida\\nObservação: após a tabela, adicionar somatória de todos os valores em aberto ou não cancelados, como alienações, hipotecas, penhor, penhores, penhoras e outros.\\n- Cláusulas restritivas de transferência ou uso do bem, como:\\n  - Incomunicabilidade\\n  - Inalienabilidade\\n  - Impenhorabilidade\\n  - Condições de reversão\\n  - Vínculos com políticas públicas ou zoneamento\\n---\\n4. SAÍDA ESPERADA\\n- Organize a saída em seções claramente identificadas.\\n- Cada anotação (AV ou R) deve estar em parágrafo próprio, com todas as informações solicitadas.\\n- Use linguagem técnica, precisa e objetiva.\\n- Não faça interpretações subjetivas.\\n- Caso haja texto ilegível, ausente ou inconsistente, marque com:  \\n  [Possível inconsistência ou ilegível].\\n- Preencha o seguinte modelo de descrição: (DESCRIÇÃO IGUAL AO INICIO DA MATRÍCULA) Imóvel rural/urbano denominado \\\"XXXXXXXX\\\", medindo X.XXX,XX ha (POR EXTENSO), situada neste munícipio de XXXX -  UF, comarca de XXX-UF, com seus limites e confrontações melhor caracterizados e descritos na matrícula X.XXX,  Livro X, (Cartório de registro) de XXXXX-UF.\\nTitulo aquisitivo: (CARTÓRIO) Escritura Pública de venda e compra lavras as folhas XXX/XXX do livro XX, no X° Ofício Extrajudicial de XXXX-UF, em XX/XX/XXXX, registrada sob o R-XX feito na Matrícula X.XXX, Livro X, (CARTÓRIO) Registro de Imóveis de XXXXX-UF, em XX/XX/XXXX.\\n---\\nNOTA FINAL\\nO objetivo da análise é identificar riscos jurídicos e financeiros, bem como o histórico completo da matrícula. As informações extraídas devem permitir uma due diligence completa sobre o imóvel.\\nNão exclua linhas e não sintetize as anotações e averbações. Traga as ativas e canceladas em suas respectivas ordens.",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000012",
+              "name": "UserName",
+              "value": "={{ $json.body.userEmail }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000059",
+              "name": "Nome da Analise",
+              "value": "={{ $json.body.analysisName }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "modelo",
+              "value": "={{ $json.body.aiModel }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000020",
+              "name": "IdDocument",
+              "value": "={{ $json.body.documentId }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000008",
+              "name": "prontExtra",
+              "value": "Formate a resposta em seções bem definidas.\\n- Use ## TÍTULO DA SESSÃO para criar cada seção.\\n- Dentro de cada seção, use listas com - **Campo:** valor.\\n- Deixe os nomes dos campos em negrito com ** e o valor em texto normal.\\n- Mantenha clareza e estrutura visual limpa como em um relatório organizado. no resumo final mande com ##Resumo Final , e no resumo final mande em um contexto só sua analise do documento\\n\\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -624,
+        -96
+      ],
+      "id": "00000000-0000-4000-8000-000000000026",
+      "name": "dados"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1248,
+        -592
+      ],
+      "id": "00000000-0000-4000-8000-000000000067",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## Inicio - FrontEnd\n",
+        "height": 336,
+        "width": 528,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -912,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000045",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Extração de conteudo",
+        "height": 336,
+        "width": 336,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        176,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000032",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        -96
+      ],
+      "id": "00000000-0000-4000-8000-000000000063",
+      "name": "converte para file",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Envio para IA de OCR",
+        "height": 336,
+        "width": 256,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        544,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000038",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://{{ $env.AZURE_DOCINTEL_ENDPOINT }}/documentintelligence/documentModels/prebuilt-layout:analyze?_overload=analyzeDocument&api-version=2024-11-30",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Ocp-Apim-Subscription-Key",
+              "value": "{{ $env.AZURE_DOCINTEL_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/pdf"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "00000000-0000-4000-8000-000000000083",
+      "name": "envia_pdf",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000065",
+              "name": "IDUser",
+              "value": "={{ $('dados').item.json.IDuser }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "name": "Tipo",
+              "value": "={{ $('dados').item.json.TipoDocs }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000025",
+              "name": "base64",
+              "value": "={{ $('dados').item.json.data }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000009",
+              "name": "horario",
+              "value": "={{ $('dados').item.json.horario }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000046",
+              "name": "TipoAnalise",
+              "value": "={{ $('dados').item.json.TipoAnalise }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000024",
+              "name": "UserName",
+              "value": "={{ $('dados').item.json.UserName }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000028",
+              "name": "CustoTokens",
+              "value": "={{ $json.custoTotal }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000057",
+              "name": "TokensUsados",
+              "value": "={{ $('Azure_OpenAI_GPT41Mini1').item.json.usage.total_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000064",
+              "name": "IdDocument",
+              "value": "={{ $('dados').item.json.IdDocument }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2496,
+        -16
+      ],
+      "id": "00000000-0000-4000-8000-000000000005",
+      "name": "salvar_no_banco"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['operation-location'] }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Ocp-Apim-Subscription-Key",
+              "value": "{{ $env.AZURE_DOCINTEL_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1232,
+        -112
+      ],
+      "id": "00000000-0000-4000-8000-000000000077",
+      "name": "consulta"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        -112
+      ],
+      "id": "00000000-0000-4000-8000-000000000047",
+      "name": "Wait",
+      "webhookId": "00000000-0000-4000-8000-000000000043"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://{{ $env.AZURE_OPENAI_ENDPOINT }}/openai/deployments/gpt-4.1-mini/chat/completions?api-version=2025-01-01-preview",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "api-key",
+              "value": "{{ $env.AZURE_OPENAI_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": {{ $json.template }}\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ $json.resultado }}\n    }\n  ],\n  \"temperature\": 0.3,\n  \"max_tokens\": 20000\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1808,
+        -80
+      ],
+      "id": "00000000-0000-4000-8000-000000000033",
+      "name": "Azure_OpenAI_GPT41Mini1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000037",
+              "name": "output",
+              "value": "={{ $json.choices[0].message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000060",
+              "name": "id_output",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000070",
+              "name": "model",
+              "value": "={{ $json.model }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000050",
+              "name": "object",
+              "value": "={{ $json.object }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "completion_tokens",
+              "value": "={{ $json.usage.completion_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000016",
+              "name": "prompt_tokens",
+              "value": "={{ $json.usage.prompt_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "name": "total_tokens",
+              "value": "={{ $json.usage.total_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000031",
+              "name": "prompt_token_price_por_1000tokens_aproximado",
+              "value": "0,002",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000023",
+              "name": "completion_token_price_1000tokens_aproximado",
+              "value": "0,008",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000019",
+              "name": "Id_arquivo",
+              "value": "={{ $('dados').item.json.IdDocument }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000006",
+              "name": "horario",
+              "value": "={{ $('dados').item.json.horario }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000068",
+              "name": "Id_Tipo_analise",
+              "value": "={{ $('dados').item.json.TipoAnalise }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000058",
+              "name": "template",
+              "value": "={{ $('dados').item.json.pront }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000034",
+              "name": "Username",
+              "value": "={{ $('dados').item.json.UserName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2096,
+        -80
+      ],
+      "id": "00000000-0000-4000-8000-000000000085",
+      "name": "coleta_tudo_envia_frontebanco2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const json = items[0].json;\n\nconst promptTokens = json.prompt_tokens || 0;\nconst completionTokens = json.completion_tokens || 0;\n\n// Valores manuais\nconst precoPrompt = 0.002;\nconst precoResposta = 0.008;\n\nconst custoPrompt = (promptTokens / 1000) * precoPrompt;\nconst custoResposta = (completionTokens / 1000) * precoResposta;\nconst custoTotal = custoPrompt + custoResposta;\n\nreturn [\n  {\n    json: {\n      promptTokens,\n      completionTokens,\n      custoPrompt: custoPrompt.toFixed(6),\n      custoResposta: custoResposta.toFixed(6),\n      custoTotal: custoTotal.toFixed(6),\n      moeda: \"R$\"\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2304,
+        -16
+      ],
+      "id": "00000000-0000-4000-8000-000000000086",
+      "name": "calculo_de_custo1"
+    },
+    {
+      "parameters": {
+        "content": "## Consulta a Analise e verifica e já está pronta",
+        "height": 336,
+        "width": 752,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        832,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000079",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Separa as informações e envia ao front e banco de dados",
+        "height": 336,
+        "width": 944,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1984,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000036",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2304,
+        -160
+      ],
+      "id": "00000000-0000-4000-8000-000000000018",
+      "name": "retornoFront"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000075",
+              "name": "resultado",
+              "value": "={{ '\"' + String($json.analyzeResult.content ?? '')\n  .normalize('NFKC')                         // normaliza unicode\n  .replace(/[\\u0000-\\u001F\\u007F]/g, ' ')    // remove controles\n  .replace(/\\\\+/g, '/')                      // troca barras invertidas\n  .replace(/[\"']/g, '')                      // REMOVE aspas duplas e simples\n  .replace(/\\t/g, ' ')                       // tabs -> espaço\n  .replace(/\\r?\\n/g, '\\n')                   // normaliza quebras\n  .replace(/\\s{2,}/g, ' ')                   // múltiplos espaços -> 1\n  .trim()\n + '\"'}}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000053",
+              "name": "template",
+              "value": "={{'\"' + $('dados').item.json.pront + $('dados').item.json.prontExtra + '\"'}}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000013",
+              "name": "",
+              "value": "Formate a resposta em seções bem definidas.\\n- Use ## TÍTULO DA SESSÃO para criar cada seção.\\n- Dentro de cada seção, use listas com - **Campo:** valor.\\n- Deixe os nomes dos campos em negrito com ** e o valor em texto normal.\\n- Mantenha clareza e estrutura visual limpa como em um relatório organizado. no resumo final mande com ##Resumo Final\\n\\n\"",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1632,
+        -64
+      ],
+      "id": "00000000-0000-4000-8000-000000000048",
+      "name": "formata_Entrada"
+    },
+    {
+      "parameters": {
+        "content": "## IA faz analise",
+        "height": 336,
+        "width": 336,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1616,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000088",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "token_usage",
+          "mode": "list",
+          "cachedResultName": "token_usage"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "document_id": "={{ $json.IdDocument }}",
+            "analysis_type_id": "={{ $json.TipoAnalise }}",
+            "user_id": "={{ $json.IDUser }}",
+            "tokens_used": "={{ $json.TokensUsados }}",
+            "cost": "={{ $json.CustoTokens }}",
+            "created_at": "={{ $json.horario }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "document_id",
+              "displayName": "document_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "analysis_type_id",
+              "displayName": "analysis_type_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tokens_used",
+              "displayName": "tokens_used",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cost",
+              "displayName": "cost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2688,
+        -16
+      ],
+      "id": "00000000-0000-4000-8000-000000000082",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "analise_api",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -240,
+        464
+      ],
+      "id": "00000000-0000-4000-8000-000000000078",
+      "name": "entrada_api",
+      "webhookId": "00000000-0000-4000-8000-000000000072"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000014",
+              "name": "data",
+              "value": "={{ $json.body.documentBase64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000010",
+              "name": "horario",
+              "value": "={{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000054",
+              "name": "pront",
+              "value": "={{ $json.body.template }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "modelo",
+              "value": "={{ $json.body.aiModel }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000027",
+      "name": "dados1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        304,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000042",
+      "name": "converte1"
+    },
+    {
+      "parameters": {
+        "content": "## Coleta e Converte\n",
+        "height": 336,
+        "width": 416,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        64,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000051",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "## Envio para IA de OCR",
+        "height": 336,
+        "width": 256,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000030",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://{{ $env.AZURE_DOCINTEL_ENDPOINT }}/documentintelligence/documentModels/prebuilt-layout:analyze?_overload=analyzeDocument&api-version=2024-11-30",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Ocp-Apim-Subscription-Key"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/pdf"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        592,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000015",
+      "name": "envia_pdf1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['operation-location'] }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Ocp-Apim-Subscription-Key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1200,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000007",
+      "name": "consulta1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000084",
+      "name": "Wait1",
+      "webhookId": "00000000-0000-4000-8000-000000000043"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "running",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000076",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://{{ $env.AZURE_OPENAI_ENDPOINT }}/openai/deployments/gpt-4.1-mini/chat/completions?api-version=2025-01-01-preview",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "api-key",
+              "value": "{{ $env.AZURE_OPENAI_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": {{ $json.template }}\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ $json.resultado }}\n    }\n  ],\n  \"temperature\": 0.3,\n  \"max_tokens\": 20000\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1776,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000056",
+      "name": "Azure_OpenAI_GPT41Mini2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000037",
+              "name": "output",
+              "value": "={{ $json.choices[0].message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000060",
+              "name": "id_output",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000070",
+              "name": "model",
+              "value": "={{ $json.model }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000050",
+              "name": "object",
+              "value": "={{ $json.object }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "completion_tokens",
+              "value": "={{ $json.usage.completion_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000016",
+              "name": "prompt_tokens",
+              "value": "={{ $json.usage.prompt_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "name": "total_tokens",
+              "value": "={{ $json.usage.total_tokens }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000031",
+              "name": "prompt_token_price_por_1000tokens_aproximado",
+              "value": "0,002",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000023",
+              "name": "completion_token_price_1000tokens_aproximado",
+              "value": "0,008",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2016,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000035",
+      "name": "coleta_tudo_envia_frontebanco"
+    },
+    {
+      "parameters": {
+        "jsCode": "const json = items[0].json;\n\nconst promptTokens = json.prompt_tokens || 0;\nconst completionTokens = json.completion_tokens || 0;\n\n// Valores manuais\nconst precoPrompt = 0.002;\nconst precoResposta = 0.008;\n\nconst custoPrompt = (promptTokens / 1000) * precoPrompt;\nconst custoResposta = (completionTokens / 1000) * precoResposta;\nconst custoTotal = custoPrompt + custoResposta;\n\nreturn [\n  {\n    json: {\n      promptTokens,\n      completionTokens,\n      custoPrompt: custoPrompt.toFixed(6),\n      custoResposta: custoResposta.toFixed(6),\n      custoTotal: custoTotal.toFixed(6),\n      moeda: \"R$\"\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2528,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000089",
+      "name": "calculo_de_custo2"
+    },
+    {
+      "parameters": {
+        "content": "## Consulta a Analise e verifica e já está pronta",
+        "height": 336,
+        "width": 752,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        800,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000017",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "content": "## Separa as informações e envia resposta da API",
+        "height": 336,
+        "width": 944,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1952,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000061",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000075",
+              "name": "resultado",
+              "value": "={{ '\"' + String($json.analyzeResult.content ?? '')\n  .normalize('NFKC')                         // normaliza unicode\n  .replace(/[\\u0000-\\u001F\\u007F]/g, ' ')    // remove controles\n  .replace(/\\\\+/g, '/')                      // troca barras invertidas\n  .replace(/[\"']/g, '')                      // REMOVE aspas duplas e simples\n  .replace(/\\t/g, ' ')                       // tabs -> espaço\n  .replace(/\\r?\\n/g, '\\n')                   // normaliza quebras\n  .replace(/\\s{2,}/g, ' ')                   // múltiplos espaços -> 1\n  .trim()\n + '\"'}}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000053",
+              "name": "template",
+              "value": "={{ '\"' + String($('dados1').item.json.pront ?? '')\n  .normalize('NFKC')                      // normaliza caracteres Unicode\n  .replace(/[\\u0000-\\u001F\\u007F]/g, '')  // remove caracteres de controle invisíveis\n  .replace(/\\\\+/g, '/')                   // troca barras invertidas por barras normais\n  .replace(/[\"']/g, '')                   // remove aspas duplas e simples\n  .replace(/\\t/g, ' ')                    // substitui tabulações por espaço\n  .replace(/\\r?\\n/g, '\\n')                // normaliza quebras de linha\n  .replace(/\\s{2,}/g, ' ')                // reduz múltiplos espaços consecutivos\n  .trim()                                 // remove espaços extras\n+ ' '\n+ JSON.stringify($('dados1').item.json.return_schema, null, 2) // adiciona o schema formatado em JSON legível\n  .replace(/[\"']/g, '')                   // remove aspas do schema\n  .replace(/\\t/g, ' ')\n  .replace(/\\r?\\n/g, '\\n')\n  .replace(/\\s{2,}/g, ' ')\n  .trim()\n + '\"'}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000069",
+      "name": "formata_Entrada1"
+    },
+    {
+      "parameters": {
+        "content": "## IA faz analise",
+        "height": 336,
+        "width": 336,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1584,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000074",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2256,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000022",
+      "name": "retornoAPI"
+    },
+    {
+      "parameters": {
+        "content": "## API\n",
+        "height": 336,
+        "width": 416,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -384,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000087",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000052",
+              "name": "operation-location",
+              "value": "={{ $('envia_pdf1').item.json.headers['operation-location'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        448
+      ],
+      "id": "00000000-0000-4000-8000-000000000021",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000052",
+              "name": "operation-location",
+              "value": "={{ $('envia_pdf').item.json.headers['operation-location'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        -112
+      ],
+      "id": "00000000-0000-4000-8000-000000000004",
+      "name": "coleta_link"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "running",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1376,
+        -112
+      ],
+      "id": "00000000-0000-4000-8000-000000000055",
+      "name": "verifica_se_completo"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.modelo }}",
+                    "rightValue": "low",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "00000000-0000-4000-8000-000000000066"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "low"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "00000000-0000-4000-8000-000000000003",
+                    "leftValue": "={{ $json.modelo }}",
+                    "rightValue": "medium",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "medium"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "00000000-0000-4000-8000-000000000062",
+                    "leftValue": "={{ $json.modelo }}",
+                    "rightValue": "high",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "high"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -160,
+        -112
+      ],
+      "id": "00000000-0000-4000-8000-000000000044",
+      "name": "Switch",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "content": "## Escolhe modelo\n",
+        "height": 336,
+        "width": 496,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -352,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000080",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "entrada": {
+      "main": [
+        [
+          {
+            "node": "dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "converte para file": {
+      "main": [
+        [
+          {
+            "node": "envia_pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "salvar_no_banco": {
+      "main": [
+        []
+      ]
+    },
+    "envia_pdf": {
+      "main": [
+        [
+          {
+            "node": "coleta_link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consulta": {
+      "main": [
+        [
+          {
+            "node": "verifica_se_completo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "consulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure_OpenAI_GPT41Mini1": {
+      "main": [
+        [
+          {
+            "node": "coleta_tudo_envia_frontebanco2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta_tudo_envia_frontebanco2": {
+      "main": [
+        [
+          {
+            "node": "retornoFront",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "calculo_de_custo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "retornoFront": {
+      "main": [
+        []
+      ]
+    },
+    "formata_Entrada": {
+      "main": [
+        [
+          {
+            "node": "Azure_OpenAI_GPT41Mini1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "entrada_api": {
+      "main": [
+        [
+          {
+            "node": "dados1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "dados1": {
+      "main": [
+        [
+          {
+            "node": "converte1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "converte1": {
+      "main": [
+        [
+          {
+            "node": "envia_pdf1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "envia_pdf1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consulta1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "consulta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "formata_Entrada1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure_OpenAI_GPT41Mini2": {
+      "main": [
+        [
+          {
+            "node": "coleta_tudo_envia_frontebanco",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta_tudo_envia_frontebanco": {
+      "main": [
+        [
+          {
+            "node": "retornoAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "formata_Entrada1": {
+      "main": [
+        [
+          {
+            "node": "Azure_OpenAI_GPT41Mini2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "calculo_de_custo1": {
+      "main": [
+        [
+          {
+            "node": "salvar_no_banco",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta_link": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_se_completo": {
+      "main": [
+        [
+          {
+            "node": "coleta_link",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "formata_Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "converte para file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "converte para file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "converte para file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timezone": "America/Manaus",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed6398d1f0e7bf2b67706e49c75bc00e97a8aceceb64592d9702aaa1b7dc4766"
+  },
+  "nodeGroups": [],
+  "tags": [
+    {
+      "updatedAt": "2025-07-11T21:26:56.889Z",
+      "createdAt": "2025-07-11T21:26:56.889Z",
+      "id": "MR0Wjq1DiYYpuSVj",
+      "name": "CLiente"
+    }
+  ]
+}
