@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "Turismo - Atendimento e Cotacao de Pacotes com IA",
   "nodes": [
     {
@@ -3100,7 +3100,7 @@
             {
               "id": "a0a06ae0-cf1d-4950-936c-36a8640d8e8d",
               "name": "token",
-              "value": "IGAAKBmbnjTXdBZAE9PRlc5OTRPWjVEZAWp5czgtRDZAYcXBSVHJ4VkJJSnNlS1pMaERSeE80S1lsYndoVjZAGM3hMRG5ObndMZAVctNTF0MjJqQlh2M0JySHkydUZApSzFUb3lqTS1Eel9pVWVKQ3liWFhJS080S0p5eDM1cEpoNnBHMAZDZD",
+              "value": "{{ $env.INSTAGRAM_TOKEN }}",
               "type": "string"
             }
           ]
