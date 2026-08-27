@@ -1,0 +1,708 @@
+{
+  "name": "Curadoria de Conteudo Cientifico com IA",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "5f0edc39-6def-494e-b764-4ebf18a49fd2",
+      "name": "Agendamento Semanal",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -128,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfg-especialidade",
+              "name": "especialidade",
+              "value": "={{ $json.body.especialidade }}",
+              "type": "string"
+            },
+            {
+              "id": "cfg-quantidade",
+              "name": "quantidade_artigos",
+              "value": 10,
+              "type": "number"
+            },
+            {
+              "id": "cfg-idioma",
+              "name": "idioma_busca",
+              "value": "pt-BR",
+              "type": "string"
+            },
+            {
+              "id": "cfg-sheet-id",
+              "name": "google_sheet_id",
+              "value": "SEU_GOOGLE_SHEET_ID_AQUI",
+              "type": "string"
+            },
+            {
+              "id": "cfg-sheet-name",
+              "name": "sheet_name",
+              "value": "Artigos",
+              "type": "string"
+            },
+            {
+              "id": "cfg-cliente",
+              "name": "nome_cliente",
+              "value": "Clínica Exemplo",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fb12f779-b00d-4ae0-84ef-1181cc3585bb",
+      "name": "⚙️ Configurações",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "notes": "Edite aqui: especialidade, quantidade de artigos e ID da planilha"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "={{ $env.TAVILY_API_KEY }}"
+            },
+            {
+              "name": "query",
+              "value": "={{ 'novidades e artigos científicos sobre ' + $('⚙️ Configurações').item.json.especialidade + ' 2026' }}"
+            },
+            {
+              "name": "search_depth",
+              "value": "advanced"
+            },
+            {
+              "name": "include_answer",
+              "value": false
+            },
+            {
+              "name": "max_results",
+              "value": "={{ $('⚙️ Configurações').item.json.quantidade_artigos }}"
+            },
+            {
+              "name": "include_domains",
+              "value": []
+            },
+            {
+              "name": "exclude_domains",
+              "value": [
+                "pinterest.com",
+                "tiktok.com",
+                "instagram.com"
+              ]
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8edd560c-4185-4527-89fa-10f9d6937c74",
+      "name": "Tavily — Buscar Artigos",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "id": "afff140b-1dd7-4b01-8267-0e0dcdc41e7d",
+      "name": "Separar Artigos",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        640,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-titulo",
+              "name": "titulo_original",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "set-url",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "set-snippet",
+              "name": "snippet",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            },
+            {
+              "id": "set-fonte",
+              "name": "fonte",
+              "value": "={{ $json.url.split('/')[2] }}",
+              "type": "string"
+            },
+            {
+              "id": "set-data-coleta",
+              "name": "data_coleta",
+              "value": "={{ $now.format('dd/MM/yyyy') }}",
+              "type": "string"
+            },
+            {
+              "id": "set-especialidade-pass",
+              "name": "especialidade",
+              "value": "=gastro",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1951d5b2-f9fb-4815-8bc5-08184cac1e85",
+      "name": "Preparar Campos",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4.1-mini",
+        "options": {
+          "maxTokens": 400,
+          "temperature": 0.3
+        }
+      },
+      "id": "c614fe14-1efa-4221-a59f-a16cbe8fb99e",
+      "name": "Claude — Classificar e Resumir",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        176
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      },
+      "notes": "Troque pelo nó de LLM que preferir (Claude via HTTP, OpenAI, etc)"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item.json;\n\nconst rawResponse = item.output || item.message?.content || item.text || item.response || '';\n\nlet parsed = {};\ntry {\n  const clean = rawResponse.replace(/```json|```/g, '').trim();\n  parsed = JSON.parse(clean);\n} catch(e) {\n  parsed = {\n    titulo_pt: 'Sem título',\n    resumo: '',\n    relevancia: 'media',\n    motivo_relevancia: 'Erro ao classificar',\n    tipo_conteudo: 'notícia',\n    usar_como_post: false\n  };\n}\n\n// Busca os campos originais no nó Preparar Campos\nconst original = $('Preparar Campos').item.json;\n\nreturn {\n  json: {\n    ...parsed,\n    titulo_original: original.titulo_original,\n    url: original.url,\n    fonte: original.fonte,\n    data_coleta: original.data_coleta,\n    especialidade: original.especialidade\n  }\n};"
+      },
+      "id": "4567b98a-a8cd-4aa4-957e-3c099f246457",
+      "name": "Parsear Resposta da IA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "filter-relevancia",
+              "leftValue": "={{ $json.relevancia }}",
+              "rightValue": "baixa",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d4599ebc-ff8a-4e51-b750-7a8436d81d00",
+      "name": "Filtrar Baixa Relevância",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        0
+      ],
+      "notes": "Remove artigos classificados como baixa relevância antes de salvar"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "=SHEET_ID_EXEMPLO",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Página1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Título PT": "={{ $json.titulo_pt }}",
+            "Data": "={{ $json.data_coleta }}",
+            "Especialidade": "={{ $json.especialidade }}",
+            "Título": "={{ $json.titulo_original }}",
+            "URL": "={{ $json.url }}",
+            "Fonte": "={{ $json.fonte }}",
+            "Relevância": "={{ $json.relevancia }}",
+            "Tipo": "={{ $json.tipo_conteudo }}",
+            "Usar como Post?": "={{ $json.usar_como_post }}",
+            "Resumo": "={{ $json.resumo }}",
+            "Relevancia": "={{ $json.relevancia }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Especialidade",
+              "displayName": "Especialidade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Título PT",
+              "displayName": "Título PT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Título",
+              "displayName": "Título",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Original",
+              "displayName": "Original",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Resumo",
+              "displayName": "Resumo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fonte",
+              "displayName": "Fonte",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Relevancia",
+              "displayName": "Relevancia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tipo",
+              "displayName": "Tipo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Usar como Post?",
+              "displayName": "Usar como Post?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Motivo",
+              "displayName": "Motivo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Relevância",
+              "displayName": "Relevância",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "bf8bf76b-6553-4141-8620-4fb34fcda07c",
+      "name": "Google Sheets — Salvar",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1760,
+        0
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "googleSheetsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "652ca48e-65a3-4059-bb8e-ec562fa402a6",
+      "name": "Agregar Resultados",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.item.json.data || [];\nconst total = items.length;\nconst alta = items.filter(i => i.relevancia === 'alta').length;\nconst paraPost = items.filter(i => i.usar_como_post === true || i['Usar como Post?'] === 'SIM').length;\n\nreturn {\n  json: {\n    resumo_execucao: `✅ Rodada concluída: ${total} artigos salvos (${alta} alta relevância, ${paraPost} sugeridos para post)`,\n    total_salvos: total,\n    alta_relevancia: alta,\n    sugeridos_para_post: paraPost,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "8bd5a4b1-0d1d-411a-9b80-973cc271b265",
+      "name": "Resumo da Execução",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2688,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "content": " \"Você é um assistente especializado em curadoria de conteúdo médico para agências de marketing digital. Sua tarefa é analisar artigos e notícias sobre especialidades médicas e retornar um JSON com classificação e resumo em português brasileiro.\\n\\nRetorne SOMENTE o JSON, sem texto extra, sem markdown, sem blocos de código.\\n\\nFormato exato:\\n{\\n  \\\"titulo_pt\\\": \\\"título traduzido/adaptado para português (máx 80 chars)\\\",\\n  \\\"resumo\\\": \\\"resumo em 2-3 frases simples, linguagem acessível, foco no benefício para o paciente\\\",\\n  \\\"relevancia\\\": \\\"alta | media | baixa\\\",\\n  \\\"motivo_relevancia\\\": \\\"uma frase explicando por que é relevante para a especialidade\\\",\\n  \\\"tipo_conteudo\\\": \\\"pesquisa | notícia | guideline | caso clínico | opinião\\\",\\n  \\\"usar_como_post\\\": true\\n}\\n\\nCritérios de relevância:\\n- Alta: novidade clínica, novo tratamento, estudo importante, mudança de protocolo\\n- Média: informação útil mas não urgente, conteúdo educativo\\n- Baixa: muito técnico para pacientes, conteúdo genérico demais\\n\\nusar_como_post: true se o conteúdo pode virar post de Instagram/blog para o cliente\""
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1056,
+        -400
+      ],
+      "typeVersion": 1,
+      "id": "60fca2f5-0aff-4372-b852-ea8b67168cf3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        496,
+        240
+      ],
+      "id": "ec27c0be-1e89-415f-b69b-aa6a9d64a967",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.titulo_original }}\n{{ $json.url }}\n{{ $json.snippet }}\n{{ $json.fonte }}\n{{ $json.data_coleta }}\n{{ $json.especialidade }}",
+        "options": {
+          "systemMessage": " \"Você é um assistente especializado em curadoria de conteúdo médico para agências de marketing digital. Sua tarefa é analisar artigos e notícias sobre especialidades médicas e retornar um JSON com classificação e resumo em português brasileiro.\\n\\nRetorne SOMENTE o JSON, sem texto extra, sem markdown, sem blocos de código.\\n\\nFormato exato:\\n{\\n  \\\"titulo_pt\\\": \\\"título traduzido/adaptado para português (máx 80 chars)\\\",\\n  \\\"resumo\\\": \\\"resumo em 2-3 frases simples, linguagem acessível, foco no benefício para o paciente\\\",\\n  \\\"relevancia\\\": \\\"alta | media | baixa\\\",\\n  \\\"motivo_relevancia\\\": \\\"uma frase explicando por que é relevante para a especialidade\\\",\\n  \\\"tipo_conteudo\\\": \\\"pesquisa | notícia | guideline | caso clínico | opinião\\\",\\n  \\\"usar_como_post\\\": true\\n}\\n\\nCritérios de relevância:\\n- Alta: novidade clínica, novo tratamento, estudo importante, mudança de protocolo\\n- Média: informação útil mas não urgente, conteúdo educativo\\n- Baixa: muito técnico para pacientes, conteúdo genérico demais\\n\\nusar_como_post: true se o conteúdo pode virar post de Instagram/blog para o cliente\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "e0bd3456-f047-4782-b011-72463e8a6e6f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "noticia",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        64,
+        0
+      ],
+      "id": "19268b7b-af4d-42a1-ad82-c1ae23a60648",
+      "name": "Webhook",
+      "webhookId": "6f3d5a25-8d02-4026-9c0e-63f17f8fe874"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2192,
+        0
+      ],
+      "id": "154f5a71-c21f-46c7-8af7-594180587355",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Agendamento Semanal": {
+      "main": [
+        []
+      ]
+    },
+    "⚙️ Configurações": {
+      "main": [
+        [
+          {
+            "node": "Tavily — Buscar Artigos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily — Buscar Artigos": {
+      "main": [
+        [
+          {
+            "node": "Separar Artigos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separar Artigos": {
+      "main": [
+        [
+          {
+            "node": "Preparar Campos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear Resposta da IA": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Baixa Relevância",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Baixa Relevância": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets — Salvar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets — Salvar": {
+      "main": [
+        [
+          {
+            "node": "Agregar Resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agregar Resultados": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "Preparar Campos": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude — Classificar e Resumir": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Parsear Resposta da IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Configurações",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed6398d1f0e7bf2b67706e49c75bc00e97a8aceceb64592d9702aaa1b7dc4766"
+  },
+  "nodeGroups": [],
+  "tags": []
+}
