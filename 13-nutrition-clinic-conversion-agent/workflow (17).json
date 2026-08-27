@@ -1,0 +1,4019 @@
+{
+  "name": "Clinica Nutricao - Atendimento e Conversao com IA",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000111",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000151",
+              "name": "dados.numero",
+              "value": "={{ $json.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000150",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000080",
+              "name": "dados.pushname",
+              "value": "={{ $('Webhook').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000038",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000152",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000116",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000131",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000094",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000096",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000030",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000115",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -1424
+      ],
+      "id": "00000000-0000-4000-8000-000000000070",
+      "name": "tratamento"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000110",
+              "name": "=messages",
+              "value": "={{ $('pegamessages').item.json.message.join('\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000050",
+              "name": "numero",
+              "value": "={{ $('Wait1').item.json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3792,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000057",
+      "name": "concatena"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $json.numero }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3376,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000036",
+      "name": "pegamessages",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $json.numero }}",
+        "messageData": "={{ $json.message }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        2992,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000047",
+      "name": "listamessage",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.numero }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        3968,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000107",
+      "name": "deletalista",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000053",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        16,
+        -1744
+      ],
+      "id": "00000000-0000-4000-8000-000000000134",
+      "name": "verifica se é uma mensagem DO CLIENTE1"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=clinica_{{ $('Webhook').item.json.body.data.key.remoteJid }}_block",
+        "value": "true",
+        "expire": true,
+        "ttl": 78894
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        256,
+        -1760
+      ],
+      "id": "00000000-0000-4000-8000-000000000063",
+      "name": "CHave-block",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "=clinica_{{ $('Webhook').item.json.body.data.key.remoteJid }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -1552
+      ],
+      "id": "00000000-0000-4000-8000-000000000138",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000089",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        -1552
+      ],
+      "id": "00000000-0000-4000-8000-000000000001",
+      "name": "verifica_isblock_estado"
+    },
+    {
+      "parameters": {
+        "content": "## Bloqueio humano",
+        "height": 420,
+        "width": 1140,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -1792
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000092",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -1552
+      ],
+      "id": "00000000-0000-4000-8000-000000000031",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000121",
+              "leftValue": "={{ $json.body.data.key.remoteJid }}",
+              "rightValue": "@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        -1728
+      ],
+      "id": "00000000-0000-4000-8000-000000000082",
+      "name": "degrupo"
+    },
+    {
+      "parameters": {
+        "content": "##  BUffer\n",
+        "height": 380,
+        "width": 1228,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2832,
+        -1552
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000056",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Tratadados",
+        "height": 292,
+        "width": 280,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        880,
+        -1536
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000072",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000121",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "rightValue": "@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -224,
+        -1184
+      ],
+      "id": "00000000-0000-4000-8000-000000000055",
+      "name": "degrupo1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -1072
+      ],
+      "id": "00000000-0000-4000-8000-000000000084",
+      "name": "No Operation, do nothing5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000027",
+              "name": "lid",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000064",
+              "name": "numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt.replace(/:\\d+(?=@)/, '') }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000061",
+              "name": "fromme",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        -1312
+      ],
+      "id": "00000000-0000-4000-8000-000000000020",
+      "name": "extrainumero"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000108",
+              "name": "numero",
+              "value": "={{ $('extrainumero').item.json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        736,
+        -1056
+      ],
+      "id": "00000000-0000-4000-8000-000000000123",
+      "name": "coleta1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000053",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        -1312
+      ],
+      "id": "00000000-0000-4000-8000-000000000122",
+      "name": "verifica se é uma mensagem DO CLIENTE"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=clinica_{{ $('extrainumero').item.json.numero }}_block",
+        "value": "true",
+        "expire": true,
+        "ttl": 78894
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -1328
+      ],
+      "id": "00000000-0000-4000-8000-000000000124",
+      "name": "CHave-block1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "=clinica_{{ $json.numero }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        352,
+        -1072
+      ],
+      "id": "00000000-0000-4000-8000-000000000106",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000089",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        -1072
+      ],
+      "id": "00000000-0000-4000-8000-000000000149",
+      "name": "verifica_isblock_estado1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000121",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "rightValue": "@lid",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -464,
+        -1408
+      ],
+      "id": "00000000-0000-4000-8000-000000000125",
+      "name": "LID?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000108",
+              "name": "numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid.replace(/:\\d+(?=@)/, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        736,
+        -1536
+      ],
+      "id": "00000000-0000-4000-8000-000000000042",
+      "name": "coleta"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000105",
+              "leftValue": "={{ $json.message.last() }}",
+              "rightValue": "={{ $('Wait1').item.json.message }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3584,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000025",
+      "name": "If2",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Inicio",
+        "height": 196,
+        "width": 676,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -960,
+        -1456
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000118",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000016",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2288,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000045",
+      "name": "If10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000136",
+              "leftValue": "={{ $('tratamento').item.json.dados.tipomessage }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        -1696
+      ],
+      "id": "00000000-0000-4000-8000-000000000014",
+      "name": "If12"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "00000000-0000-4000-8000-000000000004",
+                    "leftValue": "={{ $('If12').item.json.dados.tipomessage }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "00000000-0000-4000-8000-000000000139",
+                    "leftValue": "={{ $('If12').item.json.dados.tipomessage }}",
+                    "rightValue": "documentMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "00000000-0000-4000-8000-000000000018",
+                    "leftValue": "={{ $('If12').item.json.dados.tipomessage }}",
+                    "rightValue": "=imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Imagem"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1600,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000100",
+      "name": "Caminhos1"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2096,
+        -1584
+      ],
+      "id": "00000000-0000-4000-8000-000000000109",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "Analisar a imagem e identificar o que se trata e passar as informações adiante.\n\nna maioria das vezes vai receber exames de pedidos medicos onde será alguns serviços, exames ou coisas do tipo",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2096,
+        -1280
+      ],
+      "id": "00000000-0000-4000-8000-000000000049",
+      "name": "OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        -1280
+      ],
+      "id": "00000000-0000-4000-8000-000000000097",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "audio.mp3",
+          "mimeType": "audio/mpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        -1584
+      ],
+      "id": "00000000-0000-4000-8000-000000000135",
+      "name": "Convert to File4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.content }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "descricao",
+              "description": "falar sobre a imagem"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=Voce é especializado em analizar as imagens, na maioria das vezes voce vai receber imagem de clientes para a  , seu trabalho vai ser identificar e descrever ela para poder atender a pessoa\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        2224,
+        -1280
+      ],
+      "id": "00000000-0000-4000-8000-000000000147",
+      "name": "imagem-data1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "document.pdf",
+          "mimeType": "application/pdf"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1920,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000144",
+      "name": "Convert to File7",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2096,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000098",
+      "name": "extratorpdf1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000002",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2512,
+        -1584
+      ],
+      "id": "00000000-0000-4000-8000-000000000130",
+      "name": "saidapadrao5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000008",
+              "name": "message",
+              "value": "={{ $json.output.descricao }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000058",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2512,
+        -1280
+      ],
+      "id": "00000000-0000-4000-8000-000000000102",
+      "name": "saidapadrao6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000040",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000043",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000078",
+              "name": "base64",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2512,
+        -1424
+      ],
+      "id": "00000000-0000-4000-8000-000000000129",
+      "name": "saidapadrao7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000008",
+              "name": "message",
+              "value": "={{ $json.dados.message }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000140",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2512,
+        -1728
+      ],
+      "id": "00000000-0000-4000-8000-000000000086",
+      "name": "saidapadrao9"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "get-media-base64",
+        "instanceName": "={{ $('tratamento').item.json.dados.instancia }}",
+        "messageId": "={{ $('tratamento').item.json.dados.idmessage }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000145",
+      "name": "Obter m dia em base1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Tratamento de Audio e Imagem",
+        "height": 780,
+        "width": 1556,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1216,
+        -1792
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000126",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2224,
+        -1136
+      ],
+      "id": "00000000-0000-4000-8000-000000000132",
+      "name": "imagem?",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3184,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000127",
+      "name": "Wait1",
+      "webhookId": "00000000-0000-4000-8000-000000000009"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000006",
+              "name": "base64",
+              "value": "={{ $json.data.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -1584
+      ],
+      "id": "00000000-0000-4000-8000-000000000033",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000019",
+              "name": "base64",
+              "value": "={{ $json.data.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -1280
+      ],
+      "id": "00000000-0000-4000-8000-000000000104",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000103",
+              "name": "base64",
+              "value": "={{ $json.data.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000023",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "content": "## Bloqueio humano",
+        "height": 452,
+        "width": 1140,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -1344
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000128",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('concatena').item.json.messages }}",
+        "options": {
+          "systemMessage": "=Atendente Dra. [MEDICA]\n\nVocê é a **Assistente**, atendente da clínica da Dra. [MEDICA].\nTem 27 anos, trabalha na clínica há um tempo e gosta do que faz. Conhece bem os pacientes, é atenciosa e faz a pessoa se sentir bem-vinda de verdade — não por obrigação. É direta, gentil e nunca usa frases prontas. Cada mensagem parece escrita na hora, pra aquela pessoa. E gosta de mandar mensagens curtas e diretas ao ponto pois não gosta de enrolação.\n\nSeu objetivo principal: **converter leads em agendamentos e divulgar os procedimentos da clínica.**\n\n---\n\n## COMO A Assistente SE COMUNICA\n\nFala como uma pessoa de 27 anos manda mensagem no WhatsApp pra um conhecido. Sem template, sem frase pronta. Quente, humana e profissional ao mesmo tempo.\n\n**Regras de comunicação:**\n- Quando o cliente for mandar os exames fala que vai chamar a doutora ou chama a secretaria para resolver com o cliente se não o cliente vai achar que e a doutora falando.\n- Mensagens curtas e diretas — obrigatório\n- Uma informação ou pergunta por mensagem — se precisar perguntar duas coisas, mande em mensagens separadas\n- Leia o que o cliente quer, entenda e responda direto ao assunto. Se o cliente já chega dizendo o que precisa, vá direto sem enrolação\n- Responda a pergunta do cliente antes de fazer novas perguntas. Se perguntou sobre valores, fale sobre valores\n- Comece respondendo direto sobre o assunto, sem preâmbulos como \"Claro!\", \"Ok!\", \"Aqui está!\", \"Com certeza!\" — isso soa como IA\n- Mantenha o tom gentil mesmo em situações difíceis\n\n**Nunca use:**\n- \"Seja bem-vindo(a)\" — soa como gravação de URA\n- O formato (a) — escreva de forma neutra ou natural\n- \"Conforme informado\", \"Segue abaixo\", \"Atenciosamente\", \"Prezado(a)\"\n- \"Registrado\", \"Concluído\", \"Prosseguindo\", \"Informado\"\n- Ponto final em mensagens curtas e informais\n\n---\n\n## FERRAMENTAS\n\nVocê tem que usar as ferramentas quando necessário:\n\n- **{servicos}** — informações sobre os serviços, quais serviços tem, valores e procedimentos\n- **{secretaria}** — acionar para agendamento, confirmação, remarcação, cancelamento e verificação de cadastro\n\n---\n\n## PRIMEIRO CONTATO\n\nNa primeira contato com o paciente deseje boas vindas a ele e se apresente, pergunte como pode ajudar, caso ele já chegue falando o que deseja, apenas de as boas vindas e ajude o que ele precisa.\n\n---\n\n## FLUXO DE AGENDAMENTO\n\n### Consulta nova ou recorrente (presencial)\n\n1. O paciente diz que quer agendar → pergunte: \"antes de verificar se tem horário, você já é paciente ou é a primeira vez?\"\n2. Após a resposta, informe que vai passar para a responsável pelo agendamento e que ela entrará em contato → acione **{secretaria}** com as informações coletadas\n3. Diga que vai \"procurar saber se tem disponibilidade\" — nunca diga que \"vai agendar\"\n\n### Retorno\n\n1. O paciente menciona que quer marcar retorno → peça o nome completo\n2. Após receber, acione **{secretaria}** com as informações\n3. O retorno não é cobrado.\n\n### Teleconsulta\n\n- Caso o paciente pergunte como funciona tele consulta, pode falar que é um atendimento online com a Dr, leva uns 45 minutos e pode ser feito pelo celular ou computador, depois informe que vai passar para um responsável sobre isso para que ele trate diretamente com o paciente → acione **{secretaria}**.\n\n\n\n### Confirmação, remarcação ou cancelamento\n\nInforme que vai avisar um responsável → acione **{secretaria}**.\n\n---\n\n## SERVIÇOS\n\nConsultas e serviços são coisas **diferentes** — nunca misture:\n- **Consultas** = formas de atendimento (presencial, teleconsulta, [CONVENIO], particular)\n- **Serviços** = procedimentos listados na ferramenta {servicos} (bioimpedância, Hipex, etc.)\n\n### Quando o cliente perguntar sobre serviços:\n\n1. Use **{servicos}** para buscar as informações\n2. Apresente em lista organizada, **sem valores e sem explicação** — apenas os nomes\n3. Mencione o Hipex em destaque (é o mais perguntado)\n4. Fale algo natural antes de listar, apresentando os serviços\n5. Só explique detalhes ou valores de um serviço **quando o cliente perguntar especificamente**\n6. Quando for explicar, resuma sempre\n\n### Quando o cliente pedir valores diretamente:\n\nListe os valores direto — responda a pergunta antes de fazer outras perguntas.\n\n### Bioimpedância + consulta:\n\nSe o cliente quiser consulta + bio junto, informe que um responsável entrará em contato para agendar a bio → acione **{secretaria}**.\n\n---\n\n## PROIBIÇÕES\n\n- Você so pode perguntar uma vez o nome do cliente.\n- Não pedir cartão ou número da carteirinha [CONVENIO]\n- Não fazer agendamento direto nem consultar agenda — tudo passa pela **{secretaria}**\n- Não repetir informações que o cliente já passou\n- Não pedir para formatar datas — aceite qualquer formato\n- Não criar chave Pix ou link de pagamento além do fornecido\n- Não informar horários que já passaram no dia atual\n- Não fazer perguntas além do que foi orientado nos fluxos acima\n- Não enviar a mesma mensagem duas vezes seguidas\n- Não pedir confirmação antes de agir — aja diretamente ao ter as informações necessárias\n\n---\n\n## SOBRE A DRA. [MEDICA]\n\n- **Nome:** [MEDICA] Epifanio [MEDICA]\n- **E-mail:** contato@clinica-exemplo.com\n- **Formação:** Medicina — Faculdade de Medicina de Camilo Castelo Branco, Fernandópolis/SP (2012)\n- **Pós-graduação:** Metabologia e Endocrinologia — IPEMED, São Paulo (2014)\n- ⚠️ A Dra. **não** é endocrinologista e **não** possui RQE\n- É a única profissional da clínica — não existe outro médico\n\n---\n\n## SOBRE A CLÍNICA\n\n**Clínica Radioclin — Consultório 06, Recepção C**\nRua Pastor Manoel Cassimiro, 1210, Casa Preta — Ji-Paraná/RO — CEP: 76907-604\n\n- **Telefone:** (69) 3422-1502 — Nayara (secretária presencial) este numero é somente para ligações.\n- **Instagram:** @clinica_exemplo\n- **Horário:** Segunda a Sexta, 08h às 12h das 14h às 18h.\n- Recepção com café e água\n- Consultórios climatizados com isolamento e iluminação suave\n- Estacionamento gratuito\n- Acessibilidade: elevador e rampa\n- Banheiros masculino e feminino com trocador de bebê\n- Teleconsulta disponível\n- Não realiza cirurgias\n- Não é permitido acesso de pets\n\n---\n\n## PÚBLICO ATENDIDO\n\nMaioria entre 40 e 70 anos, Ji-Paraná e região. Vá direto ao ponto — esse público tem pouca paciência para rodeios.\n\nPrincipais demandas: diabetes, tireoide, menopausa, emagrecimento e doenças endócrinas.\n\n---\n\n## CONVÊNIOS\n\n- Todas as [CONVENIO]\n- Pelo convênio, não há cobrança ao paciente\n\n---\n\n## Atendimento a crianças\n\n- a idade minima de atendimento é a partir de 16 anos.\n\n## CONSULTAS E VALORES\n\n\n### Consulta Presencial\n- Duração média: 45 minutos.\n- Inclui anamnese, análise de exames, solicitação de novos exames e orientações clínicas.\n- Primeira consulta: R$ 650.\n- Pacientes recorrentes/regulares da Dra.: R$ 550.\n- Pagamento feito no dia da consulta.\n- Não é necessário pagamento de sinal.\n- O retorno não é cobrado. Deixa isso mais obvio para o cliente.\n- Retorno em até 30 dias, ou em casos específicos, em até 1 semana.\n- Orientar o paciente a levar exames recentes.\n\n### Teleconsulta\n\nSe for perguntado mais informações ali na hora, pode usar a ferramenta {servicos} e passe de forma curta e organizada para nao ficar uma mensagem longa.\n\n### Regra especial da teleconsulta\nSe o cliente informar que já fez teleconsulta antes, avise que irá encaminhar para a secretaria verificar corretamente e acione a ferramenta:\n\n- valores só passar caso seja perguntado.\n\n- nao precisa separar os valores de presencial e tele consulta, pq os dois para o primeira consulta são 650, e recorrente 550, entao nao precisa falar que é valor de x e x, pode falar que o valor da primeira consulta é 650 e recorrente 550, sem mencionar nomes.\n\n{secretaria}\n\n### [CONVENIO]\n- Sem cobrança ao paciente\n\n### Chave Pix\nCNPJ: **00.000.000/0001-00**\n\n---\n\n## DATA E HORA ATUAL\n\nData e hora: {{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}\nDia da semana: {{ $now.weekdayLong }}",
+          "maxIterations": 10
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        6160,
+        -736
+      ],
+      "id": "00000000-0000-4000-8000-000000000133",
+      "name": "Assistente",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        5296,
+        512
+      ],
+      "id": "00000000-0000-4000-8000-000000000073",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories",
+        "contextWindowLength": 30
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        5440,
+        480
+      ],
+      "id": "00000000-0000-4000-8000-000000000022",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('tratamento').item.json.dados.instancia }}",
+        "remoteJid": "={{ $('concatena').item.json.numero }}",
+        "messageText": "={{ $('AI Agent').item.json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        6784,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000075",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        6048,
+        880
+      ],
+      "id": "00000000-0000-4000-8000-000000000114",
+      "name": "Delete table or rows",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        5728,
+        608
+      ],
+      "id": "00000000-0000-4000-8000-000000000021",
+      "name": "Think1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        5920,
+        608
+      ],
+      "id": "00000000-0000-4000-8000-000000000079",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Voce é responsável por passar os procedimentos para os pacientes da clinica da dr.[MEDICA]\n\n\n### Sobre BioImpendancia\n\n- quando for falado sobre isso, perguntar ao cliente se ele quer fazer somente a bioimpedância ou a consulta + bioimpedância, se for só bioimpedância, falar sobre o valor dela de forma gentil, infomar que só pode ser feito com o paciente em jejum\n\n- Quando for passar as informações passa de forma resumida e explicativa.\n\n- Quando algum cliente chegar e quiser fazer apenas a bioimpedância, o valor é 100 reais\n\n- bioimpedância é um procedimento que é feito somente no PARTICULAR\n- procedimento pode ser agendado de segunda a sexta\n\n- quando alguem perguntar, pode usar a ferramenta {servicos}\n\nQuando a pessoa quiser agendar só a bio, voce vai informar que passou as informações para uma responsável desse agendamento e ela irá entrar em contato nos próximos minutinhos para agendar. usar a ferramenta {secretaria}\n\n\n\n\n## Consulta + Biopedancia\n\n- quando o cliente quiser fazer a consulta e bioimpedância, ai deve perguntar para ele se ele é particular ou pela [CONVENIO]?\n\ngeralmente será pela [CONVENIO], quando a consulta for pela [CONVENIO], a Biopendacia fica no valor de 60 reais. Agora se a consulta for particular, é valor da consulta particular (se for primeira consulta com a gente valor é 650, mas se já for um paciente nosso, o valor fica 550) + biopendancia de 100 reais,\n\n- pedir para o cliente o dia que ele deseja agendar para fazer a consulta, quando ele informar voce irá utilizar a ferramenta {agenda} para achar a disponibilizade de horario e informar para ele e agendar com ele, agora quando for para agendar a biopedancia, voce irá informar que vai passar para uma responsável pelo agendamento dela, e ative a ferramenta {secretaria}.\n\nSe o cliente for por [CONVENIO] e agendar a consulta, lembrando que [CONVENIO] só pode segundae terça a tarde e quarta e quinta pela manhã. nao ofereça horarios que nao batem com isso.\n\n----------------------------------------------------------------------------------\nProcedimentos realizados:\nNome do procedimento: Bioimpedância\n\n○   - Inbody 270 (marca da bioimpedância) - A marca é um diferencial porque ela é uma das marcas que é reconhecida pela Abeso para avaliação de Bioimpedância como fator de qualidade. (informar isso sobre o aparelho.)\n\nProcedimentos realizados:\n\nNome do procedimento: Cm Slim - 20 mil contrações musculares em 30min, levando ao fortalecimento do músculo, hipertrofia e pode diminuir gordura da área tratada, sendo que o mesmo aparelho também realiza tratamentos de fortalecimento pélvico. Também potencializa o resultado da academia para hipertrofia. \nValores:\n\n- 1.100,00 é o valor de 1 área. São oito sessões cada área\n- 950,00 é o valor de 2 áreas cada, se o a pessoa for fazer 2 areas é esse valor para cada, entao suponhamos que faça 2 areas, será de 1.900. São oito sessões cada área.\n- 750,00 é o valor de 3 áreas cada. São oito sessões cada área.\n\n\n## Serviços\n\n- Bioimpedância \n- Hipex \n- Cm slim 1 área \n- Cm slim 2 áreas \n- Cm slim 3 áreas\n\n\n\n### Formas de pagamento\n\n- pix e dinheiro\n\n## teleconsulta\n\nCaso o paciente pergunte como funciona tele consulta, pode falar que é um atendimento online com a Dr, leva uns 45 minutos e pode ser feito pelo celular ou computador, depois informe que vai passar para um responsável sobre isso para que ele trate diretamente com o paciente → acione **{secretaria}**.\n\n- Disponível apenas nas sextas-feiras pela manhã.\n- A Dra. não atende sexta-feira à tarde.\n- Apenas para consulta particular.\n- Valor da teleconsulta:\n  - Primeira vez: R$ 650.\n  - Pacientes recorrentes/regulares da Dra.: R$ 550.\n- O retorno não é cobrado. Deixa isso mais obvio para o cliente.\n- Pagamento deve ser feito até as 17h do dia anterior.\n- Solicitar envio do comprovante de pagamento.\n- Solicitar também:\n  - Últimos exames em PDF ou foto.\n  - Foto dos remédios em uso.\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        5488,
+        608
+      ],
+      "id": "00000000-0000-4000-8000-000000000153",
+      "name": "servicos"
+    },
+    {
+      "parameters": {
+        "jsCode": "const CPS = 3.5;\nconst MIN_DELAY = 6;\nconst MAX_DELAY = 15;\n\nfor (const item of items) {\n\n  const mensagem = item.json.output || item.json.message || \"\";\n  const tamanho = mensagem.length;\n\n  let tempoBase = tamanho / CPS;\n\n  // Mensagem curta evita padrão 5s\n  if (tamanho < 40) {\n    tempoBase = 6 + Math.random() * 9; // 6 a 15\n  }\n\n  // variação base\n  const variacao = tempoBase * (Math.random() * 0.4 - 0.15);\n  let tempoFinal = tempoBase + variacao;\n\n  // 🔥 EXTRA HUMANO\n  const r = Math.random();\n\n  if (r < 0.20) {\n    // 20% das vezes adiciona +5 a +20 segundos\n    tempoFinal += 5 + Math.random() * 15;\n  } else if (r < 0.30) {\n    // 10% das vezes adiciona +20 a +40 segundos\n    tempoFinal += 20 + Math.random() * 20;\n  }\n\n  tempoFinal = Math.max(MIN_DELAY, Math.min(MAX_DELAY, tempoFinal));\n  tempoFinal = Math.round(tempoFinal);\n\n  item.json.delaySeconds = tempoFinal;\n  item.json.delayMs = tempoFinal * 1000;\n  item.json.delayHuman = `${tempoFinal}s`;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6032,
+        -1472
+      ],
+      "id": "00000000-0000-4000-8000-000000000143",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $('tratamento').item.json.dados.instancia }}",
+        "remoteJid": "={{ $('tratamento').item.json.dados.numero }}",
+        "delay": "={{ $json.delayMs }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        6208,
+        -1472
+      ],
+      "id": "00000000-0000-4000-8000-000000000119",
+      "name": "digitando",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "usar para enviar para secretaria pessoas que desejam agendar bioimpedância, geralment voce vai enviar pq já agendou com o cliente a consulta, só faltando a bio",
+        "method": "POST",
+        "url": "https://n8n.exemplo.com.br/webhook/encaminhar",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "numero",
+              "value": "={{ $json.numero }}"
+            },
+            {
+              "name": "instancia",
+              "value": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "name": "resumo",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `O que passar:\n\n- Nome (se informado)\n- Motivo do encaminhamento\n- Convênio ou particular ( se informado)\n- Primeira vez ou recorrente (se informado)\n- Resumo do que foi conversado\n`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        5824,
+        608
+      ],
+      "id": "00000000-0000-4000-8000-000000000065",
+      "name": "secretaria"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "secretaria",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        7472,
+        560
+      ],
+      "id": "00000000-0000-4000-8000-000000000003",
+      "name": "Webhook8",
+      "webhookId": "00000000-0000-4000-8000-000000000083"
+    },
+    {
+      "parameters": {
+        "content": "quando retornar os horarios, caso tenha horario disponivel na parte da manhã em seguida, exmeplo : 08:00 até 08:30 e 8:30 até 9:30, ai pode sugerir agendar a consulta no primeiro horario e logo em seguida agendar a biopendancia. mas caso nao tenha horario disponivel assim, marcar só a consulta, e agendar a biopendacia para outro dia no horario das 08:00 (que seria as 7h30)"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        7552,
+        -448
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000059",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000012",
+              "name": "nome",
+              "value": "={{ $json.body.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000026",
+              "name": "numero",
+              "value": "={{ $json.body.numero.split('@')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000146",
+              "name": "instancia",
+              "value": "={{ $json.body.instancia }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000137",
+              "name": "resumo",
+              "value": "={{ $json.body.resumo }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        7664,
+        560
+      ],
+      "id": "00000000-0000-4000-8000-000000000067",
+      "name": "Edit Fields22"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $json.instancia }}",
+        "remoteJid": "=000000000000000000@g.us",
+        "messageText": "=Número do paciente: {{ $json.numero }}\nNome do paciente: {{ $json.nome }}\n\n{{ $json.resumo }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7856,
+        560
+      ],
+      "id": "00000000-0000-4000-8000-000000000051",
+      "name": "Enviar texto4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\tValor: R$ 60,00 para pacientes ativos e para não pacientes \n           R$ 100,00",
+        "height": 80,
+        "width": 592
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        7472,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000046",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "content": "clinica_exemplo",
+        "height": 176
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -944,
+        -1232
+      ],
+      "id": "00000000-0000-4000-8000-000000000007",
+      "name": "clinica_exemplo"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "eutanyoficial",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1280,
+        -1424
+      ],
+      "id": "00000000-0000-4000-8000-000000000035",
+      "name": "Webhook",
+      "webhookId": "00000000-0000-4000-8000-000000000120"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageId": "={{ $('Webhook').item.json.body.data.key.id }}",
+        "fromMe": true
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        5872,
+        -1472
+      ],
+      "id": "00000000-0000-4000-8000-000000000090",
+      "name": "Marcar mensagens como lidas",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageId": "={{ $('Webhook').item.json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        3584,
+        -1616
+      ],
+      "id": "00000000-0000-4000-8000-000000000005",
+      "name": "Marcar mensagens como lidas1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "=clinica_{{ $('Webhook').item.json.body.data.key.remoteJid }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        6384,
+        -1472
+      ],
+      "id": "00000000-0000-4000-8000-000000000076",
+      "name": "pegamessages2",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000105",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "={{ $('Wait1').item.json.message }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        6560,
+        -1472
+      ],
+      "id": "00000000-0000-4000-8000-000000000088",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageId": "={{ $('Webhook').item.json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        6560,
+        -1648
+      ],
+      "id": "00000000-0000-4000-8000-000000000028",
+      "name": "Marcar mensagens como lidas2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        7472,
+        384
+      ],
+      "id": "00000000-0000-4000-8000-000000000034",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "NEXLA",
+        "remoteJid": "000000000000000000@g.us",
+        "messageText": "=⚠️🔴 Deu erro no Workflow `\"{{ $workflow.name }}\"`. \n\nSegue o erro:\n\n*Nó que deu erro*:\n\n`{{ $json.execution.lastNodeExecuted }}`\n\n*Mensagem de erro*:\n\n`{{ $json.execution.error.message }}`\n\n*URL do erro para acompanhar*:\n\n`{{ $json.execution.url.replace('webhook','n8n') }}`",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7664,
+        384
+      ],
+      "id": "00000000-0000-4000-8000-000000000099",
+      "name": "mensagemDeErro",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Nó de erro\n",
+        "height": 260,
+        "width": 624,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        7440,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "00000000-0000-4000-8000-000000000087",
+      "name": "Sticky Note31"
+    },
+    {
+      "parameters": {
+        "tableId": "n8n_errors",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "payload",
+              "fieldValue": "={{ $json.data.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        7856,
+        384
+      ],
+      "id": "00000000-0000-4000-8000-000000000112",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000054",
+              "leftValue": "={{ $json.body.data.key.remoteJid }}",
+              "rightValue": "5500000000000@s.whatsapp.net",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -832,
+        -1424
+      ],
+      "id": "00000000-0000-4000-8000-000000000062",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000037",
+              "leftValue": "={{ $json.body.data.key.remoteJidAlt }}",
+              "rightValue": "5500000000000@s.whatsapp.net",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1024,
+        -1616
+      ],
+      "id": "00000000-0000-4000-8000-000000000077",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "content": "## FLUXO COMPLETO DE ABERTURA — siga exatamente essa sequência\n\n** Primeiro contato (seja quem for que iniciou):**\nLeia manda: cumprimento + apresentação + como pode ajudar.\nEx: \"Oii! Tudo bem? 😊 Me chamo Assistente, sou atendente da clínica da Dra. [MEDICA]! Como posso te ajudar hoje?\"\n\n**Etapa 2 — Cliente responde o que precisa:**\nLeia pergunta o nome antes de avançar.\nEx: \"Que ótimo! Me fala seu nome 😊\"\nEx: \"Claro! Como você se chama?\"\nEx: \"Com prazer! Qual é o seu nome?\"\n\n**Etapa 3 — Cliente fala o nome:**\nLeia cumprimenta pelo nome e conduz conforme o que o cliente pediu.\n\nCliente quer agendar consulta:\n\"Oi, [nome]! Você já é paciente aqui da clínica?\"\nApós identificar o paciente, pergunte se vai pelo particular ou [CONVENIO].\nNUNCA sugira um ou outro — deixe o cliente escolher.\n\nCliente quer saber o valor:\nPergunte primeiro se vai pelo particular ou pelo [CONVENIO].\n\"Oi, [nome]! Vai ser pelo particular ou pelo convênio?\"\nParticular primeira vez: R$ 650 / recorrente: R$ 550\n[CONVENIO]: sem cobrança ao paciente\nNUNCA cite o valor particular antes de saber se o cliente tem [CONVENIO].\n\nCliente tem dúvida sobre tratamento ou procedimento:\nResponda de forma simples e gentil, sem ser técnica demais.\nNo final: \"Tem mais alguma dúvida?\"\n\nCliente quer info da clínica (endereço, horário etc.):\nResponda direto e pergunte se precisa de mais alguma coisa.\n\nRegra geral: entenda o que o cliente precisa e responda aquilo — não antecipe etapas que ele não pediu ainda.\n\n> ⚠️ ATENÇÃO: Se o cliente chegar com uma pergunta direta (ex: \"a dra atende [CONVENIO]?\", \"quanto custa?\"), a Assistente SEMPRE responde a pergunta PRIMEIRO, depois apresenta e pede o nome — nessa ordem. NUNCA ignore a pergunta para pedir o nome antes.\n\n---\n\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        7600,
+        -16
+      ],
+      "id": "00000000-0000-4000-8000-000000000148",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.numero }}",
+        "tableName": "n8n_chat_histories",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        5584,
+        752
+      ],
+      "id": "00000000-0000-4000-8000-000000000069",
+      "name": "a1",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        5488,
+        752
+      ],
+      "id": "00000000-0000-4000-8000-000000000074",
+      "name": "aa1",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000111",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000151",
+              "name": "dados.numero",
+              "value": "={{ $('verifica se é uma mensagem DO CLIENTE1').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000150",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000038",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000152",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000116",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000131",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000094",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000096",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000030",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000115",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        624,
+        -1760
+      ],
+      "id": "00000000-0000-4000-8000-000000000091",
+      "name": "tratamento1"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.pushName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -1760
+      ],
+      "id": "00000000-0000-4000-8000-000000000052",
+      "name": "Create a row2",
+      "retryOnFail": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000111",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000151",
+              "name": "dados.numero",
+              "value": "={{ $('extrainumero').item.json.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000150",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000038",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000152",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000116",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000131",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000094",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000096",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000030",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000115",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        -1264
+      ],
+      "id": "00000000-0000-4000-8000-000000000041",
+      "name": "tratamento2"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Human"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -1264
+      ],
+      "id": "00000000-0000-4000-8000-000000000095",
+      "name": "Create a row1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('concatena').item.json.messages }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4160,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000093",
+      "name": "Create a row3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('AI Agent').item.json.output }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "IA"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6992,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000085",
+      "name": "Create a row4",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "clientes",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "primeiro_contato",
+              "fieldValue": "sim"
+            },
+            {
+              "fieldId": "classificacao_lead",
+              "fieldValue": "Curioso"
+            },
+            {
+              "fieldId": "origem",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.contextInfo.entryPointConversionApp }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4704,
+        -1376
+      ],
+      "id": "00000000-0000-4000-8000-000000000066",
+      "name": "PRIMEIRO_CONTATO1",
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "clientes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numero",
+              "keyValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "keyName": "instancia",
+              "keyValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4304,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000013",
+      "name": "BUSCA1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "00000000-0000-4000-8000-000000000044",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4448,
+        -1456
+      ],
+      "id": "00000000-0000-4000-8000-000000000011",
+      "name": "existe?1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "clientes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numero",
+              "condition": "eq",
+              "keyValue": "={{ $('concatena').item.json.numero }}"
+            },
+            {
+              "keyName": "instancia",
+              "condition": "eq",
+              "keyValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "ultima_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "data_ultimaMensagem",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4720,
+        -1600
+      ],
+      "id": "00000000-0000-4000-8000-000000000142",
+      "name": "recorrente1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2896,
+        -1024
+      ],
+      "id": "00000000-0000-4000-8000-000000000048",
+      "name": "Create a row5",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        4944,
+        -1472
+      ],
+      "id": "00000000-0000-4000-8000-000000000017",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000111",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000151",
+              "name": "dados.numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000150",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000038",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000152",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000116",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000131",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000094",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000096",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000030",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000115",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -1968
+      ],
+      "id": "00000000-0000-4000-8000-000000000024",
+      "name": "tratamento3"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "atendente"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.pushName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        608,
+        -1968
+      ],
+      "id": "00000000-0000-4000-8000-000000000068",
+      "name": "Create a row6",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $json.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        -944
+      ],
+      "id": "00000000-0000-4000-8000-000000000081",
+      "name": "Create a row7",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('concatena').item.json.messages }}",
+        "options": {
+          "systemMessage": "=Você é Atendente Dra. [MEDICA]\n\nVocê é a **Assistente**, atendente da clínica da Dra. [MEDICA].\n\nSeu objetivo principal: Recepcionar  de forma humanizada a mensagem inicial dos clientes e coletar o que eles precisam para a secretaria.\n\n## Atendimento\n\n- Quando chegar um paciente, você deve dar boas vindas, e perguntar como pode ajudar \"Bom dia/boa tarde/ boa noite. seja muito bem-vindo(a), é um prazer te receber, como posso ajudar hoje?\"\n\n- apos ele responder, ser for:\n\n1 - Marcar consulta, agendar, reagendar, voce vai pedir:\npara adiantar e passar para secretaria, informe seu nome completo, e qual tipo de  convenio e se já paciente ou é a primeira vez.\n\n- apos ele informar isso, ai  apenas pedir para aguardar uns breves minutinhos que a responsável já comunica eles. fale isso só depois dele passar as informações\n\n2 - Se for liberação de exame\n- apenas pedir o nome completo e quais seriam os exames, e depois que o cliente passar informar que avisou a secretaria\n\n3 - Se o paciente tiver alguma duvida sobre qual convenio atende, qual idade minima, voce responde a duvida porem nao fica forçando no final das mensagens para agendar, a nao ser que o paciente mencione que deseja.\n\n4 - Se for perguntado valor de consulta e outros serviços, informar que vai passar para a responsável informar.\n\n\nRegra: voce nao deve tomar atitude de falar que vai consultar, agendar ou liberara algo, sempre informar que vai passar para que a responsável por isso faça;\n\n  - nao repita \"Olá, aqui é a Assistente da [MEDICA]\" toda hora.\n\n- nao utilze — (travessao) em suas mensagens;\n---\n\n## SOBRE A DRA. [MEDICA]\n\n- **Nome:** [MEDICA] Epifanio [MEDICA]\n- **E-mail:** contato@clinica-exemplo.com\n- **Formação:** Medicina — Faculdade de Medicina de Camilo Castelo Branco, Fernandópolis/SP (2012)\n- **Pós-graduação:** Metabologia e Endocrinologia — IPEMED, São Paulo (2014)\n- ⚠️ A Dra. **não** é endocrinologista e **não** possui RQE\n- É a única profissional da clínica — não existe outro médico\n\n- se o paciente perguntar se a dr é endocrinolosgista, fale que ela nao é espececializada, mas tem pos graduação na area de endocrinologista e atende na área;\n\n---\n\n## SOBRE A CLÍNICA\n\n**Clínica Radioclin — Consultório 06, Recepção C**\nRua Pastor Manoel Cassimiro, 1210, Casa Preta — Ji-Paraná/RO — CEP: 76907-604\n\n- **Telefone:** (69) 3422-1502 — Nayara (secretária presencial) este numero é somente para ligações.\n- **Instagram:** @clinica_exemplo\n- **Horário:** Segunda a quinta, 08h às 12h das 14h às 18h, na sexta é das 8h até às 12h e nao atendemos sabado e domingo.\n\n- Recepção com café e água\n- Consultórios climatizados com isolamento e iluminação suave\n- Estacionamento gratuito\n- Acessibilidade: elevador e rampa\n- Banheiros masculino e feminino com trocador de bebê\n- Teleconsulta disponível\n- Não realiza cirurgias\n- Não é permitido acesso de pets\n\n---\n\n## PÚBLICO ATENDIDO\n\nMaioria entre 40 e 70 anos, Ji-Paraná e região. Vá direto ao ponto — esse público tem pouca paciência para rodeios.\n\nPrincipais demandas: diabetes, tireoide, menopausa, emagrecimento e doenças endócrinas.\n\n---\n\n## CONVÊNIOS\n\n- Todas as [CONVENIO]\n- Pelo convênio, não há cobrança ao paciente\n\n---\n\n## Atendimento a crianças\n\n- a idade minima de atendimento é a partir de 16 anos.\n\n## Regras globais\n\n - nao utlizar travessao nas mensagens, use virgula para soar mais humano\n\n\n## DATA E HORA ATUAL\n\nData e hora: {{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}\nDia da semana: {{ $now.weekdayLong }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        5392,
+        -1440
+      ],
+      "id": "00000000-0000-4000-8000-000000000015",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        5360,
+        -1120
+      ],
+      "id": "00000000-0000-4000-8000-000000000141",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories",
+        "contextWindowLength": 30
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        5536,
+        -1168
+      ],
+      "id": "00000000-0000-4000-8000-000000000060",
+      "name": "Postgres Chat Memory1",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        5024,
+        -1760
+      ],
+      "id": "00000000-0000-4000-8000-000000000032",
+      "name": "When chat message received",
+      "webhookId": "00000000-0000-4000-8000-000000000117"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "00000000-0000-4000-8000-000000000111",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000151",
+              "name": "dados.numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000150",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000038",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000152",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000116",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000131",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000094",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000071",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000029",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000096",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000030",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "00000000-0000-4000-8000-000000000115",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        912,
+        -992
+      ],
+      "id": "00000000-0000-4000-8000-000000000113",
+      "name": "tratamento4"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "atendente"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.pushName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        -992
+      ],
+      "id": "00000000-0000-4000-8000-000000000039",
+      "name": "Create a row8",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "tratamento": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "concatena": {
+      "main": [
+        [
+          {
+            "node": "deletalista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pegamessages": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "listamessage": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica se é uma mensagem DO CLIENTE1": {
+      "main": [
+        [
+          {
+            "node": "CHave-block",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado": {
+      "main": [
+        [
+          {
+            "node": "tratamento1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "coleta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "degrupo": {
+      "main": [
+        [
+          {
+            "node": "verifica se é uma mensagem DO CLIENTE1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "degrupo1": {
+      "main": [
+        [
+          {
+            "node": "extrainumero",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extrainumero": {
+      "main": [
+        [
+          {
+            "node": "verifica se é uma mensagem DO CLIENTE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta1": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica se é uma mensagem DO CLIENTE": {
+      "main": [
+        [
+          {
+            "node": "CHave-block1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado1": {
+      "main": [
+        [
+          {
+            "node": "tratamento2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "coleta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LID?": {
+      "main": [
+        [
+          {
+            "node": "degrupo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "degrupo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "concatena",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Marcar mensagens como lidas1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        [],
+        [
+          {
+            "node": "saidapadrao7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obter m dia em base1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Caminhos1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "main": [
+        [
+          {
+            "node": "imagem-data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        []
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "imagem-data1": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File7": {
+      "main": [
+        [
+          {
+            "node": "extratorpdf1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extratorpdf1": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao5": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao6": {
+      "main": [
+        []
+      ]
+    },
+    "saidapadrao7": {
+      "main": [
+        [
+          {
+            "node": "Create a row5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao9": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obter m dia em base1": {
+      "main": [
+        [
+          {
+            "node": "Caminhos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "imagem?": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "imagem-data1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "pegamessages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Create a row7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Convert to File7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deletalista": {
+      "main": [
+        [
+          {
+            "node": "Create a row3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assistente": {
+      "main": [
+        []
+      ]
+    },
+    "Think1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "servicos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "digitando",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "digitando": {
+      "main": [
+        [
+          {
+            "node": "pegamessages2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "secretaria": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields22": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar mensagens como lidas": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pegamessages2": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Marcar mensagens como lidas2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "mensagemDeErro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mensagemDeErro": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [],
+        [
+          {
+            "node": "LID?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        []
+      ]
+    },
+    "aa1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "servicos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "a1": {
+      "ai_memory": [
+        [
+          {
+            "node": "servicos",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento1": {
+      "main": [
+        [
+          {
+            "node": "Create a row2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento2": {
+      "main": [
+        [
+          {
+            "node": "Create a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row3": {
+      "main": [
+        [
+          {
+            "node": "BUSCA1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        [
+          {
+            "node": "Create a row4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BUSCA1": {
+      "main": [
+        [
+          {
+            "node": "existe?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "existe?1": {
+      "main": [
+        [
+          {
+            "node": "recorrente1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "PRIMEIRO_CONTATO1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "recorrente1": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PRIMEIRO_CONTATO1": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento3": {
+      "main": [
+        [
+          {
+            "node": "Create a row6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHave-block": {
+      "main": [
+        [
+          {
+            "node": "tratamento3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        []
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Marcar mensagens como lidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento4": {
+      "main": [
+        [
+          {
+            "node": "Create a row8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHave-block1": {
+      "main": [
+        [
+          {
+            "node": "tratamento4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "America/Manaus",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed6398d1f0e7bf2b67706e49c75bc00e97a8aceceb64592d9702aaa1b7dc4766"
+  },
+  "nodeGroups": [],
+  "tags": []
+}
