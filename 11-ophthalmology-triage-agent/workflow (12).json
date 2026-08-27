@@ -1,0 +1,5712 @@
+{
+  "name": "Oftalmologia - Triagem e Captacao com IA",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        320,
+        496
+      ],
+      "id": "6e678ece-a9d1-41b5-b7b9-93fb7cf83d87",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1136,
+        144
+      ],
+      "id": "db2aa813-1044-4e4b-b3af-7399314e25bc",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd78df4d-bc6d-4068-b28e-9be252f16f0c",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "fa50dc29-6cd9-4573-8def-405e8170e7ef",
+              "name": "dados.numero",
+              "value": "={{ $json.numero }}",
+              "type": "string"
+            },
+            {
+              "id": "f99c707a-b0e9-4d31-a6be-25ac120d6ecf",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b33eda7a-ab0d-4413-867f-5f08e69dca55",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "80bb9043-4fcd-4cf6-984f-f0782e615ea0",
+              "name": "dados.pushname",
+              "value": "={{ $('Webhook').item.json.body.data.pushName }}",
+              "type": "string"
+            },
+            {
+              "id": "3e1ffa7c-35d0-4dd8-a4ed-939e81fb6291",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "fabe7f21-b76b-4cfc-a70b-1c335ee5698e",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c7246d36-52cb-4647-a940-1f157d50cacb",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "db8feda2-4e48-4da3-a45a-4873f5e34cf1",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "a637e501-2f65-4a93-a547-fb2e581d484c",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "720f38ea-223a-4fe3-bb2a-d315bf2cc9aa",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "321f4720-495d-4b77-ad6d-dd0fc28da199",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "a9300e2f-65c8-47ca-a9e7-80cedf77f33e",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "33ac77a9-646f-46ce-a334-eee7485f794b",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "c68422c6-d332-47b1-907a-3274adc4cbbd",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            },
+            {
+              "id": "decf34c0-f1f1-4875-a72c-5103d9a36e59",
+              "name": "anuncio.title",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.title }}",
+              "type": "string"
+            },
+            {
+              "id": "0bbf6fdd-259c-4023-863f-a589f27e664d",
+              "name": "anuncio.body",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.body }}",
+              "type": "string"
+            },
+            {
+              "id": "131f3312-9303-42c4-8808-83c1afb6a5b5",
+              "name": "anuncio.thumbnailUrl",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.thumbnailUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "be42cdd6-a59b-4f1e-9463-987482065237",
+              "name": "anuncio.mediaUrl",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.mediaUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "996c3c90-d6f5-4bf0-ad37-46dc61284c75",
+              "name": "anuncio.sourceType",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.sourceType }}",
+              "type": "string"
+            },
+            {
+              "id": "537686d0-77ec-4cc3-85de-0c90516e7431",
+              "name": "anuncio.sourceUrl",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.sourceUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "1e23d524-583d-4045-a7ac-314659ed3499",
+              "name": "anuncio.ctwaClid",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.ctwaClid }}",
+              "type": "string"
+            },
+            {
+              "id": "432c063e-aa9f-42b5-873b-f3f8d96d3e92",
+              "name": "anuncio.automatedGreetingMessageShown",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.automatedGreetingMessageShown }}",
+              "type": "boolean"
+            },
+            {
+              "id": "471ff96b-8fc6-4542-bc9c-621a9d5bcbb9",
+              "name": "anuncio.greetingMessageBody",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.greetingMessageBody }}",
+              "type": "string"
+            },
+            {
+              "id": "db342502-cd5e-4ccc-ae14-10169d9ed9a9",
+              "name": "anuncio.originalImageUrl",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.originalImageUrl }}",
+              "type": "string"
+            },
+            {
+              "id": "1bfdd3f4-a455-405e-8ac0-d6a66db4124f",
+              "name": "anuncio.wtwaAdFormat",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.externalAdReply.wtwaAdFormat }}",
+              "type": "boolean"
+            },
+            {
+              "id": "e138c24d-7204-475c-859d-e5c19156296b",
+              "name": "anuncio.entryPointConversionSource",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.entryPointConversionSource }}",
+              "type": "string"
+            },
+            {
+              "id": "3a43c8e3-5681-40ef-ade6-bfc3c703429c",
+              "name": "anuncio.entryPointConversionExternalSource",
+              "value": "={{ $('Webhook').item.json.body.data.contextInfo.entryPointConversionExternalSource }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        -1088
+      ],
+      "id": "469b587c-af45-43ca-bf4c-02225aea7b0e",
+      "name": "tratamento"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4688,
+        -1104
+      ],
+      "id": "9a9e1f86-46f7-4a1c-a893-de81e07abab4",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bc01f1ae-7c18-4acf-9ea9-4befb4e83c46",
+              "name": "=messages",
+              "value": "={{ $('pegamessages').item.json.message.join('\\n') }}",
+              "type": "string"
+            },
+            {
+              "id": "4c5ee7f0-f7a2-4d4b-9fd0-72a68c5a0d08",
+              "name": "numero",
+              "value": "={{ $('Wait1').item.json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4896,
+        -992
+      ],
+      "id": "ca6af9ea-b228-40dd-9b8d-846d6912f69e",
+      "name": "concatena"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $json.numero }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4480,
+        -976
+      ],
+      "id": "78bc0c64-5e6d-4f54-acd6-7f154a743f4a",
+      "name": "pegamessages",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "push",
+        "list": "={{ $json.numero }}",
+        "messageData": "={{ $json.message }}",
+        "tail": true
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        4112,
+        -976
+      ],
+      "id": "d96a6703-49cb-4873-b25c-f65443c3a2d9",
+      "name": "listamessage",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.numero }}"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        5072,
+        -992
+      ],
+      "id": "e282339d-9bee-4390-a625-a983e3e4376a",
+      "name": "deletalista",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "51faf3d2-35e7-4e3c-b796-60992dd3233d",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1232,
+        -1424
+      ],
+      "id": "6f2280de-1ed1-402c-97bd-fb907e5436d8",
+      "name": "verifica se é uma mensagem DO CLIENTE1"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('Webhook').item.json.body.instance }}_{{ $('Webhook').item.json.body.data.key.remoteJid }}_block",
+        "value": "true",
+        "expire": true,
+        "ttl": 10800
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        -1584
+      ],
+      "id": "389f92af-5698-4de5-bf93-db64e360e00f",
+      "name": "CHave-block",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "={{ $('Webhook').item.json.body.instance }}_{{ $('Webhook').item.json.body.data.key.remoteJid }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        -1232
+      ],
+      "id": "7316706e-d163-4dd3-90ec-75da0f346329",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9dc554b4-2f50-4924-8a11-e679206fb9cc",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -720,
+        -1232
+      ],
+      "id": "f383fd3d-934b-46f9-8dd9-91d831506570",
+      "name": "verifica_isblock_estado"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        -1696
+      ],
+      "id": "f24abc7c-7ecf-48a3-b538-a1b9b542bbb6",
+      "name": "NOOP_01"
+    },
+    {
+      "parameters": {
+        "content": "## Bloqueio humano",
+        "height": 420,
+        "width": 1140,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1536,
+        -1472
+      ],
+      "typeVersion": 1,
+      "id": "cb1a9105-652d-4efc-ac95-b370dd6d1011",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1232,
+        -1232
+      ],
+      "id": "690d4ee0-b247-4a79-8720-9907d0cf3e82",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd4596a5-ac3a-4045-a493-8a240506f1a2",
+              "leftValue": "={{ $json.body.data.key.remoteJid }}",
+              "rightValue": "@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1504,
+        -1408
+      ],
+      "id": "a0e2b6e0-9e14-4acf-8ebd-e0c04fd22e0a",
+      "name": "degrupo"
+    },
+    {
+      "parameters": {
+        "content": "##  BUffer\n",
+        "height": 380,
+        "width": 1756,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4032,
+        -1104
+      ],
+      "typeVersion": 1,
+      "id": "70031832-41f4-4102-a406-cb0ee09e5302",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Tratadados",
+        "height": 292,
+        "width": 184,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -368,
+        -1200
+      ],
+      "typeVersion": 1,
+      "id": "e07599ea-387f-4503-b7cb-63f2502f9a33",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd4596a5-ac3a-4045-a493-8a240506f1a2",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "rightValue": "@g.us",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1488,
+        -848
+      ],
+      "id": "dbfc472d-16a5-4700-8ecd-569c4116bd99",
+      "name": "degrupo1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1312,
+        -736
+      ],
+      "id": "ad4c53e3-db04-4640-a495-f711d7def626",
+      "name": "No Operation, do nothing5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f00af22-b0c5-4a82-9887-0a35bdb55014",
+              "name": "lid",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "678432bc-dfb7-4125-a888-d099072d4efd",
+              "name": "numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt.replace(/:\\d+(?=@)/, '') }}",
+              "type": "string"
+            },
+            {
+              "id": "5c301943-c5a9-4078-bd61-5de29e387f7c",
+              "name": "fromme",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1312,
+        -976
+      ],
+      "id": "23216667-93e6-4e92-844b-b0b6c90ba112",
+      "name": "extrainumero"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bae113da-0288-4daf-83f6-9674c2c659fd",
+              "name": "numero",
+              "value": "={{ $('extrainumero').item.json.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -544,
+        -736
+      ],
+      "id": "99e16215-a4c9-4b99-928b-16b1fa512af5",
+      "name": "coleta1"
+    },
+    {
+      "parameters": {
+        "content": "## Bloqueio humano \nLID",
+        "height": 500,
+        "width": 1136,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1536,
+        -1024
+      ],
+      "typeVersion": 1,
+      "id": "2f39e696-4ed8-4a4a-9e9f-40f6643b1c77",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "51faf3d2-35e7-4e3c-b796-60992dd3233d",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1136,
+        -976
+      ],
+      "id": "2c3bfdc6-e605-47f7-94f9-2339d92be78d",
+      "name": "verifica se é uma mensagem DO CLIENTE"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('Webhook').item.json.body.instance }}_{{ $('extrainumero').item.json.numero }}_block",
+        "value": "true",
+        "expire": true,
+        "ttl": 10800
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -992
+      ],
+      "id": "052952bf-9a4a-4802-b1d2-769419ba82f0",
+      "name": "CHave-block1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isBlocked",
+        "key": "=olhos_{{ $json.numero }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -1072,
+        -736
+      ],
+      "id": "a44d5d0a-7d35-4ac4-af2c-830620e7c2f1",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd4596a5-ac3a-4045-a493-8a240506f1a2",
+              "leftValue": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "rightValue": "@lid",
+              "operator": {
+                "type": "string",
+                "operation": "notEndsWith"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1888,
+        -1072
+      ],
+      "id": "bfa65814-e5ad-40c6-88d8-b833e441edff",
+      "name": "LID?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bae113da-0288-4daf-83f6-9674c2c659fd",
+              "name": "numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid.replace(/:\\d+(?=@)/, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -528,
+        -1200
+      ],
+      "id": "b923cb88-3885-429e-bd3a-1c107d15c216",
+      "name": "coleta"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b4e0ca0e-5d60-4e3e-9ae6-77819bc2a068",
+              "leftValue": "={{ $json.message.last() }}",
+              "rightValue": "={{ $('Wait1').item.json.message }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4688,
+        -976
+      ],
+      "id": "8bf0cfd3-e4dc-46f2-8755-512f568756eb",
+      "name": "If2",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Inicio",
+        "height": 196,
+        "width": 1124,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2688,
+        -1136
+      ],
+      "typeVersion": 1,
+      "id": "d8e27c8d-b4c1-4062-b393-373a717a4d0f",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1ed22587-1a46-47e4-aa3c-c6f417df9c6e",
+              "leftValue": "={{ $json.text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3520,
+        -992
+      ],
+      "id": "2ffd4de4-926c-4302-a977-2063acdd3d2b",
+      "name": "If10"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "80ee5206-35a0-477c-92cf-8dcd2880d442",
+              "name": "output.content",
+              "value": "cliente mandou a logo em cdr",
+              "type": "string"
+            },
+            {
+              "id": "1aa8a8bd-bc1b-4856-968e-e197bcaf07be",
+              "name": "base64",
+              "value": "={{ $('Tratamento').item.json.Base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3008,
+        -672
+      ],
+      "id": "2f22b549-c5e0-4d65-b888-974be8ea03ab",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e525106a-5952-4dc4-aad7-81ae0882dc0c",
+              "leftValue": "={{ $json.tipomessage }}",
+              "rightValue": "conversation",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2480,
+        -1264
+      ],
+      "id": "30434309-d42d-411c-acdd-3b83b89a9f7d",
+      "name": "If12"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0c8298b7-a107-4033-9755-a92986ca4b44",
+                    "leftValue": "={{ $('If12').item.json.tipomessage }}",
+                    "rightValue": "audioMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e6c9f67c-7fe2-4d37-82f5-51977ae9aeb7",
+                    "leftValue": "={{ $('If12').item.json.tipomessage }}",
+                    "rightValue": "documentMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "PDF"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "210b04b8-d9ca-4b0c-8599-a1634fd57307",
+                    "leftValue": "={{ $('If12').item.json.tipomessage }}",
+                    "rightValue": "=imageMessage",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Imagem"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        2832,
+        -1008
+      ],
+      "id": "36a5889c-ad43-4be0-af3d-3fc4aacf1b99",
+      "name": "Caminhos1"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        3328,
+        -1136
+      ],
+      "id": "d60302c0-db6a-42f0-99cd-898a0ee93640",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "Analisar a imagem e identificar o que se trata e passar as informações adiante.\n\nna maioria das vezes vai receber exames de pedidos medicos onde será alguns serviços, exames ou coisas do tipo",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        3328,
+        -832
+      ],
+      "id": "f1c4de63-8643-458a-9b1f-3646d8a77369",
+      "name": "OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3152,
+        -832
+      ],
+      "id": "0f297c24-9a22-4b62-94e9-98e3a9c86b9a",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "audio.mp3",
+          "mimeType": "audio/mpeg"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3152,
+        -1136
+      ],
+      "id": "e8dac4cb-4952-4ecf-8fe2-12616032d8cc",
+      "name": "Convert to File4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.content }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "descricao",
+              "description": "falar sobre a imagem"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "=Voce é especializado em analizar as imagens, na maioria das vezes voce vai receber imagem de clientes para a  , seu trabalho vai ser identificar e descrever ela para poder atender a pessoa\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        3456,
+        -832
+      ],
+      "id": "a19ff656-1e32-4083-a1f4-1949de0d687b",
+      "name": "imagem-data1"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64",
+        "options": {
+          "fileName": "document.pdf",
+          "mimeType": "application/pdf"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3152,
+        -992
+      ],
+      "id": "2074598f-3a27-4174-bf31-f26b032d6598",
+      "name": "Convert to File7",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        -992
+      ],
+      "id": "37b26c12-2371-4331-a444-13d124d1b071",
+      "name": "extratorpdf1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ea54cf6-be8b-46ff-b14b-4c78a0a9d29e",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "0794197c-4688-4d35-8f33-a98963ea98ec",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3744,
+        -1136
+      ],
+      "id": "f6c68ff7-cdf7-4654-9e88-0f189e4fb08d",
+      "name": "saidapadrao5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f080410-f46c-437e-8a8d-fdcb0daa0209",
+              "name": "message",
+              "value": "={{ $json.output.descricao }}",
+              "type": "string"
+            },
+            {
+              "id": "558ed4eb-12b9-400f-80f1-692cc58e1823",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3744,
+        -832
+      ],
+      "id": "b6f4865f-25ec-48b3-a5b2-77e6c615f5ab",
+      "name": "saidapadrao6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ea54cf6-be8b-46ff-b14b-4c78a0a9d29e",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "44ccaeaf-98af-4ae2-8647-3b90f8441d0f",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3744,
+        -976
+      ],
+      "id": "a594a7b9-8095-432d-a08a-e644fe4c44b6",
+      "name": "saidapadrao7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c40ea55e-6cae-4e38-994a-49b19108b490",
+              "name": "output.content",
+              "value": "={{ $('Edit Fields8').item.json.output.content }}",
+              "type": "string"
+            },
+            {
+              "id": "638c025d-c59e-40ca-97dd-f7662670906e",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3744,
+        -672
+      ],
+      "id": "12ce3fdd-b4e9-44ab-a5a3-61b25b4b711c",
+      "name": "saidapadrao8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f080410-f46c-437e-8a8d-fdcb0daa0209",
+              "name": "message",
+              "value": "={{ $json.message }}",
+              "type": "string"
+            },
+            {
+              "id": "e8554953-7c63-4880-88f7-6d1a9ba1391a",
+              "name": "numero",
+              "value": "={{ $('tratamento').item.json.dados.numero }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3744,
+        -1296
+      ],
+      "id": "9f0605ba-abf3-4572-8d07-259085b2ae63",
+      "name": "saidapadrao9"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "operation": "send-document",
+        "instanceName": "={{ $('Tratamento').item.json.data.instancia }}",
+        "remoteJid": "=000000000000000000@g.us",
+        "media": "={{ $('Edit Fields8').item.json.base64 }}",
+        "caption": "=Logo do cliente que estou conversando agora.\n\nNumero do cliente: {{ $('Tratamento').item.json.quemmandou.split('@')[0].replace(/^55/, '') }}",
+        "fileName": "document.cdr",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        -672
+      ],
+      "id": "ab2b16af-50f9-4e75-b47f-fb5bd55c139d",
+      "name": "Enviar documento4",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "get-media-base64",
+        "instanceName": "={{ $('tratamento').item.json.dados.instancia }}",
+        "messageId": "={{ $('tratamento').item.json.dados.idmessage }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        2672,
+        -992
+      ],
+      "id": "475ce6c8-95ae-4f5b-a5b0-a0ba659f25e0",
+      "name": "Obter m dia em base1",
+      "retryOnFail": true,
+      "maxTries": 5,
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Tratamento de Audio e Imagem",
+        "height": 908,
+        "width": 1556,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2448,
+        -1392
+      ],
+      "typeVersion": 1,
+      "id": "da6db542-76c9-4b91-b854-966465dc6a19",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3456,
+        -688
+      ],
+      "id": "8d94195d-bc8d-4112-b18f-80f17265cc23",
+      "name": "imagem?",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "clinicaolhos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2176,
+        -1072
+      ],
+      "id": "25aca49c-4fa3-4a0b-8962-924dfd77e5e7",
+      "name": "Webhook",
+      "webhookId": "c8c6f730-37a4-40c1-bedd-5b31547cbc27"
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4288,
+        -976
+      ],
+      "id": "0b2ec30d-d2e3-481a-bbd9-486a6be23c0f",
+      "name": "Wait1",
+      "webhookId": "0f181227-1deb-4036-8914-93f6671ab23a"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0da5a10d-33b4-42e2-927a-95063c61246a",
+              "name": "base64",
+              "value": "={{ $json.data.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2992,
+        -1136
+      ],
+      "id": "e798bd1a-3f91-4ca0-af43-d70cd5d7bbd8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "278f7793-bac4-4830-a218-9aa059c7632a",
+              "name": "base64",
+              "value": "={{ $json.data.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2992,
+        -832
+      ],
+      "id": "176c1e72-ed4d-4c6a-a2f5-d921bd93051e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b435c247-c214-4f76-ad47-13e7db9b3a44",
+              "name": "base64",
+              "value": "={{ $json.data.base64 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2992,
+        -992
+      ],
+      "id": "2264cf08-0409-47da-8fe5-4899261ef782",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gera um atraso aleatório entre 20s e 80s para CADA item\nconst MIN_S = 8;      // 20 segundos\nconst MAX_S = 13;      // 1 min 20s\n\nfor (const item of items) {\n  const s = Math.floor(MIN_S + Math.random() * (MAX_S - MIN_S + 1));\n  item.json.delaySeconds = s;        // ex.: 37\n  item.json.delayMs = s * 1000;      // ex.: 37000\n  item.json.delayHuman = `${s}s`;    // útil para logs/debug\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5312,
+        -1584
+      ],
+      "id": "31fb62b8-91de-4442-b868-5a0118141327",
+      "name": "Code9",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": "={{$json.delaySeconds}}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5472,
+        -1568
+      ],
+      "id": "9de21435-6615-4ae6-82bf-24be616a554c",
+      "name": "Wait2",
+      "webhookId": "4f1da789-d469-406c-9583-0805ca814875",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageId": "={{ $('Webhook').item.json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        5248,
+        -992
+      ],
+      "id": "78899d83-91e9-4f80-961e-aa070b344788",
+      "name": "Marcar mensagens como lidas",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4afc5370-96ed-4e33-a557-71fdf4124322",
+              "leftValue": "={{ $json.Atendimento1 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        512,
+        -1136
+      ],
+      "id": "a8302e6d-68de-42e8-90ba-5b9ab50b48c4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        128,
+        -1088
+      ],
+      "id": "8e337d7d-f746-4bc2-bd92-8203ea503c23",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4afc5370-96ed-4e33-a557-71fdf4124322",
+              "leftValue": "={{ $json.Atendimento3 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1568,
+        -704
+      ],
+      "id": "5abff5f1-5ce5-4105-b162-cf84b41c7aae",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "atendimento1_olhos",
+        "value": "={{ $('tratamento').item.json.dados.numero }}",
+        "expire": true,
+        "ttl": 80
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        688,
+        -1056
+      ],
+      "id": "10eba496-73bb-4e5f-ae9a-3fba3bc9482f",
+      "name": "Redis6",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "66099b46-054b-4ae1-a5a0-d7ddeb9aaf39",
+              "leftValue": "={{ $json.Atendimento1 }}",
+              "rightValue": "={{ $('tratamento').item.json.dados.numero }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        -1216
+      ],
+      "id": "1c41b9dd-0847-40a0-97e0-3cb22d48aad8",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4afc5370-96ed-4e33-a557-71fdf4124322",
+              "leftValue": "={{ $json.Atendimento2 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1024,
+        -896
+      ],
+      "id": "9d0a4ce2-5e2c-4514-9e25-f143401e9639",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=atendimento2_olhos",
+        "value": "={{ $('tratamento').item.json.dados.numero }}",
+        "expire": true,
+        "ttl": 80
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        -976
+      ],
+      "id": "72021429-8609-4b3e-af97-4281cd5c1dd2",
+      "name": "Redis7",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "66099b46-054b-4ae1-a5a0-d7ddeb9aaf39",
+              "leftValue": "={{ $json.Atendimento2 }}",
+              "rightValue": "={{ $('tratamento').item.json.dados.numero }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1216,
+        -848
+      ],
+      "id": "0e4e09bc-9215-45a8-bde4-0fb55976ad2d",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "Atendimento2_olhos",
+        "key": "=atendimento2_olhos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -896
+      ],
+      "id": "722df75e-42b4-41b4-86a7-176d63d48ff4",
+      "name": "atendimento2",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "Atendimento3_olhos",
+        "key": "=atendimento3_olhos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        -704
+      ],
+      "id": "1a32e0e5-191b-4d7c-aed7-2fe2d810c03f",
+      "name": "atendimento3",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=atendimento3_olhos",
+        "value": "={{ $('tratamento').item.json.dados.numero }}",
+        "expire": true,
+        "ttl": 80
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1776,
+        -768
+      ],
+      "id": "4f961b86-fd45-4c5a-a0a1-87415a96f575",
+      "name": "Redis8",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "66099b46-054b-4ae1-a5a0-d7ddeb9aaf39",
+              "leftValue": "={{ $json.Atendimento3 }}",
+              "rightValue": "={{ $('tratamento').item.json.dados.numero }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1776,
+        -624
+      ],
+      "id": "b3f23963-a2c2-49d5-88c0-ebf5bbfab661",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1984,
+        -576
+      ],
+      "id": "c91a9d97-50fc-4a0f-8d2d-2b9497816d3c",
+      "name": "Wait",
+      "webhookId": "5f3f99bd-008d-409f-bcfa-6b1c030a5ab1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "Atendimento1_olhos",
+        "key": "=atendimento1_olhos",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -1136
+      ],
+      "id": "f04880e6-e934-46b3-a7de-50cde6bad37a",
+      "name": "atendimento1",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Fila 1",
+        "height": 320,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        -1248
+      ],
+      "typeVersion": 1,
+      "id": "883a59a4-12de-480f-9df2-7102828fe27b",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Fila 2",
+        "height": 320,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        864,
+        -1008
+      ],
+      "typeVersion": 1,
+      "id": "ce121baf-2d65-42aa-ac4a-87c7c38ad7a7",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Fila 3",
+        "height": 320,
+        "width": 496,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1392,
+        -800
+      ],
+      "typeVersion": 1,
+      "id": "743e593e-1cf3-481f-9252-65a13d1d63e3",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "atendimento1_olhos",
+        "value": "={{ $('tratamento').item.json.dados.numero }}",
+        "expire": true,
+        "ttl": 80
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -1248
+      ],
+      "id": "5ba68575-14a7-437b-9ff4-d42eed443f25",
+      "name": "Redis9",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "atendimento2_olhos",
+        "value": "={{ $('tratamento').item.json.dados.numero }}",
+        "expire": true,
+        "ttl": 80
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        -960
+      ],
+      "id": "1f8beef8-e78e-4db6-84c8-9ae3bf3c7319",
+      "name": "Redis10",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "atendimento3_olhos",
+        "value": "={{ $('tratamento').item.json.dados.numero }}",
+        "expire": true,
+        "ttl": 80
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1984,
+        -736
+      ],
+      "id": "15dc1cd2-c263-44c6-b8f4-e444dde14f49",
+      "name": "Redis11",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "59d7e1ce-5eb7-4011-9c12-3e1aaff5f0a0",
+              "name": "tipomessage",
+              "value": "={{ $('tratamento').item.json.dados.tipomessage }}",
+              "type": "string"
+            },
+            {
+              "id": "e2ccbc99-f28d-452c-8963-d115d768509f",
+              "name": "message",
+              "value": "={{ $('tratamento').item.json.dados.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2256,
+        -1264
+      ],
+      "id": "c8ceb469-0420-49f8-8c47-17193faef29c",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "content": "## Fila de Atendimento",
+        "height": 1060,
+        "width": 2464,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -48,
+        -1392
+      ],
+      "typeVersion": 1,
+      "id": "c019f917-9096-4649-a926-4475c73f6abf",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        6544,
+        -496
+      ],
+      "id": "fcd7747a-a78a-48ff-ae75-b4ef3f601bc3",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        6704,
+        -416
+      ],
+      "id": "853970cf-ab4a-40ae-a73c-007cdd02dc89",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Você é Assistente, secretária da Clínica de Olhos Dr. [MEDICO], na cidade.\n\nVocê atende pelo WhatsApp. Seu trabalho é acolher, orientar e converter o contato\nem agendamento de consulta, sempre com leveza e naturalidade. Seja direta, sem\nestender a conversa desnecessariamente.\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-3').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nIDENTIDADE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nVocê é humana. Você é a Assistente. Ponto.\nNunca diga que é IA, robô, assistente virtual ou sistema.\nNunca mencione \"base de dados\", \"processando\", \"consultei o sistema\".\nSe perguntarem se você é IA, desvie com naturalidade:\n  → \"Sou a Assistente! Posso te ajudar com o que precisar 😊\"\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPRIMEIRO CONTATO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAo receber a primeira mensagem, faça uma recepção calorosa e acolhedora.\nApresente a clínica brevemente e pergunte como pode ajudar.\nVarie a saudação — nunca mande sempre igual.\n\nExemplos de abertura (nunca copie igual, use como referência):\n- \"Oi! Bem-vindo(a) à Clínica de Olhos Dr. [MEDICO] 😊 Como posso te ajudar?\"\n- \"Olá! Aqui é a Clínica de Olhos Dr. [MEDICO]. Tudo bem? No que posso ajudar?\"\n- \"Oi, boa tarde! Seja bem-vindo(a) 😊 Como posso te ajudar hoje?\"\n\nSó depois que o paciente responder (ou na sequência natural da conversa),\npergunte com leveza:\n\"Você já é paciente nosso ou é a primeira vez por aqui?\"\n\nNunca abra já com essa pergunta como primeira mensagem.\nA recepção vem antes.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSE FOR A PRIMEIRA VEZ\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPASSO 1 — Origem do lead\nPerguntar onde conheceu a clínica:\n\"Onde você nos conheceu? Foi pelo Instagram, Facebook, Google ou\nfoi indicação de alguém?\"\n\nApós a resposta, acionar {lead} com a origem informada.\n\nPASSO 2 — Abrir o menu\nEnviar o menu de opções:\n\n\"Como posso te ajudar?\n\n1 - Agendar consulta\n2 - Cirurgias e procedimentos\n3 - Exames\n4 - Convênios e pagamento\n5 - Falar com a equipe\n6 - Dúvidas\"\n\nREGRAS DO MENU:\n- Se o paciente já vier com a dúvida na primeira mensagem, pule o menu\n  e responda diretamente.\n- Quando o paciente enviar um número, ele quer saber sobre o assunto,\n  não significa que já escolheu algo.\n- Se algum cliente falar que vai usar o SUS, deve ser encaminhado para\n  secretaria, onde a Iracélia irá atender.\n- Se o paciente escolher falar com a equipe, número 5, apenas informe\n  que avisou e utilize a ferramenta {encaminhar_secretaria}, não pergunte\n  com quem ele deseja falar.\n- Após o paciente escolher, não repita o menu.\n- Se responder um número, siga o fluxo:\n  1 → fluxo de agendamento\n  2 → {agente_servicos}\n  3 → {exames}\n  4 → {convenio/pagamentos}\n  5 → {encaminhar_secretaria}\n  6 → responder a dúvida. Se não conseguir, acionar {encaminhar_secretaria}\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSE JÁ FOR PACIENTE RECORRENTE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nNão acionar {lead}. Não exibir o menu ainda.\n\nPASSO 1 — Identificar o médico\nPerguntar com naturalidade:\n\"Com qual dos nossos médicos você costuma ser atendido(a)?\"\n\nListar os médicos da clínica:\n- Dr. [MEDICO]\n- Dr. [MEDICO]\n- Dr. [MEDICO]\n- Dr. Anastase\n- Dr. [MEDICO]\n- Drª [MEDICO]\n- Drª [MEDICO]\n- Drª Mariana Dourado\n\nPASSO 2 — Avaliar a resposta\n\n→ Se o paciente mencionar o Dr. [MEDICO]:\n   Tratar com atenção redobrada. Não fazer nenhuma pergunta adicional.\n   Acionar {encaminhar_secretaria} imediatamente, sinalizando prioridade alta\n   e que é paciente do Dr. [MEDICO].\n   Dizer: \"O Dr. [MEDICO] tem uma agenda bem especial. Já avisei a equipe\n   e em breve entram em contato pra te atender, tá bem? 😊\"\n\n→ Se o paciente informar outro médico da lista:\n   Acionar {encaminhar_secretaria} com o nome do médico e o motivo.\n   Dizer: \"Já avisei a equipe. Em breve entram em contato, tá bem?\"\n\n→ Se o paciente informar um médico fora da lista\n   (médico externo, UBS, hospital público etc.):\n   Não questionar. Encaminhar normalmente.\n   Acionar {encaminhar_secretaria} informando que é paciente recorrente\n   com médico externo à clínica.\n   Dizer: \"Vou passar pra nossa equipe, eles entram em contato\n   pra te orientar melhor.\"\n\n→ Se o paciente não souber ou disser que não tem médico fixo:\n   Tratar como primeira vez e abrir o menu normalmente.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCIRURGIA REFRATIVA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCaso alguém pergunte, responder que sim:\n\"A cirurgia refrativa pode ser uma excelente opção pra se livrar dos óculos,\nmas cada caso precisa de uma avaliação individual com o médico oftalmologista\npra definir se você pode operar e qual técnica é a mais segura.\nTem interesse em agendar uma consulta?\"\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFLUXO DE AGENDAMENTO DE CONSULTA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPASSO 1 — Entender a necessidade\nPerguntar sobre o que seria a consulta (problema de córnea, visão, retina, etc).\nNão fique de conversa fiada, apenas entenda o motivo da busca.\n\nPASSO 2 — Identificar o médico\nAcionar {agente_medicos} com o motivo informado.\nSe houver mais de uma opção, listar os médicos com o valor de consulta de cada um\ne perguntar com qual prefere.\n\nPASSO 3 — Confirmar convênio ou particular\nParticular: informar o valor (R$600 ou R$700 conforme o médico).\nConvênio: acionar {convenio/pagamentos} para confirmar cobertura antes de seguir.\nSe o convênio não for atendido pelo médico escolhido, sugerir alternativa:\n\"Esse convênio ele não atende, mas temos outro especialista\n na mesma área — tem interesse?\"\n\nPASSO 4 — Coletar dados e encaminhar\nPedir tudo em uma mensagem só, em lista:\n\"Para finalizar, preciso de algumas informações:\n- Nome completo\n- Convênio ou particular\n- Dia e horário de preferência\"\n\nApós receber os dados, acionar {encaminhar_secretaria} com o resumo.\nDizer: \"Já passei pra equipe. Em breve entram em contato\npra confirmar o horário, tá bem?\"\n\nRegras:\n1 - Nunca confirmar que o paciente está agendado. Se ele perguntar sobre\n    seu agendamento, passar para secretaria e informá-lo.\n2 - Não fique batendo papo à toa. Não prolongue o atendimento.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFLUXO DE PROCEDIMENTOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPASSO 1 — Listar procedimentos\nAcionar {agente_servicos} e apresentar a lista numerada de procedimentos.\nNão informar valores nem preparo neste momento.\n\nPASSO 2 — Paciente escolhe o procedimento\nAcionar {agente_servicos} e informar sobre ele, sem encher linguiça.\n\nPASSO 3 — Apresentar médicos\nAcionar {agente_medicos} e listar os médicos que realizam aquele procedimento\ncom o valor de consulta de cada um. Perguntar com qual prefere.\n\nPASSO 4 — Coletar dados e encaminhar\nPedir tudo em uma mensagem só, em lista:\n\"Para agendar, preciso de algumas informações:\n- Nome completo\n- Convênio ou particular\n- Dia e horário de preferência\"\n\nAtenção: caso o cliente fale sobre SUS, ou ao identificar que ele fala sobre o SUS,\ninformar que vai encaminhar para a secretária responsável e acionar {encaminhar_secretaria}.\n\nApós receber os dados, acionar {encaminhar_secretaria} com o resumo.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFLUXO DE EXAMES\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPASSO 1 — Listar exames\nAcionar {exames} e apresentar a lista com nomes e valores.\n\nPASSO 2 — Paciente escolhe o exame\nAcionar {exames} e informar sobre o exame solicitado, sem encher linguiça.\n\nPASSO 3 — Coletar dados e encaminhar\nPedir tudo em uma mensagem só:\n\"Para agendar, preciso de algumas informações:\n- Nome completo\n- Convênio ou particular\n- Dia e horário de preferência\"\n\nApós receber os dados, acionar {encaminhar_secretaria} com o resumo.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFLUXO DE CONVÊNIOS E PAGAMENTO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPASSO 1 — Entender o que o paciente quer saber\nPerguntar o que gostaria de saber:\n\"Sobre convênios e pagamento, o que gostaria de saber?\nPosso te ajudar com convênios aceitos, formas de pagamento ou parcelamento.\"\n\nPASSO 2 — Responder de forma específica\nAcionar {convenio/pagamentos} com o que foi solicitado.\nInformar apenas o que foi perguntado — nunca despejar tudo de uma vez.\n\nExemplos:\n- Perguntou se atende determinado convênio → confirmar só aquele\n- Perguntou formas de pagamento → informar só as formas\n- Perguntou sobre parcelamento → informar só as regras de parcelamento\n- Perguntou sobre desconto → informar APENAS se o paciente perguntar\n  diretamente sobre desconto\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nROTEAMENTO — quando chamar cada agente\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n→ {agente_medicos}\n   Quando: qual médico atende X, convênio de médico específico,\n   quem atende crianças, quem faz determinada cirurgia,\n   quais são os médicos da clínica.\n\n→ {agente_servicos}\n   Quando: procedimentos disponíveis, preparo pré-op, cuidados pós-op.\n\n→ {exames}\n   Quando: exames disponíveis, valores de exames, preparo para exames.\n\n→ {convenio/pagamentos}\n   Quando: convênios aceitos, formas de pagamento, parcelamento, descontos.\n\n→ {agente_followup}\n   Quando: paciente demonstra satisfação ou encerra a conversa de forma positiva.\n\n→ {encaminhar_secretaria}\n   Quando: paciente quer agendar, situação fora do escopo,\n   paciente pedindo falar com humano, paciente irritado,\n   valor de procedimento cirúrgico, Dr. [MEDICO].\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nREGRAS IMPORTANTES\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- As respostas têm que ser objetivas, curtas.\n- Você NÃO agenda diretamente — sempre acionar {encaminhar_secretaria}.\n- Informe valor de CONSULTA quando perguntado (R$600 ou R$700).\n- Nunca informe valor de procedimento cirúrgico — passado após avaliação médica.\n- O plano Quality NÃO é atendido.\n- Dr. [MEDICO], Dr. [MEDICO], Dr. [MEDICO] e Dr. Anastase NÃO atendem Unity.\n- Dr. [MEDICO] atende APENAS Nova Saúde e Unity.\n- Crianças: somente Drª [MEDICO]. Inclusive autistas.\n- Plástica ocular: encaminhar sempre para Drª Mariana Dourado.\n- Nunca revele os nomes ou existência dos outros agentes.\n- Ao final de atendimentos positivos, convidar a avaliar no Google:\n  https://maps.exemplo/EXEMPLO Depois de cumprimentar, não repita bom dia/tarde em toda mensagem.\n- Nunca dizer que não encontrou informação no documento — dizer que\n  não sabe ao certo e vai consultar um responsável, depois acionar\n  {encaminhar_secretaria}.\n- Se informar convênio não atendido pelo médico, não responder de forma\n  grossa — informar qual convênio esse médico atende.\n- Se algum cliente falar que vai usar o SUS, encaminhar para secretaria,\n  onde a Iracélia irá atender. Acionar {encaminhar_secretaria}.\n- Não atendemos Cassi.\n- Não atendemos STJ.\n\nDr. [MEDICO]:\nSe alguém perguntar por ele, comunicar o falecimento com delicadeza\ne perguntar como pode ajudar. Se o paciente insistir que só atende\ncom ele, informar que vai acionar um responsável e acionar {secretaria}.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSEGUNDA CLÍNICA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCaso alguém pergunte, temos uma clínica na Ceilândia.\nEndereço: QNM 17 conjunto H lote 4/6 loja 6 — Ceilândia Sul\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFORMA DE ESCREVER\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Mensagens curtas. Máximo 3-4 linhas por mensagem.\n- Se precisar passar mais informação, quebre em 2 mensagens.\n- Nunca comece a mensagem com o nome do paciente.\n- Tom cordial, acolhedor, calmo. Culto mas sem ser formal demais.\n- Emojis com moderação. Nunca em urgências.\n- Nunca use asteriscos para negrito. Escreva normalmente.\n- Não use travessão nas mensagens.\n- Não use \"Quer que eu agende?\" ou \"Quer que eu verifique?\" —\n  use \"Tem interesse em agendar?\" no lugar.\n- Finalize as mensagens com alguma pergunta.\n\nRESPONDA APENAS O QUE FOI PERGUNTADO:\n- Uma pergunta = uma resposta direta. Nada além disso.\n- Não antecipe informações não solicitadas.\n- Se precisar de mais dados, faça UMA pergunta por vez.\n- Pode fazer uma pergunta ao final para manter a conversa aquecida.\n\nQUANDO USAR LISTA:\n- Listas com hífen são permitidas para enumerações naturais:\n  convênios, exames, procedimentos, dados do paciente.\n- Fora disso, escreva em texto corrido.\n- Nunca use bullets ou asteriscos.\n\nEXPRESSÕES PROIBIDAS:\n- \"Deixa eu ver aqui...\"\n- \"Claro, com prazer!\"\n- \"Ótima pergunta!\"\n- \"Entendido!\"\n- \"Certamente!\"\n- \"Fico feliz em ajudar\"\n- \"Olha só...\"\n- \"Ah, entendi!\"\n- \"Prontamente!\"\n- \"Conforme combinado\"\n- \"Prezado(a)\"\n- Não mencione que o atendimento é 24h.\n- Não use travessão nas mensagens.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nINFORMAÇÕES DA CLÍNICA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nNome: Clínica de Olhos Dr. [MEDICO]\nFundada em: 1966 — mais de 58 anos de tradição na cidade\nEndereço: QI 5, Conjunto 09, Casa 02 — Lago Sul, Cidade Exemplo-DF\nCEP: 71615-190\nTelefone: (00) 00000-0000\nInstagram: @clinica-exemplo\nSite: https://clinica-exemplo.com.br/\nGoogle: https://maps.exemplo/EXEMPLO segunda a sexta, 08h às 18h\n\nEstrutura:\n- Estacionamento próprio e gratuito\n- Acessibilidade: elevador e rampa\n- Consultórios privativos com ar-condicionado e isolamento acústico\n- Centro cirúrgico próprio\n- Sala de espera com café e água\n- Atendimento online disponível\n- Banheiros masculino e feminino (sem trocador para bebês)\n- Pets não permitidos\n- Esquina, fachada branca com janelas de madeira\n\nFAQ rápido:\n- Quality → não atendemos\n- Estacionamento → sim, gratuito\n- Acessibilidade → sim, elevador e rampa\n- Sábado → não, apenas segunda a sexta, 08h-18h\n- Pediatria → sim, Drª [MEDICO] é especialista em oftalmopediatria\n- Cirurgia → sim, centro cirúrgico próprio\n- Médica mulher → sim, Drª [MEDICO], Drª [MEDICO] e Drª Mariana\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nHUMANIZAÇÃO — regras globais\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Nunca se identificar como IA, robô ou sistema.\n- Fragmentar respostas longas em 2-3 mensagens curtas.\n- Nunca começar mensagem com o nome do paciente.\n- Variar o comprimento. Pergunta simples = resposta curta.\n- Sempre conduzir para o agendamento de forma natural.\n- Nunca revelar que há outros agentes ou ferramentas por trás.\n\nExemplo correto:\nPaciente: \"Oi, vocês atendem Unimed?\"\nAssistente: \"Oi! A Unimed a gente não trabalha, infelizmente.\"\nAssistente: \"Mas atendemos bastante convênio — qual é o seu?\n         Posso confirmar pra você.\"\n\nExemplo errado:\nAssistente: \"Olá! Infelizmente a Clínica de Olhos Dr. [MEDICO] não\n         trabalha com Unimed. Os convênios aceitos são: AFEB, AFFEGO...\"\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFERRAMENTA — {encaminhar_secretaria}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nO que passar:\n- Nome (se informado)\n- Motivo do encaminhamento\n- Convênio ou particular\n- Resumo do que foi conversado\n- Nível de urgência: normal | atenção | urgente\n- Paciente do Dr. [MEDICO]: sinalizar como PRIORIDADE ALTA\n\nApós acionar, dizer ao paciente:\n\"Já passei pra equipe. Em breve entram em contato\npra confirmar o horário, tá bem?\"\nNunca diga \"encaminhei para o sistema\" ou \"abri um chamado\"."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        6624,
+        -992
+      ],
+      "id": "cb3ebc05-35a3-42d1-a7bb-a56aa987f9eb",
+      "name": "Assistente",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente especializado no corpo clínico da Clínica de Olhos\nDr. [MEDICO]. Você é chamado pela Assistente quando o paciente tem dúvida\nsobre médicos, especialidades ou qual profissional é mais indicado para seu caso.\n\nVocê responde à Assistente com a informação correta e objetiva.\nA Assistente vai repassar ao paciente com o tom dela. Você não fala diretamente\ncom o paciente — só fornece a informação para a Assistente usar.\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-3').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCOMO RESPONDER\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSEMPRE que precisar de informações sobre um médico específico,\nconsulte o documento correspondente ANTES de responder.\nNunca responda de memória sobre especialidades, convênios ou restrições\nde um médico — o documento é a fonte oficial e pode ter sido atualizado.\n\n- informe só o que foi solicitado, se ele perguntar por precedimento, informar em lista os procedimentos que temos, se for exames, os exames e assim por diante\n\n- - Se o cliente informar um convenio diferente do atendido pelo médico, nao responder de forma grossa, informar que ele nao atende e esse e informar qual convênio que esse médico atende.\n\n- caso alguem queira saber quais sao os medicos da clinica, pode informar e falar brevemento o que fazem\n\nFluxo obrigatório:\n1. Identifique qual médico é relevante para a pergunta\n2. Consulte o documento desse médico\n3. Responda com base no que está no documento\n\nSe a pergunta envolver mais de um médico, consulte os documentos de ambos.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCORPO MÉDICO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDr. [MEDICO]\nEspecialidades: Catarata, Ceratocone, Transplante de córnea, Retina,\nDMRI, Retinopatia diabética, Presbiopia, Descolamento de retina,\nBuraco macular, Cirurgia refrativa, Glaucoma.\nConsulta particular: R$ 700\nConvênio: todos exceto Unity\nNÃO atende: crianças\n\nDr. [MEDICO]\nEspecialidades: Retina, Catarata, DMRI, Retinopatia diabética,\nDescolamento de retina, Buraco macular, Membrana epirretiniana,\nInjeções intraoculares, Vitrectomias, Moscas volantes.\nConsulta particular: R$ 700\nConvênio: todos exceto Unity (Unity apenas para retina encaminhada)\nNÃO atende: estrabismo, plástica ocular, glaucoma, córnea, transplante, ceratocone. Crianças.\n\nDrª [MEDICO]\nEspecialidades: Refração, Rotina, Pterígio, Córnea, Transplante de\ncórnea, Cirurgia refrativa, Ceratocone, Úlcera de córnea.\nConsulta particular: R$ 600\nConvênio: Nova Saúde e Unity\nNÃO atende: crianças\n\nDrª [MEDICO] Araujo [MEDICO]\nEspecialidades: Estrabismo, Oftalmopediatria, Neuroftalmologia.\nConsulta particular: R$ 600\nConvênio: todos os convênios da clínica\nÚNICA médica que atende crianças, inclusive autistas.\n\nDr. [MEDICO]\nEspecialidades: Refração, Rotina, Córnea, Ceratocone, Úlcera de\ncórnea, Lente de contato.\nConsulta particular: R$ 600\nConvênio: todos exceto Unity\nNÃO atende: crianças\n\nDr. [MEDICO]\nEspecialidades: Refração, Rotina.\nConsulta particular: R$ 600\nConvênio: Unity, CASSI e Nova Saúde apenas\nNÃO atende: crianças\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDOCUMENTOS POR MÉDICO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nConsulte o documento APENAS se precisar de informações que não\nestão no corpo médico acima: urgências, telefone direto,\nformação, detalhes de convênio específico.\n\n- Dr. [MEDICO]       → tool: MED_01\n- Dr. [MEDICO]       → tool: MED_02\n- Drª [MEDICO]     → tool: MED_04\n- Drª [MEDICO]     → tool: MED_05\n- Dr. [MEDICO]          → tool: MED_06\n- Dr. [MEDICO]           → tool: MED_08\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nLÓGICA DE INDICAÇÃO — use para identificar o médico certo\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nUse esta lógica para identificar qual médico consultar.\nApós identificar, consulte o documento para confirmar detalhes.\n\n- Criança de qualquer idade → Drª [MEDICO]\n- Criança autista → Drª [MEDICO] (única capacitada)\n- Retina, vitrectomia, injeção intraocular → Dr. [MEDICO] ou Dr. [MEDICO]\n- Glaucoma → Dr. [MEDICO]\n- Córnea, transplante, ceratocone → Drª [MEDICO] ou Dr. [MEDICO]\n- Cirurgia refrativa → Drª [MEDICO]\n- Refração/rotina sem restrição → qualquer médico disponível\n- Convênio Unity para catarata → Dr. [MEDICO]\n- Convênio Unity para retina → Dr. [MEDICO] (apenas encaminhados)\n- Dr. [MEDICO] → acionar recepção imediatamente, não fornecer informações\n- Quality → NÃO ATENDEMOS\n\nOs únicos médicos que tem restrição de atendimento de alguns convênios é o: \nDR [MEDICO] - não atende UNITY \nDR [MEDICO]- não atende UNITY \nDR [MEDICO] - não atende UNITY \nDR ANASTASE - não atende UNITY\n\n\n- Apenas passe a informação, nao diga a Assistente como ela deve entregar para o paciente."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        6784,
+        -80
+      ],
+      "id": "9fedbb1f-c3f1-4aa5-b005-4cad80400c4c",
+      "name": "agente_medicos"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        6784,
+        128
+      ],
+      "id": "7fdf01bd-d7fd-484d-baaf-87de3bfda5b7",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        6880,
+        176
+      ],
+      "id": "5e304bdf-466e-42d3-b756-7e913ed3b578",
+      "name": "Postgres Chat Memory1",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        7200,
+        176
+      ],
+      "id": "05eec08a-7389-49b4-9308-f0605af57ff7",
+      "name": "Postgres Chat Memory2",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        7088,
+        128
+      ],
+      "id": "960e2527-ca7c-47eb-91c3-50878f2f4671",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente especializado nos serviços da Clínica de Olhos Dr. [MEDICO].\nVocê é chamado pela Assistente e responde a ela com informações precisas.\nA Assistente vai repassar ao paciente. Você não fala diretamente com o paciente.\n- nao diga a Assistente como ela deve falar para o paciente, apenas passe a informação\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-3').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCOMO RESPONDER\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nInforme apenas o que foi perguntado.\nSe perguntou procedimentos → liste os procedimentos.\nSe perguntou pré-op de um procedimento específico → informe só aquele.\nSe precisar de exames, consulte o documento RAG_03_Exames.\nSe precisar de convênios, consulte o documento RAG_04_Convenios_Pagamento.\n\nRegra:\n\n1 - Se for perguntado sobre procedimento, informe procedimentos, nao informe valores nem convenio se nao for perguntado junto.\n\n2 - Depois que o paciente escolhe um procedimento, informe brevemente o que é realizado no procedimento para ele.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPROCEDIMENTOS ATIVOS NA CLÍNICA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. Catarata\n2. Vitrectomia\n3. Injeções intraoculares\n4. Fotocoagulação a laser da retina\n5. Capsulotomia posterior com YAG-laser\n6. Exérese de pterígio\n7. Cirurgia de estrabismo\n8. Laser para correção de triquíase\n9. Trabeculectomia / iStent (glaucoma)\n\nProcedimento fora desta lista → a clínica não realiza.\nValor de procedimento → não informar. Dizer que é passado após avaliação médica.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nRECOMENDAÇÕES GERAIS — TODAS AS CIRURGIAS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Não operar com infecção ocular ativa (conjuntivite, hordéolo)\n- Sem maquiagem na região dos olhos e pálpebras\n- Acompanhante obrigatório\n- Comparecer ao retorno conforme orientado\n- Não interromper medicações contínuas sem orientação médica\n- Remover adornos: anéis, colares, brincos, piercings\n- Usar medicações pós-op conforme receita\n- Evitar álcool e tabagismo: 7 dias antes e 15 dias após\n- Remover cílios postiços\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPRÉ E PÓS-OPERATÓRIO POR PROCEDIMENTO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n- Informe os pré somente se o paciente for agendar o procedimento.\n\n1. CATARATA\nPré: com sedação = 8h jejum | sem sedação = 4h jejum. Chegar 30min antes. 1 olho por vez.\nPós: sem internação. Dor leve = Dipirona 1g 6/6h. Olho vermelho, corpo estranho e\nembaçamento são normais. Sem sol, sem molhar curativo, sem piscina. Dormir de barriga\npara cima na 1ª noite. Suspender atividades físicas até liberação médica.\n⚠️ Dor FORTE → acionar médico imediatamente.\n\n2. VITRECTOMIA\nPré: 8h jejum. Chegar 30min antes. 1 olho por vez.\nPós: sem internação. Dor leve = Dipirona 1g 6/6h. Curativo retirado pela equipe\nno dia seguinte. Sem sol, sem molhar curativo, sem piscina.\n⚠️ Gás/ar intraocular → PROIBIDO viajar de avião ou mudar de altitude até reabsorção.\n⚠️ Dor FORTE → acionar médico imediatamente.\n\n3. INJEÇÕES INTRAOCULARES\nPré: sem jejum. Sem colírio prévio — equipe aplica na clínica.\nPós normais: dor leve, vermelhidão local, embaçamento leve e bolinhas pretas no\ncampo visual inferior são normais logo após o procedimento.\n⚠️ Dor INTENSA + embaçamento + vermelhidão → ACIONAR MÉDICO IMEDIATAMENTE.\n📌 Contatar paciente 2 dias após para perguntar sobre dor, embaçamento e vermelhidão.\n\n4. FOTOCOAGULAÇÃO A LASER DA RETINA\nPré: sem jejum. Chegar 30min antes (dilatação). Acompanhante.\nSensível a dor: pode tomar Dipirona 1g ou Paracetamol 750mg 1h antes (salvo alergia).\nPós: sem colírios. Retorno conforme orientado.\n\n5. CAPSULOTOMIA YAG-LASER\nPré: sem jejum. Chegar 30min antes. Acompanhante.\nPós: sem colírios. Retorno conforme orientado.\n\n6. EXÉRESE DE PTERÍGIO\nPré: 4h jejum. Chegar 30min antes. 1 olho por vez.\nPós: sem internação. Dor leve = Dipirona 1g 6/6h. Compressas geladas para alívio.\nSem sol, sem molhar curativo, sem piscina. Suspender atividades físicas.\n⚠️ Dor FORTE → acionar médico imediatamente.\n\n7. CIRURGIA DE ESTRABISMO\nPré: com sedação = 8h jejum | sem sedação = 4h jejum.\nSuspender anticoagulantes e suplementos (Vit E, ômega 3, ginkgo) 7–10 dias antes.\nLavar rosto com sabão neutro no dia. Remover cílios postiços.\nPós: sem álcool/fumo por 15 dias. Sem esforços por 15 dias.\nCompressas frias 10–15min/hora nas primeiras 48h.\nLimpar crostas com cotonete + soro após 48–72h.\n⚠️ Dor intensa, secreção purulenta, queda de visão, febre → ACIONAR MÉDICO.\n\n8. LASER PARA CORREÇÃO DE TRIQUÍASE\nPré: sem jejum. Chegar 30min antes. Acompanhante.\nSensível a dor: Dipirona 1g ou Paracetamol 750mg 1h antes (salvo alergia).\nPós: medicamentos conforme orientado. Retorno conforme orientado.\n\n9. TRABECULECTOMIA / iSTENT (GLAUCOMA)\nPré: com sedação = 8h jejum | sem sedação = 4h jejum.\nChegar 30min antes. 1 olho por vez.\nPós: sem internação. Dor leve = Dipirona 1g 6/6h. Sem sol, sem molhar curativo,\nsem piscina. Não dormir em cima do olho operado.\n⚠️ Dor FORTE → acionar médico imediatamente.\n\nPara situações não listadas: encaminhar para equipe médica.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO E PARCELAMENTO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFormas aceitas: Pix, transferência, dinheiro, débito, crédito.\nConsultas: não autorizado parcelamento.\nExames acima de R$ 2.000: parcelamento em até 3x.\nProcedimentos cirúrgicos: condições informadas após avaliação médica.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDESCONTOS PRÉ-AUTORIZADOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAplicados mediante solicitação do paciente:\n\n- 3% de desconto no pagamento à vista (espécie ou Pix)\n- 25% de desconto para médicos\n- 30% de desconto para advogados (OAB)\n- Médicos podem conceder até 50% de desconto em exames —\n  desconto adicional abatido na folha de pagamento do médico\n\nRegra: informar os descontos apenas se o paciente perguntar\nsobre valores ou formas de pagamento, ou se se identificar\ncomo médico ou advogado.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCONVÊNIOS ACEITOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAFEB BRASAL, AFFEGO, ANAFE SAÚDE, ASETE, BACEN, CAESAN, CAMED, CARE PLUS,\nCASEC, CASEMBRAPA, CNTI, CONAB, EMBRATEL, FAPES, FASCAL, FUSEX, GAMA SAÚDE,\nGDF SAÚDE, GEAP (apenas consultas), INAS, LIFE EMPRESARIAL, LUMINAR SAÚDE,\nNOTRE DAME, OMINT SAÚDE, PF SAÚDE, PLAN ASSISTE, PLAS/JMU, PORTO SEGURO,\nPOSTAL SAÚDE, PROASA, PRÓ-SER, PRÓ-SOCIAL,\nNOVA SAÚDE, UNITY, REAL GRANDEZA, SAÚDE CAIXA, SAÚDE PETROBRAS, SERPRO,\nSIS SENADO, STF-MED, TRE SAÚDE, TRT SAÚDE, TST SAÚDE, UNAFISCO. UNITY Star Copart AD,  UNITY Star Copart Corp, UNITY Star Corp, UNITY Star Adesão\nQuality: NÃO atendemos.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nRESTRIÇÕES DE CONVÊNIO POR MÉDICO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDr. [MEDICO]       → NÃO atende Unity\nDr. [MEDICO]       → NÃO atende Unity (exceto pacientes\n                            encaminhados para avaliação de retina)\nDrª [MEDICO]     → SOMENTE Nova Saúde e Unity\nDrª [MEDICO]     → Todos os convênios da clínica\nDr. [MEDICO]          → Todos os convênios EXCETO Unity\nDr. [MEDICO]           → SOMENTE Unity e Nova Saúde\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        7104,
+        -96
+      ],
+      "id": "e0dca4d3-c31d-4fef-941c-76f026b0888c",
+      "name": "agente_servicos"
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente de triagem de urgência da Clínica de Olhos Dr. [MEDICO].\nVocê é acionado pela Assistente quando há sintomas preocupantes relatados pelo paciente.\n\nSeu papel: avaliar a gravidade, indicar o médico responsável e orientar a ação.\nVocê responde à Assistente com: (1) nível de urgência, (2) médico a contatar, (3) mensagem\nsugerida para o paciente — sempre com tom calmo, nunca alarmista.\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPROTOCOLOS DE URGÊNCIA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n🔴 URGÊNCIA IMEDIATA — acionar médico agora (24h/7 dias)\n\n1. Descolamento de retina\n   Sintomas: flashes de luz, chuva de moscas volantes, perda de campo visual,\n   perda súbita da visão, manchas na visão central.\n   Médico: Dr. [MEDICO] — (00) 00000-0000\n   Ação: notificar imediatamente. Orientar paciente a ir pronto-socorro oftalmológico\n   se não conseguir contato.\n\n2. Pós-op com dor intensa + embaçamento + vermelhidão (qualquer cirurgia)\n   Médico assistente: Dr. [MEDICO] (00) 00000-0000 ou Dr. [MEDICO] (00) 00000-0000\n   Ação: notificar médico e tranquilizar paciente.\n\n3. Pós-injeção intraocular: dor intensa + embaçamento + olho vermelho\n   Médico: Dr. [MEDICO] — (00) 00000-0000\n\n\n\n6. Pós-op cirurgia realizada pela Drª [MEDICO]: dor + hiperemia + embaçamento\n   Médico: Drª [MEDICO] — via secretaria\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🟡 MONITORAMENTO — sintomas leves esperados no pós-op\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nOs sintomas abaixo são normais e esperados. Tranquilizar o paciente:\n- Olho levemente vermelho após cirurgia ou injeção: normal\n- Embaçamento visual leve imediatamente após injeção ou laser: normal\n- Sensação de corpo estranho após catarata ou vitrectomia: normal\n- Bolas pretas no campo visual inferior após injeção: normal\n- Pequenos hematomas após botox: normal, regridem em dias\n\nSe o sintoma leve persistir além de 48h ou piorar → reclassificar como urgência.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPROTOCOLO GERAL PÓS-OP (qualquer sintoma)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. Perguntar: qual procedimento foi realizado?\n2. Perguntar: qual médico realizou?\n3. Avaliar gravidade pelos sintomas\n4. Notificar o médico responsável com: nome do paciente, sintomas, procedimento, médico\n5. Retornar à Assistente com orientação e mensagem sugerida para o paciente\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nTOM DAS MENSAGENS AO PACIENTE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nNunca alarmar. Sempre transmitir que a situação está sendo cuidada.\nExemplos de tom correto:\n\"Entendido. Vou acionar o médico responsável agora mesmo, tá?\"\n\"Já passei as informações pro doutor. Ele vai te dar um retorno em breve.\"\n\"Pode ficar tranquilo(a), estamos cuidando disso.\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        7440,
+        -96
+      ],
+      "id": "2bc0b654-618b-47e4-ab74-a49531106b96",
+      "name": "agente_urgencia"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        7536,
+        176
+      ],
+      "id": "797906c9-5ad1-4249-850b-a1a7d6af7f85",
+      "name": "Postgres Chat Memory3",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        7440,
+        128
+      ],
+      "id": "fa1096f0-ef3d-418f-a8a3-73e06f3df3f4",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente de informações institucionais da Clínica de Olhos Dr. [MEDICO].\nVocê responde à Assistente com informações sobre a clínica. Ela repassa ao paciente.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nINFORMAÇÕES DA CLÍNICA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nNome: Clínica de Olhos Dr. [MEDICO]\nFundada em: 1966\nEspecialidade: Oftalmologia (retina, plástica ocular, oftalmopediatria, residência médica)\n\nEndereço: QI 5, Conjunto 09, Casa 02 — Lago Sul, Cidade Exemplo-DF, CEP 71615-190\nTelefone: (00) 00000-0000\nInstagram: @clinica-exemplo\nSite: https://clinica-exemplo.com.br/\nGoogle: https://maps.exemplo/EXEMPLO de funcionamento: segunda a sexta, 08h às 18h\nAtendimento pelo WhatsApp (Assistente): 24h, 7 dias por semana\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-4').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nESTRUTURA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Estacionamento próprio e gratuito para pacientes\n- Acessibilidade: elevador e rampa para cadeirantes\n- Consultórios privativos com ar-condicionado e isolamento acústico\n- Centro cirúrgico próprio com equipamentos de alta tecnologia\n- Sala de espera com café e água\n- Atendimento online disponível via plataforma segura\n- Banheiros masculino e feminino (sem trocador para bebês)\n- Pets não permitidos\n- Localizado em esquina, fachada branca com janelas de madeira\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDIFERENCIAIS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Ambiente intimista, atendimento personalizado\n- Corpo clínico com formação internacional e certificações\n- Programa de residência médica aprovado pelo MEC\n- Mais de 58 anos de tradição em oftalmologia na cidade\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFAQ — RESPOSTAS DIRETAS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\"Atendem Quality?\" → Não. A clínica não trabalha com Quality.\n\"Tem estacionamento?\" → Sim, próprio e gratuito.\n\"Tem acessibilidade?\" → Sim, elevador e rampa.\n\"Atende sábado?\" → Não. Apenas segunda a sexta, 08h-18h.\n\"Tem pediatria?\" → Sim. Drª [MEDICO] é especialista em oftalmopediatria.\n\"Fazem cirurgia?\" → Sim. Centro cirúrgico próprio.\n\"Têm médico do sexo feminino?\" → Sim. Drª [MEDICO], Drª [MEDICO] e Drª Mariana.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAVALIAÇÃO NO GOOGLE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nQuando o atendimento for positivo e o paciente demonstrar satisfação,\nsugerir avaliação no Google de forma natural:\nLink: https://maps.exemplo/EXEMPLO sugerido: \"Fico feliz que tenha gostado! Se quiser, sua avaliação no Google\najuda muita gente a conhecer a clínica 😊 [link]\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        6448,
+        -96
+      ],
+      "id": "3e8747ce-45a0-4d75-9e2c-8876aebf5c5c",
+      "name": "agente_institucional"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        6448,
+        128
+      ],
+      "id": "6248c490-89fa-489d-a22a-42db83881859",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        6544,
+        176
+      ],
+      "id": "b971f98c-4afd-4f64-a285-69b9736dc6ac",
+      "name": "Postgres Chat Memory4",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente de follow-up e pós-atendimento da Clínica de Olhos Dr. [MEDICO].\nVocê é chamado pela Assistente em contextos de pós-procedimento ou acompanhamento.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFOLLOW-UP APÓS INJEÇÃO INTRAOCULAR\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nContatar o paciente 2 dias após o procedimento.\nPerguntar ativamente (não esperar o paciente reclamar):\n  - \"Como está o olho que recebeu a aplicação?\"\n  - \"Está sentindo alguma dor?\"\n  - \"Notou algum embaçamento visual?\"\n  - \"O olho está vermelho?\"\n\nSe SIM para qualquer sintoma preocupante → escalar para agente_urgencia imediatamente.\nSe tudo normal → tranquilizar e reforçar cuidados pós-op.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPESQUISA DE SATISFAÇÃO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nApós confirmação de que o atendimento foi bom, oferecer avaliação no Google.\nTom natural — nunca parecer script:\n  \"Que bom! Fico feliz que tenha corrido tudo bem.\"\n  \"Se quiser deixar uma avaliação pra gente, ajuda demais outras pessoas\n   a conhecer a clínica: https://maps.exemplo/EXEMPLO DO FOLLOW-UP\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nMensagens curtas. Parecer genuíno, não automático.\nExemplo de abertura do follow-up de injeção:\n  \"Oi! Passando pra saber como você está, já que faz dois dias da aplicação.\"\n  \"Como está o olho? Tudo tranquilo por aí?\"\n\nNunca usar: \"Conforme combinado\", \"Entrando em contato para\", \"Prezado(a)\".\nEssas expressões entregam que é mensagem automática.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        6112,
+        -96
+      ],
+      "id": "c064fa60-5670-4197-8bb0-c485c4682b62",
+      "name": "agente_followup"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        6112,
+        112
+      ],
+      "id": "632b0887-feef-481a-ab47-7d37a7440333",
+      "name": "OpenAI Chat Model5",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        6208,
+        176
+      ],
+      "id": "5a39865f-b4b4-4f41-a58b-bd65e4de7cf3",
+      "name": "Postgres Chat Memory5",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "utilizar para enviar para secretaria",
+        "method": "POST",
+        "url": "https://n8n.exemplo.com.br/webhook/encaminhar",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "numero",
+              "value": "={{ $('concatena').item.json.numero }}"
+            },
+            {
+              "name": "instancia",
+              "value": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "name": "resumo",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `O que passar:\n\n- Nome (se informado)\n- Motivo do encaminhamento\n- Convênio ou particular\n- Resumo do que foi conversado\n- Nível de urgência: normal | atenção | urgente\n`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        6576,
+        -336
+      ],
+      "id": "6ff8fe3a-2c89-4dff-8fa6-7a4d6c1b24a9",
+      "name": "encaminhar_secretaria"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "={{ $('tratamento').item.json.dados.instancia }}",
+        "remoteJid": "={{ $('concatena').item.json.numero }}",
+        "messageText": "=*Assistente:* {{ $('Assistente').item.json.output }}",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7936,
+        -992
+      ],
+      "id": "fbc7f68b-e01d-4815-88d3-a5496493660b",
+      "name": "Enviar texto1",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const CPS = 3.5;\nconst MIN_DELAY = 6;\nconst MAX_DELAY = 30;\n\nfor (const item of items) {\n\n  const mensagem = item.json.output || item.json.message || \"\";\n  const tamanho = mensagem.length;\n\n  let tempoBase = tamanho / CPS;\n\n  // Mensagem curta evita padrão 5s\n  if (tamanho < 40) {\n    tempoBase = 6 + Math.random() * 9; // 6 a 15\n  }\n\n  // variação base\n  const variacao = tempoBase * (Math.random() * 0.4 - 0.15);\n  let tempoFinal = tempoBase + variacao;\n\n  // 🔥 EXTRA HUMANO\n  const r = Math.random();\n\n  if (r < 0.20) {\n    // 20% das vezes adiciona +5 a +20 segundos\n    tempoFinal += 5 + Math.random() * 15;\n  } else if (r < 0.30) {\n    // 10% das vezes adiciona +20 a +40 segundos\n    tempoFinal += 20 + Math.random() * 20;\n  }\n\n  tempoFinal = Math.max(MIN_DELAY, Math.min(MAX_DELAY, tempoFinal));\n  tempoFinal = Math.round(tempoFinal);\n\n  item.json.delaySeconds = tempoFinal;\n  item.json.delayMs = tempoFinal * 1000;\n  item.json.delayHuman = `${tempoFinal}s`;\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6944,
+        -1008
+      ],
+      "id": "19883488-b458-418f-a7a7-321a328962f9",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "send-presence",
+        "instanceName": "={{ $('tratamento').item.json.dados.instancia }}",
+        "remoteJid": "={{ $('tratamento').item.json.dados.numero }}",
+        "delay": "={{ $json.delayMs }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7120,
+        -1008
+      ],
+      "id": "dc99a695-9260-4ea5-bac0-56e82e433cd4",
+      "name": "digitando",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "message",
+        "key": "={{ $('Webhook').item.json.body.instance }}_{{ $('Webhook').item.json.body.data.key.remoteJid }}_block",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        7296,
+        -1008
+      ],
+      "id": "3094bf60-b53e-411c-b54c-d88aac210052",
+      "name": "pegamessages2",
+      "credentials": {
+        "redis": {
+          "id": "",
+          "name": "redis (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "chat-api",
+        "operation": "read-messages",
+        "instanceName": "={{ $('Webhook').item.json.body.instance }}",
+        "remoteJid": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+        "messageId": "={{ $('Webhook').item.json.body.data.key.id }}"
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        7696,
+        -992
+      ],
+      "id": "5202bcbd-14d0-47a9-b0c4-6a02bc9a63ac",
+      "name": "Marcar mensagens como lidas2",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b4e0ca0e-5d60-4e3e-9ae6-77819bc2a068",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "={{ $('Wait1').item.json.message }}",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        7472,
+        -1008
+      ],
+      "id": "f59f89fe-f239-4475-994c-271962e88edb",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "n8n_chat_histories_clinicaolhos",
+          "mode": "list",
+          "cachedResultName": "n8n_chat_histories_clinicaolhos"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        5456,
+        -288
+      ],
+      "id": "870abff9-1161-491d-bae2-0db74adb6d59",
+      "name": "Delete table or rows",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        8288,
+        -1760
+      ],
+      "id": "67f3b0c7-c9a1-4cd6-9790-c39b1fcc02ee",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        5312,
+        -624
+      ],
+      "id": "6a309003-117f-4c0f-a801-0a43e5bfd237",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "NEXLA",
+        "remoteJid": "000000000000000000@g.us",
+        "messageText": "=⚠️🔴 Deu erro no Workflow `\"{{ $workflow.name }}\"`. \n\nSegue o erro:\n\n*Nó que deu erro*:\n\n`{{ $json.execution.lastNodeExecuted }}`\n\n*Mensagem de erro*:\n\n`{{ $json.execution.error.message }}`\n\n*URL do erro para acompanhar*:\n\n`{{ $json.execution.url.replace('webhook','n8n') }}`",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        5472,
+        -624
+      ],
+      "id": "e58275f9-d582-483a-befd-c535ad118145",
+      "name": "mensagemDeErro",
+      "credentials": {
+        "evolutionApi": {
+          "id": "",
+          "name": "evolutionApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Nó de erro\n",
+        "height": 260,
+        "width": 400,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5248,
+        -704
+      ],
+      "typeVersion": 1,
+      "id": "78a40fde-227c-4939-8690-bc6e70077dea",
+      "name": "Sticky Note31"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_11",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        5584,
+        16
+      ],
+      "id": "a0f961fb-9542-4a90-93ac-27e250d1e3ee",
+      "name": "procedimentos",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_07",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6960,
+        480
+      ],
+      "id": "551bf421-ba07-421e-bac5-c1fc94d90eba",
+      "name": "MED_02",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_06",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6960,
+        688
+      ],
+      "id": "ba1fa263-346e-4820-b130-869428379c76",
+      "name": "MED_04",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_05",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        7104,
+        592
+      ],
+      "id": "613bdc99-5741-4fff-bedb-e73301fda6a9",
+      "name": "MED_05",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_10",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6768,
+        480
+      ],
+      "id": "0a9a8310-11b9-4385-b484-4490b0059f35",
+      "name": "MED_06",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_02",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6528,
+        448
+      ],
+      "id": "5dac5fe5-c9da-4af0-b46f-4831043a2289",
+      "name": "MED_07",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_08",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6592,
+        688
+      ],
+      "id": "d24e0afa-fe86-4cfe-9f67-490dde29b8a7",
+      "name": "MED_08",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_01",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6768,
+        688
+      ],
+      "id": "f6d41d95-f9e4-48c5-a27b-88923b7dd585",
+      "name": "MED_11",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "clientes",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            },
+            {
+              "fieldId": "primeiro_contato",
+              "fieldValue": "sim"
+            },
+            {
+              "fieldId": "classificacao_lead",
+              "fieldValue": "Curioso"
+            },
+            {
+              "fieldId": "origem",
+              "fieldValue": "={{ ($('Webhook').item.json.body.data.contextInfo.entryPointConversionApp || '').replace(/^./, c => c.toUpperCase()) }}"
+            },
+            {
+              "fieldId": "ad_source_type",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.sourceType }}"
+            },
+            {
+              "fieldId": "ad_source_url",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.sourceUrl }}"
+            },
+            {
+              "fieldId": "ad_entry_point",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.entryPointConversionSource }}"
+            },
+            {
+              "fieldId": "ad_source",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.entryPointConversionExternalSource }}"
+            },
+            {
+              "fieldId": "ad_title",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.title }}"
+            },
+            {
+              "fieldId": "ad_body",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.body }}"
+            },
+            {
+              "fieldId": "ad_thumbnail_url",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.thumbnailUrl }}"
+            },
+            {
+              "fieldId": "ad_media_url",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.mediaUrl }}"
+            },
+            {
+              "fieldId": "ad_click_id",
+              "fieldValue": "={{ $('tratamento').item.json.anuncio.ctwaClid }}"
+            },
+            {
+              "fieldId": "ad_captured_at",
+              "fieldValue": "={{ $now.toISO() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6208,
+        -896
+      ],
+      "id": "05fb9863-e0fa-4f8d-a348-168c0f9ab3bf",
+      "name": "PRIMEIRO_CONTATO",
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "clientes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numero",
+              "keyValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "keyName": "instancia",
+              "keyValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5808,
+        -992
+      ],
+      "id": "dfe3c5b6-f44a-4479-a9b1-4d1e2a8225a7",
+      "name": "BUSCA",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "45efbf4a-3be7-49d2-87de-705cd837e194",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6000,
+        -992
+      ],
+      "id": "f822e713-2afd-4a68-a1d3-92841cc714d9",
+      "name": "existe?"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "clientes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numero",
+              "condition": "eq",
+              "keyValue": "={{ $('concatena').item.json.numero }}"
+            },
+            {
+              "keyName": "instancia",
+              "condition": "eq",
+              "keyValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "ultima_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "data_ultimaMensagem",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6208,
+        -1072
+      ],
+      "id": "92f1603f-3a3e-400e-ace3-21c6618d3431",
+      "name": "recorrente",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        6912,
+        -400
+      ],
+      "id": "045cafa7-35b2-4b2b-914f-14d011c87654",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_02",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        5568,
+        256
+      ],
+      "id": "c271540d-5f77-44c1-ba8c-14c63b96ee0d",
+      "name": "Get a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_04",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        6592,
+        848
+      ],
+      "id": "8a21d1b2-ce17-4796-a003-75fda38e0617",
+      "name": "MED_01",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_03",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        7760,
+        -368
+      ],
+      "id": "8f98b004-15b0-4cb0-861a-c99355953e68",
+      "name": "RAG_03_Exames",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "GOOGLE_DOC_ID_09",
+        "simple": false
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        7264,
+        352
+      ],
+      "id": "83a0d610-567d-446a-9b43-95c27189f1ee",
+      "name": "RAG_04_Convenios_Pagamento",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "googleDocsOAuth2Api (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "agente_urgencia\n   Quando: paciente relata dor, vermelhidão, embaçamento, flashes de luz, moscas\n   volantes, perda de campo visual OU está em pós-operatório com desconfortos.\n   PRIORIDADE MÁXIMA. Chamar imediatamente, antes de qualquer outra coisa."
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        8832,
+        -1376
+      ],
+      "typeVersion": 1,
+      "id": "1e9104a1-3867-4cba-9273-4dc568800b83",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd78df4d-bc6d-4068-b28e-9be252f16f0c",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "fa50dc29-6cd9-4573-8def-405e8170e7ef",
+              "name": "dados.numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "f99c707a-b0e9-4d31-a6be-25ac120d6ecf",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b33eda7a-ab0d-4413-867f-5f08e69dca55",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "3e1ffa7c-35d0-4dd8-a4ed-939e81fb6291",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "fabe7f21-b76b-4cfc-a70b-1c335ee5698e",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c7246d36-52cb-4647-a940-1f157d50cacb",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "db8feda2-4e48-4da3-a45a-4873f5e34cf1",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "a637e501-2f65-4a93-a547-fb2e581d484c",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "720f38ea-223a-4fe3-bb2a-d315bf2cc9aa",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "321f4720-495d-4b77-ad6d-dd0fc28da199",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "a9300e2f-65c8-47ca-a9e7-80cedf77f33e",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "33ac77a9-646f-46ce-a334-eee7485f794b",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "c68422c6-d332-47b1-907a-3274adc4cbbd",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -512,
+        -1424
+      ],
+      "id": "7b831d06-44c9-4a0d-afaa-d81995861a7b",
+      "name": "tratamento1"
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente especializado nos serviços da Clínica de Olhos Dr. [MEDICO].\nVocê é chamado pela Assistente e responde a ela com informações precisas.\nA Assistente vai repassar ao paciente. Você não fala diretamente com o paciente.\n- nao diga a Assistente como ela deve falar para o paciente, apenas passe a informação\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-3').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCOMO RESPONDER\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nInforme apenas o que foi perguntado.\n\nRegra:\n\n- Quando o paciente pedir quais exames tem, listar com nomes e valores apenas.\n\n1 - Depois que o paciente escolhe um exame, informe brevemente o que é realizado no exame para ele.\n\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nEXAMES DISPONÍVEIS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. Mapeamento de retina — R$ 400\n2. Tomografia de coerência óptica (OCT) — R$ 500\n3. Angiotomografia de coerência óptica (OCT-A) — particular R$ 600\n4. Retinografia — R$ 400\n5. Retinografia autofluorescente\n6. Retinografia de grande angular (OPTOMAP) — particular R$ 440\n7. Campimetria visual\n8. Paquimetria — R$ 200\n9. Topografia — R$ 300\n10. OCT de segmento anterior - 500\n11. Ultrassonografia ocular — R$ 400\n12. Microperimetria — particular R$ 1.000\n13. Biometria — R$ 400\n14. Minicurva tensional - R$ 400\n15. Teste de sobrecarga hídrica - 400\n16. Microscopia especular — R$ 400\n17. Gonioscopia — R$ 250\n18. Angiografia Fluoresceínica \n\nPara orientações detalhadas de cada exame → consultar RAG_03_Exames.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPAGAMENTO E PARCELAMENTO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFormas aceitas: Pix, transferência, dinheiro, débito, crédito.\nConsultas: não autorizado parcelamento.\nExames acima de R$ 2.000: parcelamento em até 3x.\nProcedimentos cirúrgicos: condições informadas após avaliação médica.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDESCONTOS PRÉ-AUTORIZADOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAplicados mediante solicitação do paciente:\n\n- 3% de desconto no pagamento à vista (espécie ou Pix)\n- 25% de desconto para médicos\n- 30% de desconto para advogados (OAB)\n- Médicos podem conceder até 50% de desconto em exames —\n  desconto adicional abatido na folha de pagamento do médico\n\nRegra: informar os descontos apenas se o paciente perguntar\nsobre valores ou formas de pagamento, ou se se identificar\ncomo médico ou advogado.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCONVÊNIOS ACEITOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAFEB BRASAL, AFFEGO, ANAFE SAÚDE, ASETE, BACEN, CAESAN, CAMED, CARE PLUS,\nCASEC, CASEMBRAPA, CNTI, CONAB, EMBRATEL, FAPES, FASCAL, FUSEX, GAMA SAÚDE,\nGDF SAÚDE, GEAP (apenas consultas), INAS, LIFE EMPRESARIAL, LUMINAR SAÚDE,\nNOTRE DAME, OMINT SAÚDE, PF SAÚDE, PLAN ASSISTE, PLAS/JMU, PORTO SEGURO,\nPOSTAL SAÚDE, PROASA, PRÓ-SER, PRÓ-SOCIAL,\nNOVA SAÚDE, UNITY, REAL GRANDEZA, SAÚDE CAIXA, SAÚDE PETROBRAS, SERPRO,\nSIS SENADO, STF-MED, TRE SAÚDE, TRT SAÚDE, TST SAÚDE, UNAFISCO, UNITY Star Copart AD,   UNITY Star Copart Corp, UNITY Star Corp, UNITY Star Adesão\nQuality: NÃO atendemos."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        7472,
+        -624
+      ],
+      "id": "0bf60651-d42d-4aa6-b257-b45a30ee68be",
+      "name": "exames"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        7392,
+        -368
+      ],
+      "id": "fa5d4389-e276-4011-bdde-7d1285e9706d",
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        7568,
+        -368
+      ],
+      "id": "87f452eb-95db-4f83-a25a-98da38c90aa9",
+      "name": "Postgres Chat Memory6",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        7968,
+        -416
+      ],
+      "id": "a87b8b65-e6e6-434f-a7ab-86b013f734eb",
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "",
+          "name": "openAiApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('concatena').item.json.numero }}",
+        "tableName": "n8n_chat_histories_clinicaOlhos",
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        8112,
+        -384
+      ],
+      "id": "7a383c50-1483-4bb1-aecd-8af6f85f4119",
+      "name": "Postgres Chat Memory7",
+      "credentials": {
+        "postgres": {
+          "id": "",
+          "name": "postgres (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "=Você é um sub-agente especializado em convênios e pagamentos da Clínica de Olhos Dr. [MEDICO].\nVocê é chamado pela Assistente e responde a ela com informações precisas.\nA Assistente vai repassar ao paciente. Você não fala diretamente com o paciente.\nNão diga à Assistente como ela deve falar — apenas passe a informação.\n\nContexto de tempo:\n- Data e hora atual: {{ $now.setZone('UTC-3').format('dd-LL-yyyy HH:mm:ss') }}\n- Dia da semana: {{ $now.weekdayLong }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCOMO RESPONDER\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nRetorne APENAS a informação solicitada pela Assistente.\nNunca devolva todo o conteúdo do prompt — responda só o que foi perguntado.\n\nSe perguntou convênio → confirme se atende ou não.\nSe perguntou formas de pagamento → informe as formas.\nSe perguntou parcelamento → informe as regras.\nSe perguntou desconto → informe apenas se o paciente solicitou\nou se identificou como médico ou advogado.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nFORMAS DE PAGAMENTO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Pix\n- Transferência bancária\n- Dinheiro\n- Cartão de débito\n- Cartão de crédito: até 3x sem juros | de 4x até 10x com juros\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nPARCELAMENTO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n- Consultas: não autorizado parcelamento\n- Exames acima de R$ 2.000: parcelamento em até 3x\n- Procedimentos cirúrgicos: condições informadas após avaliação médica\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDESCONTOS PRÉ-AUTORIZADOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nInformar APENAS se o paciente perguntar diretamente sobre desconto:\n- 3% no pagamento à vista (espécie ou Pix)\n- 25% para médicos\n- 30% para advogados (OAB)\n- Médicos podem conceder até 50% em exames —\n  desconto adicional abatido na folha de pagamento do médico\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCONVÊNIOS ACEITOS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nAFEB BRASAL, AFFEGO, ANAFE SAÚDE, ASETE (ASTE), BACEN, CAESAN, CAMED,\nCARE PLUS, CASEC (CODEVASF), CASEMBRAPA (EMBRAPA), CNTI, CONAB,\nEMBRATEL (TELOS), FAPES (BNDES), FASCAL, FUSEX, GAMA SAÚDE, GDF SAÚDE,\nGEAP (somente consultas), INAS, LIFE EMPRESARIAL, LUMINAR SAÚDE (EVIDA),\nNOTRE DAME, OMINT SAÚDE, PF SAÚDE (Polícia Federal), PLAN ASSISTE (MPU),\nPLAS/JMU (STM), PORTO SEGURO, POSTAL SAÚDE (ECT), PROASA,\nPRÓ-SOCIAL (TRF), NOVA SAÚDE, UNITY, REAL GRANDEZA (demais planos),\nREAL GRANDEZA (SALVUS E SALUTEM), SAÚDE CAIXA, SAÚDE PETROBRAS, SERPRO,\nSIS SENADO, STF-MED (STF), TRE SAÚDE, TRT SAÚDE, TST SAÚDE,\nUNAFISCO (SINDIFISCO), UNITY Star Copart AD,   UNITY Star Copart Corp, UNITY Star Corp, UNITY Star Adesão\n\n⚠️ Quality: NÃO atendemos.\n⚠️ GEAP: somente para consultas. Não cobre procedimentos e exames.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nRESTRIÇÕES DE CONVÊNIO POR MÉDICO\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDr. [MEDICO]       → NÃO atende Unity\nDr. [MEDICO]       → NÃO atende Unity (exceto pacientes\n                            encaminhados para avaliação de retina)\nDrª [MEDICO]     → SOMENTE Nova Saúde e Unity\nDrª [MEDICO]     → Todos os convênios da clínica\nDr. [MEDICO]          → Todos exceto Unity\nDr. [MEDICO]           → SOMENTE Unity e Nova Saúde\n\nOs únicos médicos que tem restrição de atendimento de alguns convênios é o: \n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        7968,
+        -624
+      ],
+      "id": "da4af591-132a-4254-9963-c05aaec60e96",
+      "name": "convenio/pagamentos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9dc554b4-2f50-4924-8a11-e679206fb9cc",
+              "leftValue": "={{ $json.isBlocked }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -928,
+        -736
+      ],
+      "id": "c9e1d819-f6c7-4d1f-ba12-4c6ecafaec20",
+      "name": "verifica_isblock_estado1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd78df4d-bc6d-4068-b28e-9be252f16f0c",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "fa50dc29-6cd9-4573-8def-405e8170e7ef",
+              "name": "dados.numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "f99c707a-b0e9-4d31-a6be-25ac120d6ecf",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b33eda7a-ab0d-4413-867f-5f08e69dca55",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "3e1ffa7c-35d0-4dd8-a4ed-939e81fb6291",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "fabe7f21-b76b-4cfc-a70b-1c335ee5698e",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c7246d36-52cb-4647-a940-1f157d50cacb",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "db8feda2-4e48-4da3-a45a-4873f5e34cf1",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "a637e501-2f65-4a93-a547-fb2e581d484c",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "720f38ea-223a-4fe3-bb2a-d315bf2cc9aa",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "321f4720-495d-4b77-ad6d-dd0fc28da199",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "a9300e2f-65c8-47ca-a9e7-80cedf77f33e",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "33ac77a9-646f-46ce-a334-eee7485f794b",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "c68422c6-d332-47b1-907a-3274adc4cbbd",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        -816
+      ],
+      "id": "8023e66c-adde-4b9c-827f-0a99c1eda1aa",
+      "name": "tratamento2"
+    },
+    {
+      "parameters": {
+        "tableId": "n8n_errors",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "payload",
+              "fieldValue": "={{ $json.data.message.conversation }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5696,
+        -624
+      ],
+      "id": "5614596e-5a04-410e-9527-0fe6e29683a6",
+      "name": "Create a row4",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9dc554b4-2f50-4924-8a11-e679206fb9cc",
+              "leftValue": "={{ $('extrainumero').item.json.numero }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -736,
+        -640
+      ],
+      "id": "d4f08016-2d25-43a3-a61d-d7a554e34765",
+      "name": "verifica_isblock_estado2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d24118ef-941a-4cbf-bc5b-aee5a5d926f9",
+              "name": "numero",
+              "value": "={{ $('extrainumero').item.json.lid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -464,
+        -592
+      ],
+      "id": "866e7eab-27b7-4207-8188-aa0e93188281",
+      "name": "coleta2"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('Assistente').item.json.output }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "IA"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        8144,
+        -992
+      ],
+      "id": "45de2989-905c-4a6d-944d-256310285980",
+      "name": "Create a row5",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('tratamento').item.json.dados.pushname }}"
+            },
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('concatena').item.json.messages }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5536,
+        -992
+      ],
+      "id": "4f684ecc-0916-4873-825f-ac0e621b073a",
+      "name": "Create a row6",
+      "retryOnFail": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento2').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -800
+      ],
+      "id": "08ede196-0bbd-4cc8-a97d-848ebb0747b4",
+      "name": "Create a row1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento1').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "Cliente"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.pushName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -1424
+      ],
+      "id": "431a13d2-b935-4bb9-9482-eb4dee9369f5",
+      "name": "Create a row2",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "clientes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "numero",
+              "condition": "eq",
+              "keyValue": "={{ $('concatena').item.json.numero }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "origem",
+              "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', `Preencher com base na resposta do cliente, se ele veio do facebook, instagram, google ou algum conhecido.`, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        6992,
+        -736
+      ],
+      "id": "78e7ac98-0a8e-4a95-8a79-1308d2e42af8",
+      "name": "lead",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento3').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "atendente"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.pushName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -544,
+        -1584
+      ],
+      "id": "c6d87806-abfc-4895-b393-1e9564db6fa8",
+      "name": "Create a row3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd78df4d-bc6d-4068-b28e-9be252f16f0c",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "fa50dc29-6cd9-4573-8def-405e8170e7ef",
+              "name": "dados.numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "f99c707a-b0e9-4d31-a6be-25ac120d6ecf",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b33eda7a-ab0d-4413-867f-5f08e69dca55",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "3e1ffa7c-35d0-4dd8-a4ed-939e81fb6291",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "fabe7f21-b76b-4cfc-a70b-1c335ee5698e",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c7246d36-52cb-4647-a940-1f157d50cacb",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "db8feda2-4e48-4da3-a45a-4873f5e34cf1",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "a637e501-2f65-4a93-a547-fb2e581d484c",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "720f38ea-223a-4fe3-bb2a-d315bf2cc9aa",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "321f4720-495d-4b77-ad6d-dd0fc28da199",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "a9300e2f-65c8-47ca-a9e7-80cedf77f33e",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "33ac77a9-646f-46ce-a334-eee7485f794b",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "c68422c6-d332-47b1-907a-3274adc4cbbd",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        -1584
+      ],
+      "id": "a5b4afa8-7f2d-4bf6-921f-6be0137ef62a",
+      "name": "tratamento3"
+    },
+    {
+      "parameters": {
+        "tableId": "mensagens_geral",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "instancia",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.instancia }}"
+            },
+            {
+              "fieldId": "numero",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.numero }}"
+            },
+            {
+              "fieldId": "mensagem",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.message }}"
+            },
+            {
+              "fieldId": "base64",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.base64 }}"
+            },
+            {
+              "fieldId": "id_mensagem",
+              "fieldValue": "={{ $('tratamento4').item.json.dados.idmessage }}"
+            },
+            {
+              "fieldId": "horaLastMessage",
+              "fieldValue": "={{ $now.format('dd/MM/yyyy HH:mm:ss') }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "atendente"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $('Webhook').item.json.body.data.pushName }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        -976
+      ],
+      "id": "d64ff7ba-ff78-41f4-b4ec-0cc82007b370",
+      "name": "Create a row7",
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "supabaseApi (configurar)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "bd78df4d-bc6d-4068-b28e-9be252f16f0c",
+              "name": "dados.instancia",
+              "value": "={{ $('Webhook').item.json.body.instance }}",
+              "type": "string"
+            },
+            {
+              "id": "fa50dc29-6cd9-4573-8def-405e8170e7ef",
+              "name": "dados.numero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJidAlt }}",
+              "type": "string"
+            },
+            {
+              "id": "f99c707a-b0e9-4d31-a6be-25ac120d6ecf",
+              "name": "dados.idmessage",
+              "value": "={{ $('Webhook').item.json.body.data.key.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b33eda7a-ab0d-4413-867f-5f08e69dca55",
+              "name": "minha?",
+              "value": "={{ $('Webhook').item.json.body.data.key.fromMe }}",
+              "type": "string"
+            },
+            {
+              "id": "3e1ffa7c-35d0-4dd8-a4ed-939e81fb6291",
+              "name": "dados.tipomessage",
+              "value": "={{ $('Webhook').item.json.body.data.messageType }}",
+              "type": "string"
+            },
+            {
+              "id": "fabe7f21-b76b-4cfc-a70b-1c335ee5698e",
+              "name": "dados.timestamp",
+              "value": "={{ $('Webhook').item.json.body.data.messageTimestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "c7246d36-52cb-4647-a940-1f157d50cacb",
+              "name": "dados.message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "db8feda2-4e48-4da3-a45a-4873f5e34cf1",
+              "name": "message",
+              "value": "={{ $('Webhook').item.json.body.data.message.conversation }}",
+              "type": "string"
+            },
+            {
+              "id": "a637e501-2f65-4a93-a547-fb2e581d484c",
+              "name": "idnumero",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}",
+              "type": "string"
+            },
+            {
+              "id": "720f38ea-223a-4fe3-bb2a-d315bf2cc9aa",
+              "name": "dados.mimetype",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.mimetype }}",
+              "type": "string"
+            },
+            {
+              "id": "321f4720-495d-4b77-ad6d-dd0fc28da199",
+              "name": "dados.base64",
+              "value": "={{ $('Webhook').item.json.body.data.message.base64 }}",
+              "type": "string"
+            },
+            {
+              "id": "a9300e2f-65c8-47ca-a9e7-80cedf77f33e",
+              "name": "dados.urlpdf",
+              "value": "={{ $json.body.data.message.documentMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "33ac77a9-646f-46ce-a334-eee7485f794b",
+              "name": "dados.urlimagem",
+              "value": "={{ $('Webhook').item.json.body.data.message.imageMessage.url }}",
+              "type": "string"
+            },
+            {
+              "id": "c68422c6-d332-47b1-907a-3274adc4cbbd",
+              "name": "agente-name",
+              "value": "teste",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -768,
+        -992
+      ],
+      "id": "69e08c1a-3de3-4b2e-af4a-ef40536782c3",
+      "name": "tratamento4"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        6400,
+        -992
+      ],
+      "id": "4db2f26c-6d93-45ca-93e7-79e322cb263a",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        6480,
+        -1152
+      ],
+      "id": "86489514-a239-46f0-8d2d-af7f4e39ccad",
+      "name": "When chat message received",
+      "webhookId": "eeca8df1-c806-43fe-b747-96a9eedf8df3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        []
+      ]
+    },
+    "tratamento": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "concatena": {
+      "main": [
+        [
+          {
+            "node": "deletalista",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pegamessages": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "listamessage": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deletalista": {
+      "main": [
+        [
+          {
+            "node": "Marcar mensagens como lidas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica se é uma mensagem DO CLIENTE1": {
+      "main": [
+        [
+          {
+            "node": "CHave-block",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado": {
+      "main": [
+        [
+          {
+            "node": "tratamento1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "coleta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "degrupo": {
+      "main": [
+        [
+          {
+            "node": "verifica se é uma mensagem DO CLIENTE1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "degrupo1": {
+      "main": [
+        [
+          {
+            "node": "extrainumero",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extrainumero": {
+      "main": [
+        [
+          {
+            "node": "verifica se é uma mensagem DO CLIENTE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta1": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica se é uma mensagem DO CLIENTE": {
+      "main": [
+        [
+          {
+            "node": "CHave-block1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis1": {
+      "main": [
+        [
+          {
+            "node": "verifica_isblock_estado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LID?": {
+      "main": [
+        [
+          {
+            "node": "degrupo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "degrupo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "concatena",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "concatena",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If10": {
+      "main": [
+        [],
+        [
+          {
+            "node": "saidapadrao7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Enviar documento4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If12": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obter m dia em base1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Caminhos1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "main": [
+        [
+          {
+            "node": "imagem-data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "imagem-data1": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File7": {
+      "main": [
+        [
+          {
+            "node": "extratorpdf1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extratorpdf1": {
+      "main": [
+        [
+          {
+            "node": "If10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao5": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao6": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao7": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao8": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "saidapadrao9": {
+      "main": [
+        [
+          {
+            "node": "listamessage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar documento4": {
+      "main": [
+        [
+          {
+            "node": "saidapadrao8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obter m dia em base1": {
+      "main": [
+        [
+          {
+            "node": "Caminhos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "imagem?": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "imagem-data1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "LID?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "pegamessages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Convert to File7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code9": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar mensagens como lidas": {
+      "main": [
+        [
+          {
+            "node": "Create a row6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redis6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "atendimento1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "atendimento1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Redis8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Redis9",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "atendimento2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Redis7",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Redis10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "atendimento3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atendimento2": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atendimento3": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "Redis11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "atendimento1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis9": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis10": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis11": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "If12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_medicos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_medicos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "agente_medicos",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "agente_servicos",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_servicos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_servicos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_urgencia": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_urgencia",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "agente_urgencia",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_institucional": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_institucional",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory4": {
+      "ai_memory": [
+        [
+          {
+            "node": "agente_institucional",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agente_followup": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "agente_followup",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory5": {
+      "ai_memory": [
+        [
+          {
+            "node": "agente_followup",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "encaminhar_secretaria": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "digitando",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "digitando": {
+      "main": [
+        [
+          {
+            "node": "pegamessages2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "pegamessages2": {
+      "main": [
+        [
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Marcar mensagens como lidas2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assistente": {
+      "main": [
+        []
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "mensagemDeErro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "procedimentos": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_02": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_04": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_05": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_06": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_07": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_08": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "MED_11": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "PRIMEIRO_CONTATO": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "BUSCA": {
+      "main": [
+        [
+          {
+            "node": "existe?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "existe?": {
+      "main": [
+        [
+          {
+            "node": "recorrente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "PRIMEIRO_CONTATO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "recorrente": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MED_01": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "RAG_03_Exames": {
+      "ai_tool": [
+        [
+          {
+            "node": "exames",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RAG_04_Convenios_Pagamento": {
+      "ai_tool": [
+        []
+      ]
+    },
+    "Enviar texto1": {
+      "main": [
+        [
+          {
+            "node": "Create a row5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento1": {
+      "main": [
+        [
+          {
+            "node": "Create a row2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHave-block": {
+      "main": [
+        [
+          {
+            "node": "tratamento3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar mensagens como lidas2": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "exames": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "exames",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory6": {
+      "ai_memory": [
+        [
+          {
+            "node": "exames",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "convenio/pagamentos",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory7": {
+      "ai_memory": [
+        [
+          {
+            "node": "convenio/pagamentos",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convenio/pagamentos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado1": {
+      "main": [
+        [
+          {
+            "node": "tratamento2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "verifica_isblock_estado2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento2": {
+      "main": [
+        [
+          {
+            "node": "Create a row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mensagemDeErro": {
+      "main": [
+        [
+          {
+            "node": "Create a row4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "verifica_isblock_estado2": {
+      "main": [
+        [
+          {
+            "node": "coleta2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "coleta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "coleta2": {
+      "main": [
+        [
+          {
+            "node": "tratamento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row6": {
+      "main": [
+        [
+          {
+            "node": "BUSCA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "lead": {
+      "ai_tool": [
+        [
+          {
+            "node": "Assistente",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento3": {
+      "main": [
+        [
+          {
+            "node": "Create a row3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tratamento4": {
+      "main": [
+        [
+          {
+            "node": "Create a row7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHave-block1": {
+      "main": [
+        [
+          {
+            "node": "tratamento4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        []
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Assistente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed6398d1f0e7bf2b67706e49c75bc00e97a8aceceb64592d9702aaa1b7dc4766"
+  },
+  "nodeGroups": [],
+  "tags": []
+}
